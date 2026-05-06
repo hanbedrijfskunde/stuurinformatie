@@ -120,7 +120,11 @@
     </button>
   </div>
 
-  <p class="mt-12 text-xs text-slate-600 text-center">
+  <button id="landing-reset" class="mt-10 px-4 py-2 text-sm rounded bg-slate-800 hover:bg-rose-900 transition text-slate-400 hover:text-white">
+    Willekeurig opnieuw toewijzen
+  </button>
+
+  <p class="mt-6 text-xs text-slate-600 text-center">
     Voor docent: voeg <code class="text-slate-400 bg-slate-800 px-2 py-0.5 rounded">?docent</code> toe aan de URL voor het volledige overzicht.
   </p>
 </div>
@@ -445,6 +449,7 @@
 
     document.getElementById('reset').addEventListener('click', resetAll);
     document.getElementById('full-reset').addEventListener('click', fullReset);
+    document.getElementById('landing-reset').addEventListener('click', fullReset);
     document.getElementById('toggle-key').addEventListener('click', toggleKey);
 
     document.addEventListener('keydown', (e) => {
