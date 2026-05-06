@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sturing in lagen — EnYoi 2016</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <style>
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
 </style>
@@ -64,15 +64,19 @@
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h2 class="text-2xl font-bold mb-3">Scan om te beginnen</h2>
-        <p class="text-slate-200 leading-relaxed mb-4">
+        <p class="text-slate-200 leading-relaxed mb-5">
           Scan deze QR-code met je telefoon. Je wordt willekeurig ingedeeld bij één
           managementlaag — strategisch, tactisch of operationeel — en krijgt de bijbehorende
           dataset om te bekijken voordat je de business-vragen beantwoordt.
         </p>
-        <p class="text-slate-400 text-sm">
-          Of typ direct in je browser:
-        </p>
-        <code id="student-url" class="block mt-1 bg-slate-900 px-3 py-2 rounded text-xs text-slate-300 break-all"></code>
+        <p class="text-slate-400 text-sm mb-2">Of klik direct hieronder:</p>
+        <a id="student-link" href="heatmap.html" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-white font-bold transition">
+          <span>Begin de werkvorm</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
       </div>
       <div class="flex flex-col items-center">
         <div id="qrcode" class="bg-white p-3 rounded-lg shadow-2xl"></div>
@@ -132,22 +136,29 @@
   // Bouw URL voor studenten (relatief tov huidige pagina)
   const heatmapUrl = new URL('heatmap.html', window.location.href).href;
 
-  // Toon URL als kopieerbare tekst
-  document.getElementById('student-url').textContent = heatmapUrl;
+  // Update knop-link
+  document.getElementById('student-link').href = heatmapUrl;
 
-  // Genereer QR-code via canvas
-  const canvas = document.createElement('canvas');
-  document.getElementById('qrcode').appendChild(canvas);
-  QRCode.toCanvas(canvas, heatmapUrl, {
-    width: 220,
-    margin: 1,
-    color: { dark: '#0f172a', light: '#ffffff' }
-  }, (err) => {
-    if (err) {
-      // Fallback: toon URL in plaats van QR
-      document.getElementById('qrcode').textContent = heatmapUrl;
-    }
-  });
+  // Genereer QR-code via qrcode-generator
+  // API: qrcode(typeNumber, errorCorrectionLevel) — 0 = auto-detect
+  try {
+    const qr = qrcode(0, 'M');
+    qr.addData(heatmapUrl);
+    qr.make();
+
+    const img = document.createElement('img');
+    img.src = qr.createDataURL(6, 4);   // cellSize, margin
+    img.alt = 'QR-code naar de werkvorm';
+    img.width = 220;
+    img.height = 220;
+    document.getElementById('qrcode').appendChild(img);
+  } catch (err) {
+    // Fallback: toon URL in plaats van QR
+    const fallback = document.createElement('p');
+    fallback.className = 'text-xs text-slate-600 break-all p-4 max-w-[220px]';
+    fallback.textContent = heatmapUrl;
+    document.getElementById('qrcode').appendChild(fallback);
+  }
 </script>
 
 </body>
