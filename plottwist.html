@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sturing in lagen — EnYoi 2016</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .slide { display: none; }
+  .slide.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal-row {
+    animation: fadeIn 0.45s ease-out both;
+  }
+  .slide.active .reveal-row:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .reveal-row:nth-child(2) { animation-delay: 0.20s; }
+  .slide.active .reveal-row:nth-child(3) { animation-delay: 0.35s; }
+  .slide.active .reveal-row:nth-child(4) { animation-delay: 0.50s; }
+  .slide.active .reveal-row:nth-child(5) { animation-delay: 0.65s; }
+  .slide.active .reveal-row:nth-child(6) { animation-delay: 0.80s; }
+  .slide.active .reveal-row:nth-child(7) { animation-delay: 0.95s; }
+  kbd {
+    background: rgb(51 65 85);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: ui-monospace, monospace;
+  }
+  .corner-nav { transition: opacity 0.2s ease; }
+  body:fullscreen .corner-nav { opacity: 0; }
+</style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center select-none cursor-pointer">
+
+<a href="index.html" class="corner-nav fixed top-4 right-4 text-sm text-slate-500 hover:text-white transition z-10">
+  ← overzicht
+</a>
+
+<main class="w-full max-w-6xl mx-auto p-8 md:p-12">
+
+  <!-- 1: Welkom -->
+  <section class="slide active flex-col items-center justify-center text-center min-h-[85vh]" data-slide="1">
+    <div class="text-sm uppercase tracking-widest text-slate-400 mb-6">Tijdsblok 5 · Plot twist</div>
+    <h1 class="text-6xl md:text-7xl font-bold mb-8">Sturing in lagen</h1>
+    <p class="text-xl md:text-2xl text-slate-300">EnYoi ICT Services B.V. · Boekjaar 2016</p>
+    <div class="mt-20 text-slate-500 text-sm">
+      <kbd>→</kbd> volgende · <kbd>←</kbd> vorige · <kbd>F</kbd> fullscreen · <kbd>1–9</kbd> springen
+    </div>
+  </section>
+
+  <!-- 2: Plot twist vraag -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="2">
+    <div class="text-sm uppercase tracking-widest text-amber-400 mb-6">Plot twist</div>
+    <h2 class="text-4xl md:text-5xl font-bold leading-tight max-w-4xl">
+      Wie had de data om de<br>
+      <span class="text-amber-300">échte strategische vraag</span><br>
+      te beantwoorden?
+    </h2>
+  </section>
+
+  <!-- 3: Marge tabel -->
+  <section class="slide flex-col items-center justify-center min-h-[85vh]" data-slide="3">
+    <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Marge per productgroep</h2>
+    <div class="w-full overflow-x-auto">
+      <table class="text-base md:text-xl w-full">
+        <thead class="text-slate-400 border-b border-slate-700">
+          <tr>
+            <th class="text-left p-3">Productgroep</th>
+            <th class="text-right p-3">Omzet</th>
+            <th class="text-right p-3">COGS</th>
+            <th class="text-right p-3">Bruto-marge</th>
+            <th class="text-right p-3">Marge%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="reveal-row border-b border-slate-800 bg-emerald-900/30">
+            <td class="p-3 font-bold">Consultancy</td>
+            <td class="p-3 text-right">€ 5.012.674</td>
+            <td class="p-3 text-right">€ 3.700</td>
+            <td class="p-3 text-right font-bold text-emerald-300">€ 5.008.974</td>
+            <td class="p-3 text-right font-bold text-emerald-300">99,9%</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3">Cursussen</td>
+            <td class="p-3 text-right">€ 523.595</td>
+            <td class="p-3 text-right">€ 0</td>
+            <td class="p-3 text-right">€ 523.595</td>
+            <td class="p-3 text-right">100,0%</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3">Abonnementen</td>
+            <td class="p-3 text-right">€ 71.166</td>
+            <td class="p-3 text-right">€ 0</td>
+            <td class="p-3 text-right">€ 71.166</td>
+            <td class="p-3 text-right">100,0%</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800 bg-rose-900/30">
+            <td class="p-3 font-bold">Systemen</td>
+            <td class="p-3 text-right">€ 961.791</td>
+            <td class="p-3 text-right">€ 568.171</td>
+            <td class="p-3 text-right font-bold text-rose-300">€ 393.619</td>
+            <td class="p-3 text-right font-bold text-rose-300">40,9%</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3">Componenten</td>
+            <td class="p-3 text-right">€ 313.180</td>
+            <td class="p-3 text-right">€ 206.897</td>
+            <td class="p-3 text-right">€ 106.283</td>
+            <td class="p-3 text-right">33,9%</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3">Monitoren</td>
+            <td class="p-3 text-right">€ 205.862</td>
+            <td class="p-3 text-right">€ 133.770</td>
+            <td class="p-3 text-right">€ 72.093</td>
+            <td class="p-3 text-right">35,0%</td>
+          </tr>
+          <tr class="reveal-row">
+            <td class="p-3">Randapparatuur</td>
+            <td class="p-3 text-right">€ 31.477</td>
+            <td class="p-3 text-right">€ 22.272</td>
+            <td class="p-3 text-right">€ 9.205</td>
+            <td class="p-3 text-right">29,2%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4: De zinger -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="4">
+    <div class="text-sm uppercase tracking-widest text-amber-400 mb-8">De zinger</div>
+    <p class="text-4xl md:text-5xl font-bold leading-tight">
+      Hardware:<br>
+      <span class="text-amber-400">21%</span> van de omzet<br>
+      maar slechts <span class="text-rose-400">8%</span> van de marge
+    </p>
+    <p class="mt-12 text-xl text-slate-400 italic max-w-2xl">
+      … en het bindt al onze voorraad-cash.
+    </p>
+  </section>
+
+  <!-- 5: Kernpunt -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="5">
+    <div class="text-sm uppercase tracking-widest text-emerald-400 mb-8">Kernpunt</div>
+    <p class="text-3xl md:text-4xl leading-relaxed max-w-4xl">
+      Strategisch inzicht ontstaat hier <em>niet</em> op<br>
+      het strategische niveau —<br><br>
+      het ontstaat in de <strong class="text-emerald-300">meest atomaire data</strong><br>
+      van het operationele niveau.
+    </p>
+  </section>
+
+  <!-- 6: Nuance intro -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="6">
+    <div class="text-sm uppercase tracking-widest text-blue-400 mb-8">Maar...</div>
+    <h2 class="text-5xl md:text-6xl font-bold leading-tight">
+      Marge ≠ marge
+    </h2>
+  </section>
+
+  <!-- 7: Tweelaagse tabel -->
+  <section class="slide flex-col items-center justify-center min-h-[85vh]" data-slide="7">
+    <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Bruto-marge versus contributiemarge</h2>
+    <div class="w-full overflow-x-auto">
+      <table class="text-base md:text-xl w-full">
+        <thead class="text-slate-400 border-b border-slate-700">
+          <tr>
+            <th class="text-left p-3">Productgroep</th>
+            <th class="text-right p-3">Bruto-marge (uit XAF)</th>
+            <th class="text-center p-3">Contributiemarge</th>
+            <th class="text-left p-3 pl-6">Wat ontbreekt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3 font-bold">Consultancy</td>
+            <td class="p-3 text-right">€ 5.009k <span class="text-slate-500">(99,9%)</span></td>
+            <td class="p-3 text-center text-amber-400 font-bold">onbekend</td>
+            <td class="p-3 pl-6 text-slate-300">tijdregistratie consultants per project</td>
+          </tr>
+          <tr class="reveal-row border-b border-slate-800">
+            <td class="p-3 font-bold">Hardware</td>
+            <td class="p-3 text-right">€ 581k <span class="text-slate-500">(38%)</span></td>
+            <td class="p-3 text-center text-amber-400 font-bold">onbekend</td>
+            <td class="p-3 pl-6 text-slate-300">uren verkooppersoneel + voorraad-handling</td>
+          </tr>
+          <tr class="reveal-row">
+            <td class="p-3 font-bold">Cursussen</td>
+            <td class="p-3 text-right">€ 524k <span class="text-slate-500">(100%)</span></td>
+            <td class="p-3 text-center text-amber-400 font-bold">onbekend</td>
+            <td class="p-3 pl-6 text-slate-300">docent-uren + lokaalkosten</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8: Disclaimer -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="8">
+    <p class="text-2xl md:text-3xl leading-relaxed max-w-4xl">
+      <span class="text-blue-300 font-bold">Financiële boekhouding</span> rapporteert wat XAF levert.<br><br>
+      <span class="text-emerald-300 font-bold">Management accounting</span> beantwoordt strategische vragen.<br><br>
+      <span class="text-slate-400 italic">Dat zijn twee disciplines, niet één.</span>
+    </p>
+  </section>
+
+  <!-- 9: Vraag aan studenten -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="9">
+    <div class="text-sm uppercase tracking-widest text-amber-400 mb-8">Vraag aan jullie</div>
+    <p class="text-2xl md:text-3xl leading-relaxed max-w-4xl">
+      Welke data zou je nodig hebben om de<br>
+      <strong>échte contributiemarge</strong> te berekenen?<br><br>
+      <span class="text-slate-400">In welk systeem zou die zitten?</span><br><br>
+      <span class="text-amber-300">Heeft EnYoi dat systeem überhaupt?</span>
+    </p>
+  </section>
+
+  <!-- 10: Reflectie — misconceptie-check -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="10">
+    <div class="text-sm uppercase tracking-widest text-blue-400 mb-8">Reflectie</div>
+    <p class="text-2xl md:text-3xl leading-relaxed max-w-4xl mb-10 italic text-slate-300 border-l-4 border-slate-600 pl-6 text-left">
+      "Strategisch niveau gebruikt geaggregeerde data,<br>
+      operationeel niveau gebruikt detail-data."
+    </p>
+    <p class="text-2xl md:text-3xl leading-relaxed max-w-4xl">
+      Klopt dat?<br><br>
+      <span class="text-amber-300">Welk voorbeeld uit vandaag nuanceert het?</span>
+    </p>
+  </section>
+
+  <!-- 11: Slot -->
+  <section class="slide flex-col items-center justify-center text-center min-h-[85vh]" data-slide="11">
+    <div class="text-sm uppercase tracking-widest text-emerald-400 mb-8">Tot slot</div>
+    <p class="text-2xl md:text-3xl leading-relaxed max-w-4xl italic">
+      Sommige strategische vragen kun je niet beantwoorden<br>
+      met de data die je hebt.<br><br>
+      Dat is geen falen — dat is een <span class="not-italic font-bold text-emerald-300">ontwerpvraag</span><br>
+      voor je IT-architectuur.<br><br>
+      <span class="text-emerald-300 not-italic">Welke vragen wil je over 5 jaar kunnen beantwoorden,<br>
+      en welke systemen heb je daarvoor nodig?</span>
+    </p>
+  </section>
+
+</main>
+
+<!-- Slide indicator -->
+<div class="fixed bottom-4 left-4 text-slate-600 text-sm font-mono">
+  <span id="current">1</span> / <span id="total">10</span>
+</div>
+
+<!-- Help indicator (desktop only) -->
+<div class="fixed bottom-4 right-4 text-slate-600 text-xs">
+  klik / <kbd>→</kbd> volgende
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  let current = 1;
+
+  function show(n) {
+    if (n < 1) n = 1;
+    if (n > total) n = total;
+    slides.forEach(s => s.classList.remove('active'));
+    const next = document.querySelector(`[data-slide="${n}"]`);
+    if (next) next.classList.add('active');
+    document.getElementById('current').textContent = n;
+    current = n;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      show(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      show(current - 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    } else if (e.key === 'Home') {
+      show(1);
+    } else if (e.key === 'End') {
+      show(total);
+    } else if (/^[1-9]$/.test(e.key)) {
+      show(parseInt(e.key));
+    }
+  });
+
+  document.body.addEventListener('click', (e) => {
+    if (e.target.closest('kbd')) return;
+    show(current + 1);
+  });
+</script>
+
+</body>
+</html>

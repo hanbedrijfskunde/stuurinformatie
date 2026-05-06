@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sturing in lagen — EnYoi 2016</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+</style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+
+<main class="max-w-5xl mx-auto p-6 md:p-12">
+
+  <!-- Hero -->
+  <header class="mb-12 text-center">
+    <div class="text-sm uppercase tracking-widest text-slate-400 mb-2">Werkvorm Informatiemanagement</div>
+    <h1 class="text-5xl md:text-6xl font-bold mb-3">Sturing in lagen</h1>
+    <p class="text-xl text-slate-300">EnYoi ICT Services B.V. · Boekjaar 2016</p>
+  </header>
+
+  <!-- Tijdsblok 1: Casus intro -->
+  <section class="bg-slate-800/50 rounded-lg p-6 md:p-8 mb-10 border border-slate-700">
+    <div class="text-sm uppercase tracking-widest text-slate-400 mb-3">Tijdsblok 1 · Intro</div>
+    <h2 class="text-2xl font-bold mb-4">De casus</h2>
+    <p class="text-slate-200 leading-relaxed mb-6">
+      EnYoi ICT Services is een Nederlandse IT-dienstverlener uit Leusden. In 2016 maakten ze
+      <strong>€ 7,33 miljoen</strong> omzet met <strong>198 klanten</strong>. Bijzonder jaar
+      — ze begonnen met een eigen vermogen van <strong class="text-rose-400">−€ 1,75 miljoen</strong>.
+      We gaan vandaag ervaren dat de informatie die je nodig hebt om dit bedrijf te sturen
+      op drie niveaus totaal verschillend is.
+    </p>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-slate-900/50 rounded p-4 text-center">
+        <div class="text-xs uppercase tracking-wider text-slate-400">Omzet</div>
+        <div class="text-2xl font-bold mt-1">€ 7,33 M</div>
+      </div>
+      <div class="bg-slate-900/50 rounded p-4 text-center">
+        <div class="text-xs uppercase tracking-wider text-slate-400">Klanten</div>
+        <div class="text-2xl font-bold mt-1">198</div>
+      </div>
+      <div class="bg-slate-900/50 rounded p-4 text-center">
+        <div class="text-xs uppercase tracking-wider text-slate-400">EV begin</div>
+        <div class="text-2xl font-bold mt-1 text-rose-400">−€ 1,75 M</div>
+      </div>
+      <div class="bg-slate-900/50 rounded p-4 text-center">
+        <div class="text-xs uppercase tracking-wider text-slate-400">Leveranciers</div>
+        <div class="text-2xl font-bold mt-1">41</div>
+      </div>
+    </div>
+
+    <blockquote class="border-l-4 border-amber-500 pl-4 text-slate-300 italic">
+      "Welke informatie zou jij als bestuurder hier het eerst willen zien?"
+    </blockquote>
+  </section>
+
+  <!-- QR-code voor studenten -->
+  <section class="bg-emerald-900/30 rounded-lg p-6 md:p-8 mb-10 border-2 border-emerald-700">
+    <div class="text-sm uppercase tracking-widest text-emerald-300 mb-3">Tijdsblok 2 + 3 · Voor studenten</div>
+
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-2xl font-bold mb-3">Scan om te beginnen</h2>
+        <p class="text-slate-200 leading-relaxed mb-4">
+          Scan deze QR-code met je telefoon. Je wordt willekeurig ingedeeld bij één
+          managementlaag — strategisch, tactisch of operationeel — en krijgt de bijbehorende
+          dataset om te bekijken voordat je de business-vragen beantwoordt.
+        </p>
+        <p class="text-slate-400 text-sm">
+          Of typ direct in je browser:
+        </p>
+        <code id="student-url" class="block mt-1 bg-slate-900 px-3 py-2 rounded text-xs text-slate-300 break-all"></code>
+      </div>
+      <div class="flex flex-col items-center">
+        <div id="qrcode" class="bg-white p-3 rounded-lg shadow-2xl"></div>
+        <p class="text-xs text-slate-400 mt-3">Scan met camera-app</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voor docent: navigatie per fase -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-bold mb-2">Voor docent</h2>
+    <p class="text-slate-400 text-sm mb-6">
+      Klik door naar de fase die je wilt projecteren. De studenten werken op hun
+      eigen apparaat (via de QR-code hierboven) — jij gebruikt de docent-modus
+      van de heatmap en het plot-twist-deck op de beamer.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-4">
+
+      <a href="heatmap.html?docent" class="block bg-slate-800 hover:bg-slate-700 rounded-lg p-6 transition border border-slate-700 hover:border-purple-500">
+        <div class="text-sm uppercase tracking-widest text-purple-300 font-bold mb-2">Tijdsblok 3 · 10–25 min</div>
+        <div class="text-xl font-bold mb-2">Vraagkaartjes-heatmap →</div>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Live matrix met 10 vragen × 3 groepen. Toon docent-modus op de beamer
+          terwijl studenten op hun eigen telefoon hun kolom invullen. Antwoord­sleutel
+          met kleurcoding voor de plenaire nabespreking.
+        </p>
+      </a>
+
+      <a href="plottwist.html" class="block bg-slate-800 hover:bg-slate-700 rounded-lg p-6 transition border border-slate-700 hover:border-amber-500">
+        <div class="text-sm uppercase tracking-widest text-amber-300 font-bold mb-2">Tijdsblok 5 · 36–45 min</div>
+        <div class="text-xl font-bold mb-2">Plot twist &amp; nuance →</div>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          11-slide presentatie met marge-tabel per productgroep, contributiemarge-nuance,
+          metacognitieve reflectie en architectuur-slot. Druk <kbd class="bg-slate-700 px-1.5 py-0.5 rounded text-xs">F</kbd> voor fullscreen.
+        </p>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center text-slate-500 text-sm mt-16 pt-8 border-t border-slate-800">
+    <p class="mb-2">
+      Werkvorm bij Onderdeel 1, 2, 3, 4 van Informatiemanagement (HBO Bedrijfskunde, HAN).
+    </p>
+    <p>
+      <a href="https://github.com/hanbedrijfskunde/stuurinformatie" class="text-slate-400 hover:text-white transition">
+        github.com/hanbedrijfskunde/stuurinformatie
+      </a>
+    </p>
+  </footer>
+
+</main>
+
+<script>
+  // Bouw URL voor studenten (relatief tov huidige pagina)
+  const heatmapUrl = new URL('heatmap.html', window.location.href).href;
+
+  // Toon URL als kopieerbare tekst
+  document.getElementById('student-url').textContent = heatmapUrl;
+
+  // Genereer QR-code via canvas
+  const canvas = document.createElement('canvas');
+  document.getElementById('qrcode').appendChild(canvas);
+  QRCode.toCanvas(canvas, heatmapUrl, {
+    width: 220,
+    margin: 1,
+    color: { dark: '#0f172a', light: '#ffffff' }
+  }, (err) => {
+    if (err) {
+      // Fallback: toon URL in plaats van QR
+      document.getElementById('qrcode').textContent = heatmapUrl;
+    }
+  });
+</script>
+
+</body>
+</html>

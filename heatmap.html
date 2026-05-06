@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vraagkaartjes-heatmap — Sturing in lagen</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .cell {
+    min-height: 4.5rem;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+    cursor: pointer;
+  }
+  .cell:hover { transform: scale(1.03); }
+  .cell:active { transform: scale(0.98); }
+  .cell-empty    { background: rgb(51 65 85); }
+  .cell-ja       { background: rgb(16 185 129); }
+  .cell-misschien{ background: rgb(245 158 11); }
+  .cell-nee      { background: rgb(244 63 94); }
+
+  .verwacht-badge {
+    font-size: 0.72rem;
+    opacity: 0.9;
+    line-height: 1.3;
+    margin-top: 0.3rem;
+  }
+  .verwacht-pill {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: white;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    vertical-align: baseline;
+  }
+  .verwacht-pill-ja        { background: rgb(16 185 129); }
+  .verwacht-pill-misschien { background: rgb(245 158 11); }
+  .verwacht-pill-nee       { background: rgb(244 63 94); }
+
+  .corner-nav { transition: opacity 0.2s ease; }
+  body:fullscreen .corner-nav { opacity: 0; }
+
+  kbd {
+    background: rgb(51 65 85);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.85em;
+  }
+
+  /* Niveau-tegels */
+  .level-button {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .level-button.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+  }
+  .level-button.inactive {
+    opacity: 0.25;
+    pointer-events: none;
+    filter: grayscale(0.4);
+  }
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.0); }
+    50%      { box-shadow: 0 0 0 6px rgba(255,255,255,0.18); }
+  }
+  .level-button.active {
+    animation: pulse-ring 2.5s ease-in-out infinite;
+  }
+
+  /* Matrix: dim niet-actieve kolommen in student-modus */
+  body[data-level="s"] [data-col-group]:not([data-col-group="s"]),
+  body[data-level="s"] [data-cell-group]:not([data-cell-group="s"]),
+  body[data-level="t"] [data-col-group]:not([data-col-group="t"]),
+  body[data-level="t"] [data-cell-group]:not([data-cell-group="t"]),
+  body[data-level="o"] [data-col-group]:not([data-col-group="o"]),
+  body[data-level="o"] [data-cell-group]:not([data-cell-group="o"]) {
+    opacity: 0.18;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+
+<!-- ===================================================================
+     Stap 0 — Landing (random toewijzing zichtbaar maken)
+     =================================================================== -->
+<div id="landing" class="hidden fixed inset-0 bg-slate-900 z-50 flex flex-col items-center justify-center p-6 overflow-y-auto">
+  <div class="text-sm uppercase tracking-widest text-slate-400 mb-4">Tijdsblok 3 · Vraagkaartjes</div>
+  <h1 class="text-3xl md:text-5xl font-bold mb-3 text-center">Welk niveau ben jij vandaag?</h1>
+  <p class="text-slate-400 mb-12 text-center max-w-xl">
+    Voor deze sessie ben je willekeurig ingedeeld bij één managementlaag.
+    Klik op je <span class="text-white font-bold">actieve tegel</span> om verder te gaan.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+    <button data-level="s" class="level-button bg-blue-900/40 hover:bg-blue-900/60 border-2 border-blue-500 rounded-lg p-6 text-left">
+      <div class="text-blue-300 font-bold text-2xl mb-1">Strategisch</div>
+      <div class="text-slate-300 text-sm mb-4">Directie / DGA</div>
+      <div class="text-xs text-slate-400">
+        Beschikbaar systeem:<br><strong class="text-blue-200">D — Grootboek</strong>
+      </div>
+    </button>
+    <button data-level="t" class="level-button bg-purple-900/40 hover:bg-purple-900/60 border-2 border-purple-500 rounded-lg p-6 text-left">
+      <div class="text-purple-300 font-bold text-2xl mb-1">Tactisch</div>
+      <div class="text-slate-300 text-sm mb-4">Manager Finance / Sales</div>
+      <div class="text-xs text-slate-400">
+        Beschikbare systemen:<br><strong class="text-purple-200">A · B · D</strong>
+      </div>
+    </button>
+    <button data-level="o" class="level-button bg-emerald-900/40 hover:bg-emerald-900/60 border-2 border-emerald-500 rounded-lg p-6 text-left">
+      <div class="text-emerald-300 font-bold text-2xl mb-1">Operationeel</div>
+      <div class="text-slate-300 text-sm mb-4">Debiteurenbeheerder / Magazijnchef</div>
+      <div class="text-xs text-slate-400">
+        Beschikbare systemen:<br><strong class="text-emerald-200">A · B · C</strong>
+      </div>
+    </button>
+  </div>
+
+  <p class="mt-12 text-xs text-slate-600 text-center">
+    Voor docent: voeg <code class="text-slate-400 bg-slate-800 px-2 py-0.5 rounded">?docent</code> toe aan de URL voor het volledige overzicht.
+  </p>
+</div>
+
+<!-- ===================================================================
+     Stap 1 — Data Understanding (CRISP-DM)
+     =================================================================== -->
+<div id="data-stage" class="hidden p-4 md:p-8">
+  <div class="max-w-4xl mx-auto">
+
+    <header class="mb-8">
+      <div class="text-sm uppercase tracking-widest text-slate-400">Stap 1 van 2 · Data Understanding</div>
+      <h1 class="text-3xl md:text-4xl font-bold mt-1">Bekijk eerst de data</h1>
+      <div id="ds-level-info" class="mt-3 inline-flex items-center gap-3 bg-slate-800 rounded-lg px-4 py-2">
+        <span class="text-slate-400 text-sm">Jij bent:</span>
+        <span id="ds-level-name" class="font-bold"></span>
+      </div>
+    </header>
+
+    <div class="bg-slate-800/50 rounded-lg p-6 mb-6 border border-slate-700">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-blue-300 font-bold mb-2">Waarom</div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Voordat je vragen kunt beantwoorden, moet je weten <em>wat</em> je hebt.
+            Dit is de <strong>Data Understanding</strong>-fase uit CRISP-DM
+            (Cross-Industry Standard Process for Data Mining) — de tweede van zes
+            stappen in een data-analyse-traject.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-purple-300 font-bold mb-2">Hoe</div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Download de dataset hieronder, pak 'm uit, en open de CSV-bestanden in
+            Excel of Google Sheets. Scroll, filter, vorm een beeld.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-2">Wat doe jij</div>
+          <ol class="text-slate-200 text-sm leading-relaxed list-decimal pl-5 space-y-1">
+            <li>Download &amp; open de bestanden</li>
+            <li>Wat zit erin? Hoeveel rijen, welke kolommen?</li>
+            <li>Welke vragen zou je <em>zonder twijfel</em> kunnen beantwoorden met deze data?</li>
+            <li>Welke <em>echt niet</em>?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-slate-800 rounded-lg p-6 mb-6">
+      <h2 class="font-bold text-xl mb-1">Jouw dataset</h2>
+      <p class="text-slate-400 text-sm mb-4" id="ds-files-desc"></p>
+
+      <div class="bg-slate-900/60 rounded p-4 mb-5">
+        <div class="text-xs uppercase tracking-wider text-slate-400 mb-2">Bestanden in deze ZIP</div>
+        <ul id="ds-files-list" class="text-sm text-slate-200 font-mono space-y-1"></ul>
+      </div>
+
+      <a id="ds-download" href="" download class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-bold text-white transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Download dataset</span>
+        <span id="ds-size" class="text-xs opacity-75"></span>
+      </a>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <p class="text-xs text-slate-500 max-w-md">
+        Tip: open de bestanden in Excel of Google Sheets. Sla ze op als je wilt
+        — voor de volgende stap heb je ze nodig om te zien wat je <em>wel</em>
+        en <em>niet</em> kunt beantwoorden.
+      </p>
+      <button id="ds-continue" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition whitespace-nowrap">
+        Verder naar de vragen →
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     Stap 2 — Matrix (vragen classificeren)
+     =================================================================== -->
+<div id="matrix-section" class="hidden p-4 md:p-8">
+
+  <a href="index.html" class="corner-nav fixed top-4 right-4 text-sm text-slate-500 hover:text-white transition">
+    ← overzicht
+  </a>
+
+  <header class="max-w-6xl mx-auto mb-6">
+    <div class="text-sm uppercase tracking-widest text-slate-400">Stap 2 van 2 · Welke vragen kun jij beantwoorden?</div>
+    <h1 class="text-2xl md:text-3xl font-bold mt-1">Live heatmap — kunnen jullie deze vraag beantwoorden?</h1>
+
+    <div id="level-info" class="hidden mt-3 inline-flex items-center gap-3 bg-slate-800 rounded-lg px-4 py-2">
+      <span class="text-slate-400 text-sm">Jij bent:</span>
+      <span id="level-name" class="font-bold"></span>
+    </div>
+
+    <div id="docent-banner" class="hidden mt-3 inline-flex items-center gap-2 bg-amber-900/40 border border-amber-700 rounded-lg px-4 py-2">
+      <span class="text-amber-300 text-sm font-bold">Docent-modus</span>
+      <span class="text-slate-400 text-xs">— alle drie kolommen interactief, antwoordsleutel beschikbaar</span>
+    </div>
+  </header>
+
+  <details class="max-w-6xl mx-auto mb-8 bg-slate-800/50 rounded-lg border border-slate-700/50">
+    <summary class="cursor-pointer px-5 py-3 text-slate-300 font-semibold text-sm uppercase tracking-wider select-none hover:bg-slate-800 transition rounded-lg">
+      Instructie · klik om in/uit te klappen
+    </summary>
+    <div class="grid md:grid-cols-3 gap-6 px-5 pb-5 pt-1">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-blue-300 font-bold mb-2">Waarom</div>
+        <p class="text-slate-200 text-sm leading-relaxed">
+          Nu je weet wat je hebt, kun je beoordelen wat je <em>kunt</em>: voor welke
+          business-vragen levert jouw data antwoorden, en voor welke niet?
+        </p>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-widest text-purple-300 font-bold mb-2">Hoe</div>
+        <p class="text-slate-200 text-sm leading-relaxed">
+          Drie groepen, drie apparaten, één matrix. Jullie groep vult alleen de kolom
+          van jullie niveau in. De andere kolommen worden door andere groepen ingevuld.
+        </p>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-2">Wat doe jij</div>
+        <ol class="text-slate-200 text-sm leading-relaxed list-decimal pl-5 space-y-1">
+          <li>Lees elk vraagkaartje samen met je groep</li>
+          <li>Bepaal: kunnen wij dit met ónze data beantwoorden?
+            <span class="block text-slate-400 text-xs mt-0.5">JA · MISSCHIEN · NEE</span></li>
+          <li>Klik op de cel in jullie kolom — elke klik cycle't door de toestanden</li>
+          <li>Aan het eind: bespreek plenair wat het patroon over de drie groepen onthult</li>
+        </ol>
+      </div>
+    </div>
+  </details>
+
+  <main class="max-w-6xl mx-auto">
+
+    <table class="w-full text-sm md:text-base border-separate border-spacing-y-1">
+      <thead>
+        <tr class="text-slate-300">
+          <th class="text-left p-2 w-1/2"></th>
+          <th class="text-center p-2 w-1/6" data-col-group="s">
+            <div class="font-bold text-blue-300 text-base">Strategisch</div>
+            <div class="text-xs font-normal text-slate-400">Systeem D</div>
+          </th>
+          <th class="text-center p-2 w-1/6" data-col-group="t">
+            <div class="font-bold text-purple-300 text-base">Tactisch</div>
+            <div class="text-xs font-normal text-slate-400">A + B + D</div>
+          </th>
+          <th class="text-center p-2 w-1/6" data-col-group="o">
+            <div class="font-bold text-emerald-300 text-base">Operationeel</div>
+            <div class="text-xs font-normal text-slate-400">A + B + C</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div class="mt-8 flex flex-wrap gap-3 items-center">
+      <button id="toggle-key"
+              class="hidden px-4 py-2 rounded bg-slate-700 hover:bg-slate-600 transition text-white font-semibold">
+        Toon antwoordsleutel
+      </button>
+      <button id="reset"
+              class="px-4 py-2 rounded bg-slate-800 hover:bg-rose-700 transition text-slate-300 hover:text-white">
+        Reset antwoorden
+      </button>
+      <button id="full-reset"
+              class="px-4 py-2 rounded bg-slate-800 hover:bg-rose-900 transition text-slate-400 hover:text-white text-sm">
+        Begin opnieuw
+      </button>
+      <span class="ml-auto text-xs text-slate-500">
+        sneltoetsen: <kbd>R</kbd> reset · <kbd>F</kbd> fullscreen
+      </span>
+    </div>
+
+    <p class="mt-3 text-xs text-slate-600">
+      Klik op een cel om te cyclen:
+      <span class="inline-block px-1.5 py-0.5 rounded bg-slate-700">leeg</span> →
+      <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-500">JA</span> →
+      <span class="inline-block px-1.5 py-0.5 rounded bg-amber-500">MISSCHIEN</span> →
+      <span class="inline-block px-1.5 py-0.5 rounded bg-rose-500">NEE</span>
+    </p>
+
+    <p id="docent-howto" class="hidden mt-8 text-xs text-slate-500 leading-relaxed max-w-3xl">
+      <strong>Docent-modus:</strong> deze view ziet alleen wat je in <em>deze</em> browser hebt
+      ingevuld. Studenten vullen op hun eigen apparaten in — die zie je hier níét automatisch.
+      Voor het plenaire moment vraag je groepen verbaal hun antwoorden te delen, en typt ze
+      hier kort in. Daarna onthul je de antwoordsleutel met <kbd>K</kbd> of de knop.
+    </p>
+
+  </main>
+
+</div>
+
+<script>
+  const VRAGEN = [
+    "Wat was onze totale omzet in 2016?",
+    "Wie zijn onze top-10 klanten naar omzet?",
+    "Wat is de verdeling van betaaltermijnen van onze klanten?",
+    "Wat is de klantconcentratie? (top-3 als % van totaal)",
+    "Hoeveel staat er aan debiteuren open op 31 december 2016?",
+    "WELKE klanten moeten samen die € 534.000 aan debiteuren nog betalen?",
+    "Hoeveel betaalden we aan de Belastingdienst aan BTW + loonheffing?",
+    "Wat is de omzet per businesslijn (consultancy / hardware / cursussen)?",
+    "Welk percentage van onze omzet komt uit recurring abonnementen?",
+    "Wat is ons EBIT-resultaat (bedrijfsresultaat) over 2016?"
+  ];
+
+  // Verwachte antwoorden — pas aan naar eigen didactische bedoeling.
+  // Per rij: [strategisch, tactisch, operationeel]
+  const ANTWOORDEN = [
+    ["ja",  "ja",  "ja"],
+    ["nee", "ja",  "ja"],
+    ["nee", "nee", "ja"],
+    ["nee", "ja",  "ja"],
+    ["ja",  "ja",  "misschien"],
+    ["nee", "nee", "ja"],
+    ["nee", "ja",  "ja"],
+    ["ja",  "ja",  "ja"],
+    ["ja",  "ja",  "ja"],
+    ["ja",  "ja",  "nee"]
+  ];
+
+  const GROEPEN = ['s', 't', 'o'];
+  const STATES  = ['', 'ja', 'misschien', 'nee'];
+  const LABELS  = { '': '', 'ja': 'JA', 'misschien': 'MISSCHIEN', 'nee': 'NEE' };
+  const LEVEL_NAMES = {
+    's': 'Strategisch (D)',
+    't': 'Tactisch (A · B · D)',
+    'o': 'Operationeel (A · B · C)'
+  };
+
+  const DATASETS = {
+    's': {
+      desc: 'Drie bestanden uit het grootboek (Systeem D). Balans en resultatenrekening bevatten alleen rekening-IDs en bedragen — voor de omschrijving moet je koppelen met het rekeningschema.',
+      files: [
+        'D_grootboek/rekeningschema.csv',
+        'D_grootboek/balans_eindstand.csv',
+        'D_grootboek/resultatenrekening.csv'
+      ],
+      zip: 'data/strategisch.zip',
+      size: '4 KB'
+    },
+    't': {
+      desc: 'Zeven bestanden — verkoop- en inkoopadministratie plus het grootboek. Gemengd: per-factuur-detail en jaartotalen. Voor labels op balans/V&W koppel je met het rekeningschema.',
+      files: [
+        'A_crm/klanten.csv',
+        'A_crm/verkoopfacturen.csv',
+        'B_inkoop/leveranciers.csv',
+        'B_inkoop/inkoopfacturen.csv',
+        'D_grootboek/rekeningschema.csv',
+        'D_grootboek/balans_eindstand.csv',
+        'D_grootboek/resultatenrekening.csv'
+      ],
+      zip: 'data/tactisch.zip',
+      size: '76 KB'
+    },
+    'o': {
+      desc: 'Vijf bestanden — verkoop, inkoop en de bank-export met alle individuele mutaties. Veel rijen, fijnmazig detail.',
+      files: [
+        'A_crm/klanten.csv',
+        'A_crm/verkoopfacturen.csv',
+        'B_inkoop/leveranciers.csv',
+        'B_inkoop/inkoopfacturen.csv',
+        'C_bank/bankmutaties.csv'
+      ],
+      zip: 'data/operationeel.zip',
+      size: '113 KB'
+    }
+  };
+
+  const STORAGE_KEY  = 'heatmap-v02';
+  const LEVEL_KEY    = 'heatmap-level';
+  const DATASEEN_KEY = 'heatmap-data-seen';
+
+  let state    = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  let level    = null;
+  let isDocent = false;
+  let showKey  = false;
+
+  function init() {
+    const params = new URLSearchParams(location.search);
+    isDocent = params.has('docent');
+
+    if (isDocent) {
+      enterDocentMode();
+    } else {
+      // Random toewijzen op eerste bezoek; daarna persistent
+      let lvl = localStorage.getItem(LEVEL_KEY);
+      if (!lvl || !GROEPEN.includes(lvl)) {
+        lvl = GROEPEN[Math.floor(Math.random() * GROEPEN.length)];
+        localStorage.setItem(LEVEL_KEY, lvl);
+      }
+      level = lvl;
+
+      const dataSeen = localStorage.getItem(DATASEEN_KEY) === 'true';
+      if (dataSeen) {
+        enterStudentMode(lvl);
+      } else {
+        showLanding(lvl);
+      }
+    }
+
+    // Wire landing tiles
+    document.querySelectorAll('#landing [data-level]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('inactive')) return;
+        showDataStage(btn.dataset.level);
+      });
+    });
+
+    // Continue button
+    document.getElementById('ds-continue').addEventListener('click', () => {
+      localStorage.setItem(DATASEEN_KEY, 'true');
+      enterStudentMode(level);
+    });
+
+    document.getElementById('reset').addEventListener('click', resetAll);
+    document.getElementById('full-reset').addEventListener('click', fullReset);
+    document.getElementById('toggle-key').addEventListener('click', toggleKey);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if ((e.key === 'k' || e.key === 'K') && isDocent) { e.preventDefault(); toggleKey(); }
+      else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); resetAll(); }
+      else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+      }
+    });
+  }
+
+  function showLanding(lvl) {
+    document.getElementById('landing').classList.remove('hidden');
+    document.getElementById('data-stage').classList.add('hidden');
+    document.getElementById('matrix-section').classList.add('hidden');
+
+    document.querySelectorAll('#landing [data-level]').forEach(btn => {
+      btn.classList.remove('active', 'inactive');
+      if (btn.dataset.level === lvl) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.add('inactive');
+      }
+    });
+  }
+
+  function showDataStage(lvl) {
+    level = lvl;
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('data-stage').classList.remove('hidden');
+    document.getElementById('matrix-section').classList.add('hidden');
+
+    document.getElementById('ds-level-name').textContent = LEVEL_NAMES[lvl];
+
+    const ds = DATASETS[lvl];
+    document.getElementById('ds-files-desc').textContent = ds.desc;
+    document.getElementById('ds-download').href = ds.zip;
+    document.getElementById('ds-size').textContent = `(${ds.size})`;
+
+    const ul = document.getElementById('ds-files-list');
+    ul.replaceChildren();
+    ds.files.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      ul.appendChild(li);
+    });
+  }
+
+  function enterStudentMode(lvl) {
+    level = lvl;
+    isDocent = false;
+    document.body.dataset.level = lvl;
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('data-stage').classList.add('hidden');
+    document.getElementById('matrix-section').classList.remove('hidden');
+    document.getElementById('level-info').classList.remove('hidden');
+    document.getElementById('level-name').textContent = LEVEL_NAMES[lvl];
+    document.getElementById('docent-banner').classList.add('hidden');
+    document.getElementById('toggle-key').classList.add('hidden');
+    document.getElementById('docent-howto').classList.add('hidden');
+    buildRows();
+    render();
+  }
+
+  function enterDocentMode() {
+    level = null;
+    isDocent = true;
+    document.body.removeAttribute('data-level');
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('data-stage').classList.add('hidden');
+    document.getElementById('matrix-section').classList.remove('hidden');
+    document.getElementById('level-info').classList.add('hidden');
+    document.getElementById('docent-banner').classList.remove('hidden');
+    document.getElementById('toggle-key').classList.remove('hidden');
+    document.getElementById('docent-howto').classList.remove('hidden');
+    buildRows();
+    render();
+  }
+
+  function buildRows() {
+    const tbody = document.getElementById('rows');
+    tbody.replaceChildren();
+
+    VRAGEN.forEach((vraag, i) => {
+      const tr = document.createElement('tr');
+
+      const tdVraag = document.createElement('td');
+      tdVraag.className = 'p-3 align-top bg-slate-800/40 rounded-l';
+
+      const nrSpan = document.createElement('span');
+      nrSpan.className = 'text-slate-500 mr-2 font-mono text-sm';
+      nrSpan.textContent = `${i + 1}.`;
+
+      const txtSpan = document.createElement('span');
+      txtSpan.className = 'text-slate-100';
+      txtSpan.textContent = vraag;
+
+      tdVraag.append(nrSpan, txtSpan);
+      tr.appendChild(tdVraag);
+
+      GROEPEN.forEach(g => {
+        const td = document.createElement('td');
+        td.className = 'p-1.5';
+        td.dataset.cellGroup = g;
+        const btn = document.createElement('button');
+        btn.className = 'cell w-full rounded text-base font-bold text-white';
+        btn.dataset.q = i;
+        btn.dataset.g = g;
+        btn.setAttribute('aria-label', `Vraag ${i + 1}, groep ${g}`);
+        btn.addEventListener('click', () => onCellClick(btn));
+        td.appendChild(btn);
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function onCellClick(btn) {
+    const g = btn.dataset.g;
+    if (!isDocent && level && g !== level) return;
+
+    const q   = +btn.dataset.q;
+    const key = `${q}-${g}`;
+    const cur = state[key] || '';
+    const nxt = STATES[(STATES.indexOf(cur) + 1) % STATES.length];
+    if (nxt === '') delete state[key];
+    else state[key] = nxt;
+    save();
+    render();
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function render() {
+    document.querySelectorAll('.cell').forEach(btn => {
+      const q        = +btn.dataset.q;
+      const g        = btn.dataset.g;
+      const groepIdx = GROEPEN.indexOf(g);
+      const key      = `${q}-${g}`;
+      const s        = state[key] || '';
+
+      btn.className = 'cell w-full rounded text-base font-bold text-white px-2 py-2';
+      btn.classList.add(s ? `cell-${s}` : 'cell-empty');
+
+      btn.replaceChildren();
+
+      if (s) {
+        const main = document.createElement('div');
+        main.textContent = LABELS[s];
+        btn.appendChild(main);
+      }
+
+      if (showKey && isDocent) {
+        const verwacht = ANTWOORDEN[q][groepIdx];
+        const klopt    = s !== '' && s === verwacht;
+        const symbol   = s === '' ? '·' : (klopt ? '✓' : '✗');
+
+        const badge = document.createElement('div');
+        badge.className = 'verwacht-badge';
+        badge.style.color = s ? 'rgba(255,255,255,0.9)' : 'rgb(148 163 184)';
+        badge.appendChild(document.createTextNode(`${symbol} verwacht: `));
+
+        const pill = document.createElement('span');
+        pill.className = `verwacht-pill verwacht-pill-${verwacht}`;
+        pill.textContent = LABELS[verwacht];
+        badge.appendChild(pill);
+
+        btn.appendChild(badge);
+      }
+    });
+  }
+
+  function toggleKey() {
+    showKey = !showKey;
+    document.getElementById('toggle-key').textContent =
+      showKey ? 'Verberg antwoordsleutel' : 'Toon antwoordsleutel';
+    render();
+  }
+
+  function resetAll() {
+    const confirmMsg = isDocent
+      ? 'Alle classificaties wissen?'
+      : 'Jullie classificaties wissen?';
+    if (!confirm(confirmMsg)) return;
+
+    if (isDocent) {
+      state = {};
+    } else if (level) {
+      Object.keys(state).forEach(k => {
+        if (k.endsWith(`-${level}`)) delete state[k];
+      });
+    }
+    save();
+    render();
+  }
+
+  function fullReset() {
+    if (!confirm('Alles wissen — niveau, data-status én classificaties? Je begint opnieuw bij de niveau-toewijzing.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEVEL_KEY);
+    localStorage.removeItem(DATASEEN_KEY);
+    location.reload();
+  }
+
+  init();
+</script>
+
+</body>
+</html>
