@@ -74,17 +74,29 @@ platform/
 ## Datasets
 
 Per niveau een eigen ZIP. Studenten downloaden bij Data Understanding-fase en
-openen in Excel of Google Sheets.
+importeren in **MS PowerBI** (Excel/Sheets als alternatief).
 
 | ZIP | Inhoud | Merge-puzzel |
 |---|---|---|
-| `strategisch.zip` (4 KB) | rekeningschema + balans + V&W | Balans/V&W tonen alleen rekening-IDs — koppel met rekeningschema voor omschrijving |
-| `tactisch.zip` (76 KB) | A_crm + B_inkoop + D_grootboek | Idem + klantnummer/leveranciernummer → koppel met klanten/leveranciers voor namen |
+| `strategisch.zip` (4 KB) | rekeningschema + balans + V&W | Balans/V&W tonen alleen rekening-IDs — leg relatie met rekeningschema voor omschrijvingen |
+| `tactisch.zip` (76 KB) | A_crm + B_inkoop + D_grootboek | Idem + klantnummer/leveranciernummer → relatie met klanten/leveranciers voor namen |
 | `operationeel.zip` (113 KB) | A_crm + B_inkoop + C_bank | Tegenpartij_id in bankmutaties heeft prefix C of S → conditioneel koppelen met klanten óf leveranciers |
 
-Elk niveau heeft een eigen merge-puzzel via VLOOKUP/XLOOKUP. Strategisch lijkt
-"makkelijk" qua omvang (4 KB) maar dwingt direct database-normalisatie-denken
-af; operationeel heeft het meeste detail maar simpele 1-op-1 lookups.
+Elk niveau heeft een eigen merge-puzzel: in PowerBI via *Model view → Manage
+Relationships* (of *Power Query → Merge Queries*), in Excel via VLOOKUP/XLOOKUP.
+Strategisch lijkt "makkelijk" qua omvang (4 KB) maar dwingt direct database-
+normalisatie-denken af; operationeel heeft het meeste detail maar grotendeels
+simpele 1-op-1 lookups.
+
+### PowerBI-startsuggestie
+
+```
+1. PowerBI Desktop openen (gratis op Microsoft Store of powerbi.microsoft.com)
+2. Get Data → Folder → wijs naar de uitgepakte ZIP-map
+3. Combine & Transform Data → laad alle CSVs in
+4. Switch naar Model view → sleep relaties op de gemeenschappelijke ID-velden
+5. Bouw je eerste visual: hoe je structuur voelt, wat je ziet, wat je mist
+```
 
 ## Lokaal draaien
 
