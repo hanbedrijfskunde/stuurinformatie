@@ -133,17 +133,30 @@
 </main>
 
 <script>
-  // Bouw URL voor studenten (relatief tov huidige pagina)
-  const heatmapUrl = new URL('heatmap.html', window.location.href).href;
+  // Productie-URL voor de QR-code. Wordt gebruikt zodra de pagina niet
+  // op een externe webserver draait (lokale preview met file://-protocol
+  // levert een URL op die op een telefoon onbereikbaar is).
+  const PROD_URL = 'https://hanbedrijfskunde.github.io/stuurinformatie/heatmap.html';
 
-  // Update knop-link
-  document.getElementById('student-link').href = heatmapUrl;
+  const isLocal =
+    location.protocol === 'file:' ||
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1';
+
+  // QR wijst altijd naar een telefoon-bereikbare URL
+  const qrTargetUrl = isLocal
+    ? PROD_URL
+    : new URL('heatmap.html', window.location.href).href;
+
+  // Knop volgt de huidige context (lokaal opent lokaal, prod opent prod)
+  document.getElementById('student-link').href = isLocal
+    ? PROD_URL
+    : 'heatmap.html';
 
   // Genereer QR-code via qrcode-generator
-  // API: qrcode(typeNumber, errorCorrectionLevel) — 0 = auto-detect
   try {
     const qr = qrcode(0, 'M');
-    qr.addData(heatmapUrl);
+    qr.addData(qrTargetUrl);
     qr.make();
 
     const img = document.createElement('img');
@@ -153,11 +166,23 @@
     img.height = 220;
     document.getElementById('qrcode').appendChild(img);
   } catch (err) {
-    // Fallback: toon URL in plaats van QR
     const fallback = document.createElement('p');
     fallback.className = 'text-xs text-slate-600 break-all p-4 max-w-[220px]';
-    fallback.textContent = heatmapUrl;
+    fallback.textContent = qrTargetUrl;
     document.getElementById('qrcode').appendChild(fallback);
+  }
+
+  // Toon URL onder QR ter verificatie + dev-warning bij lokale preview
+  const urlNote = document.createElement('p');
+  urlNote.className = 'text-[10px] text-slate-500 font-mono mt-2 break-all max-w-[220px] text-center';
+  urlNote.textContent = qrTargetUrl;
+  document.getElementById('qrcode').parentElement.appendChild(urlNote);
+
+  if (isLocal) {
+    const devNote = document.createElement('p');
+    devNote.className = 'text-xs text-amber-400 mt-2 max-w-[220px] text-center';
+    devNote.textContent = '⚠ Lokale preview — QR wijst naar productie';
+    document.getElementById('qrcode').parentElement.appendChild(devNote);
   }
 </script>
 
