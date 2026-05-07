@@ -3,7 +3,7 @@
 Statische werkvorm-tool voor het college **Sturing in lagen** uit de module
 Informatiemanagement (HBO Bedrijfskunde, HAN). Studenten ervaren in 45 minuten dat
 informatie in een organisatie verspreid zit over meerdere systemen, en dat
-elke managementlaag andere data kan zien — gebaseerd op echte XAF-auditfile-data
+elke managementlaag andere data kan zien — gebaseerd op echte boekhoudgegevens
 van EnYoi ICT Services B.V. (boekjaar 2016).
 
 🌐 **Live:** [hanbedrijfskunde.github.io/stuurinformatie](https://hanbedrijfskunde.github.io/stuurinformatie/)
@@ -115,8 +115,9 @@ De inhoud staat inline in de HTML-bestanden:
 - **Plot twist tabellen** → `plottwist.html` (slides 3 en 7)
 - **Vraagkaartjes + antwoordsleutel** → `heatmap.html` (variabelen `VRAGEN` en
   `ANTWOORDEN` bovenin het `<script>`-blok)
-- **Datasets** → regenereer met een eigen XAF (zie `genereer_datasets.py` in
-  het brondocument), zip de mappen per niveau, vervang de ZIPs in `data/`
+- **Datasets** → vervang de CSV-bestanden in `data/` (zelfde kolomnamen, andere
+  getallen) en zip ze opnieuw per niveau. De engine werkt op de CSV-structuur,
+  niet op de specifieke cijfers.
 
 ## Architectuur-keuzes
 
