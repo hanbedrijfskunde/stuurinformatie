@@ -69,6 +69,13 @@ afweek, zodat ik mijn mentale model bijstel in plaats van mij dom te voelen.
 > leer-momenten, geen oordeel. Antwoord-engine (F2) toont uitleg bij elke
 > mismatch tussen classificatie en berekend antwoord.
 
+**S6.** Als student wil ik dat de werkvorm voelt als wat ik later in mijn beroep
+ga doen, zodat ik begrijp waarom ik dit leer.
+> **Purpose** — de consultant-frame (F5) verbindt de oefening direct met de
+> beroepspraktijk waarvoor HBO Bedrijfskunde opleidt. Niet "abstract schoolwerk"
+> maar een mini-uitvoering van een echte rol tegen marktconforme voorwaarden.
+> Antwoord op de impliciete vraag *"waarom doe ik dit?"*.
+
 ### Docent
 
 **D1.** Als docent wil ik een nieuwe CSV-set kunnen inladen zonder de antwoordsleutel
@@ -80,7 +87,7 @@ handmatig te bouwen.
 
 | Dimensie | Stories | Gedekt | Versterkt door F5 (consultant-frame) |
 |---|---|:--:|---|
-| **Purpose** | S4 | ✓ | Bedrijfskundig adviseur is reëel HBO-uitstroomprofiel — game = carrière-rol-spelen |
+| **Purpose** | **S4, S6** | ✓✓ | F5 is **structureel** Purpose-element (zie F5.7): vocational alignment + sense-making + identity formation. Niet game-skin maar identiteits-bridge naar beroepspraktijk |
 | **Autonomy** | S2 | ✓ | Hoog-tarief-vragen kiezen vs. veel-laag-tarief-vragen = strategische projectkeuze |
 | **Mastery** | S1, S5 | ✓ | Fee in euro is concretere groei-meter dan abstracte punten |
 | **Social** | S3 | ✓ | Strategy consultants subcontracten data-analisten = exact het echte consulting-model |
@@ -96,9 +103,15 @@ handmatig te bouwen.
 - **Social vereist drempel-incentive** — als je je drempel alleen haalt door
   samen te werken (Bijlage A toont dit), is samenwerking *nodig*, niet optioneel.
   Dit is de fundamentele design-keuze van v0.4.
-- **Purpose vereist expliciete reflectie** — Idee C uit sectie 5 (drie meta-vragen
-  na de game) is geen "nice-to-have" maar dé Purpose-aanvulling. Zonder reflectie
-  blijft de transfer naar eigen werk impliciet — en dus onzichtbaar.
+- **Purpose werkt op twee lagen — structureel én reflectief**:
+  - **Structureel** (F5.7 — consultant-frame): Purpose is geweven in het ontwerp
+    zelf, niet als losse feature. De student speelt geen werkvorm, maar voert
+    een mini-versie van hun toekomstige beroep uit.
+  - **Reflectief** (Idee C — meta-vragen na de game): drie reflectie-vragen
+    maken de Purpose-ervaring expliciet en transfereerbaar.
+  - **Beide nodig**: zonder structurele laag is reflectie leeg ("drie vragen aan
+    het eind"). Zonder reflectie verdampt het structurele effect zodra
+    studenten de zaal uitlopen.
 
 ## 4. Functionele requirements
 
@@ -263,11 +276,43 @@ elke vraag wordt geformuleerd als verzoek van een client-stakeholder, bijv.
 *"De CFO wil voor de board-meeting weten of onze top-10 klanten 80% van de
 omzet leveren. Hoeveel kost het je om dit antwoord op te leveren?"*
 
-> **Pedagogische winst van het consultant-frame**: het is niet alleen een
-> game-skin maar een rol die studenten in hun toekomstige carrière daadwerkelijk
-> kunnen aannemen. Bedrijfskundig adviseur is een mainstream HBO-uitstroomprofiel.
-> De fee-mechaniek leert ze tegelijk omgaan met *time-to-deliver* — een vaardigheid
-> die hun stage en eerste baan direct nodig hebben.
+**F5.7 Purpose-koppeling — beroepsrol als didactische motor**
+
+De consultant-frame is geen *cosmetische gamification-laag* maar een
+**identiteits-bridge** tussen het curriculum en de beroepspraktijk waarvoor
+de opleiding voorbereidt. Door studenten in een professionele rol te plaatsen
+mét een echte fee (marktconform tarief × declarabele uren), wordt de werkvorm
+betekenis-rijk op drie niveaus:
+
+**1. Vocational alignment** — HBO Bedrijfskunde is een **beroepsopleiding**,
+geen academische opleiding. Een werkvorm die de directe beroepspraktijk
+simuleert (rol + tarief + client-opdracht + deliverable) sluit fundamenteel
+beter aan bij het opleidings-DNA dan een werkvorm met abstracte
+data-classificatie. De student doet niet "schoolwerk" maar oefent het werk
+zelf — onder *gecontroleerde* condities.
+
+**2. Sense-making** — de onderhuidse vraag *"Waarom leer ik dit?"* die in
+elke onderwijssessie meeluistert, wordt door de consultant-frame *expliciet*
+beantwoord. Het antwoord is niet *"omdat het in het curriculum staat"* maar
+*"omdat dit is wat je straks doet, en hier oefen je het tegen marktconforme
+voorwaarden"*. Die directe koppeling tussen leeractiviteit en beroepsrealiteit
+verhoogt intrinsieke motivatie meer dan welke gamification-laag ook.
+
+**3. Identity formation** — in de psychologie van early-career professionals
+gaat ontwikkeling niet alleen over kennis-verwerving maar over
+**identiteits-vorming**: *Wie ben ik als professional? Welke rol past bij mij?*.
+Door studenten tijdens de werkvorm één van drie consultant-niveaus te laten
+ervaren (en bij "Begin opnieuw" mogelijk een ander niveau te krijgen), ontstaat
+een mini-replica van het carrière-keuze-proces dat ze in hun stage en eerste
+baan zullen doorlopen. *"Voelde strategisch werk goed? Of was operationeel
+juist energieker?"* — dat soort zelf-reflectie is een Purpose-vraag, geen
+Mastery-vraag.
+
+> **Implicatie voor het ontwerp**: F5 is daarmee geen *nice-to-have*-laag
+> bovenop de game, maar **structureel onderdeel van het pedagogische ontwerp**.
+> Zonder F5 is de werkvorm een vingeroefening in data-analyse; mét F5 is het
+> een professionele voorbereiding waarin studenten niet alleen leren *wat te
+> doen* maar ook *wie te zijn*.
 
 ### F4 — Samenwerkings-mechaniek (cross-level)
 
