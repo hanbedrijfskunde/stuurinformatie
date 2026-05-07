@@ -73,7 +73,24 @@ hun rol-titel (*"Strategy consultant — wat is jouw advies?"*), niet als
 | **3b. Vragen beantwoorden** | Antwoorden geven | Vragen stellen: *"Hoe zou je dat aanpakken? Wat heb je nodig?"* |
 | **3c. Samenwerking** | Wachten tot het vanzelf gebeurt | Forceren als nodig — zie sectie 5 |
 | **4. Dashboard** | Mooi maken | Het moet kloppen — niet mooi |
-| **5. Plenair** | Hardlopend door alle slides | Tijd nemen voor de plot twist en twee-routes-discussie |
+| **5. Plenair** | Hardlopend door alle slides | Tijd nemen voor de plot twist, twee-routes-discussie én DuPont-triangulatie |
+
+### 1.5 Triangulatie als pedagogisch hart van v0.5+
+
+Vanaf v0.5.1 bevat de werkvorm **vier ratio-vragen** (12-15: Profit Margin, ROA,
+ROE, Cash Conversion Cycle) die expliciet gemaakt zijn voor **triangulatie-
+ervaringen**. De pedagogische winst zit in twee soorten momenten:
+
+| Soort | Wat gebeurt | Wanneer activeren |
+|---|---|---|
+| **Algebraïsche identiteit** (vraag 13, 14) | ROE = PM × TAT × EM klopt op rondingsruimte. Drie groepen, drie ratio's, één getal — wiskundige sluitcontrole. | Tijdsblok 5 · DuPont-Challenge |
+| **Bewuste mismatch** (vraag 3, 8, 11, 15) | Twee routes geven verschillende getallen — beide kloppen, maar meten een ander ding. Methodologie-gesprek. | Tijdsblok 5b plot-twist + 5c nuance |
+
+De vier ratio-vragen tonen samen dat een ratio-systeem zowel **intern
+consistent** moet zijn (algebraïsch) als **extern betekenisvol** (interpretatief).
+Bij Vento-2016 falen de standaardratio's op het tweede vlak: ROE is wiskundig
+correct -443% maar betekenis-arm omdat het EV negatief is. Dat is het centrale
+leer-moment van Tijdsblok 5d.
 
 ---
 
@@ -92,7 +109,14 @@ gericht kunt verkleinen.
   1 minuut uitleggen
 - **HHI** (Herfindahl-Hirschman Index) interpreteren en de drempels noemen
   (<1.500 laag, 1.500–2.500 matig, >2.500 hoog)
-- **Werkkapitaal-cyclus** (DSO, DPO, DSI, CCC) op hoofdlijnen begrijpen
+- **Werkkapitaal-cyclus** (DSO, DPO, DSI, CCC) op hoofdlijnen begrijpen, plus
+  het verschil tussen **snapshot-DPO** (balans/COGS×365) en **mediaan-DPO**
+  (per-factuur-distributie) — deze leveren bij dienstverleners totaal
+  verschillende getallen op
+- **DuPont-identiteit** (ROE = PM × TAT × EM) kunnen uitleggen als algebraïsche
+  sluitcontrole, en weten wanneer de ratio betekenis-arm wordt (negatief EV)
+- Verschil tussen **EV begin** (pre-closing balans) en **EV eind** (na NI-
+  toevoeging) doorzien — closing-entry-concept
 - Onderscheid **bruto-marge / contributiemarge / operationele marge** kunnen
   toelichten
 - **ERP versus BI / OLTP versus OLAP** op architectuur-niveau begrijpen —
@@ -309,7 +333,7 @@ Stuur deze e-mail of Brightspace-bericht:
 > junior business analyst tegen € 100. Jullie krijgen willekeurig een rol
 > toegewezen.*
 >
-> *Doel: € 3.000 honorarium verdienen door business-vragen van Vento ICT te
+> *Doel: € 3.500 honorarium verdienen door business-vragen van Vento ICT te
 > beantwoorden. Maar één regel: dat doel ga je niet alleen halen. Sommige
 > vragen vereisen data die jouw niveau niet heeft. Dan moet je samenwerken
 > met een collega van een ander niveau. Net als in de echte wereld."*
@@ -324,7 +348,7 @@ Stuur deze e-mail of Brightspace-bericht:
 |---|---|
 | *"Mag ik een ander niveau kiezen?"* | *"Nee — random krijgen is deel van het experiment. Je leert ook iets door een rol te krijgen die je niet had gekozen."* |
 | *"Werken we in groepen of individueel?"* | *"Individueel je rol, samen werken indien nodig — net als in een advies-team."* |
-| *"Kunnen we samenwerken?"* | *"Sterker nog: dat moet, anders haal je de € 3.000 niet."* |
+| *"Kunnen we samenwerken?"* | *"Sterker nog: dat moet, anders haal je de € 3.500 niet."* |
 | *"Telt dit voor een cijfer?"* | *(Afhankelijk van curriculum — wees eerlijk. Bij 'nee' is dat OK; de game heeft eigen drempel.)* |
 
 ### 4.3 Wat te doen als studenten zich verzetten tegen de rol-toewijzing
@@ -430,7 +454,74 @@ Dit is een **nieuwe** plenaire moment in v0.4 (PRD F3.5). Verloop:
 > *"Derde les: beslissingen op verschillende niveaus vereisen verschillende
 > aggregaties."*
 
-### 6.3 Identity-reflectie (1 minuut, plenair)
+### 6.3 DuPont-triangulatie — algebraïsche identiteit (vraag 13 + 14)
+
+Dit is een **plenair moment** in v0.5.1, gepland voor de DuPont-Challenge-pagina.
+Verloop:
+
+1. Toon `/dupont.html` op de beamer — live-data status moet groen zijn
+2. Drie groepen leveren elk één ratio:
+   - **Junior Analyst** → Profit Margin (PM = NI / Omzet ≈ 19,48%)
+   - **Management Consultant** → Asset Turnover (TAT = Omzet / TA ≈ 1,89×)
+   - **Strategy Consultant** → Equity Multiplier (EM = TA / EV ≈ −12,03×)
+3. Klik *"Bereken ROE via DuPont"* — het systeem checkt of PM × TAT × EM = NI / EV
+4. Bij Vento klopt de identiteit perfect (Δ < 0,01 procentpunt) — **maar het
+   resultaat is −443%**. Wiskundig gevalideerd, betekenis-arm.
+
+**Drie take-aways die hier landen** (verbatim uitspreken):
+
+> *"Eerste les: triangulatie is een sluitcontrole. Drie onafhankelijke metingen,
+> één getal — als ze samen kloppen, weet je dat tientallen tussenstappen
+> consistent zijn."*
+
+> *"Tweede les: wiskundig correct ≠ pedagogisch zinvol. ROE-direct = ROE-DuPont
+> = -443% bij Vento. De ratio klopt, maar zegt niets meer over rendement op
+> aandeelhouders — er is geen aandeelhouders-kapitaal meer."*
+
+> *"Derde les: wanneer een ratio betekenis-arm wordt, is dat zelf het signaal.
+> ROA blijft hier wèl betekenisvol (36,9%) — daar zit de operationele prestatie."*
+
+**Drie debug-vragen voor de matchcheck** (gebruik bij mismatch):
+
+| Symptoom | Oorzaak | Fix |
+|---|---|---|
+| Δ > 100pp | PM in decimaal i.p.v. % ingevoerd (0,1948 i.p.v. 19,48) | Met % invoeren |
+| EM is positief 12× | EV begin gebruikt (−1,75M) i.p.v. EV eind (−322k) | Closing-entry: EV eind = balans + NI |
+| Δ ~ 0,5pp | Afronding op te weinig decimalen | Gebruik *"Toon werkelijke Vento-waarden"* voor exact match |
+
+### 6.4 Cash Conversion Cycle — snapshot vs hybrid (vraag 15)
+
+Vraag 15 toont **twee routes naar dezelfde KPI**, met dramatisch verschillende
+uitkomsten:
+
+| Route | Berekening | Vento-uitkomst |
+|---|---|---|
+| **Snapshot** (alleen balans + V&W) | DSI + DSO − DPO via crediteuren/COGS×365 | **−178 dagen** (negatieve cyclus) |
+| **Hybrid** (factuur-distributies) | DSI + DSO_med − DPO_med | **+76 dagen** (positieve cyclus) |
+
+**De twist**: snapshot suggereert dat leveranciers de cyclus financieren — een
+sterk werkkapitaal-positief signaal. **Caveat**: de DPO van **291 dagen** is een
+snapshot-ratio die de werkelijkheid bij dienstverleners overschat. De
+crediteurenpost van € 748.838 (rek 1600) bestaat slechts deels uit COGS-
+gerelateerde inkopen; veel niet-COGS-uitgaven (overige bedrijfskosten ≈ € 3,85M)
+lopen óók via 1600. De per-factuur-distributie (sectie 2.2 PRD) onthult dat de
+werkelijke mediaan-betaaltermijn aan leveranciers maar **27 dagen** is.
+
+**Plenaire opbouw** (3-4 minuten):
+
+1. *"Wat is jullie CCC?"* — Tactische groep: snapshot −178d. Operationeel: weten
+   het niet (hebben geen voorraden). Strategy: snapshot via D-data ook −178d.
+2. *"Welke is correct?"* — beide. Het zijn andere definities.
+3. *"Welke gebruikt een echte CFO?"* — voor IT-dienstverlener: hybrid. De
+   snapshot-DPO is methodologisch verkeerd voor bedrijven waar 1600 méér bevat
+   dan COGS-leveranciers.
+4. *"Welke les?"* — methodologie matters. Bij elk getal hoort een definitie. Een
+   snapshot-ratio zonder validatie via factuur-distributies kan misleiden.
+
+> Dit is structureel hetzelfde inzicht als de HHI-twee-routes (sectie 6.2), maar
+> dan op werkkapitaal-niveau. Zelfde meta-les: aggregatieniveau is een keuze.
+
+### 6.5 Identity-reflectie (1 minuut, plenair)
 
 > *"Tot slot — vandaag heb je een rol gespeeld als consultant op één niveau.
 > Stak het strategische werk je het meest? Of zou je liever Junior Analyst
@@ -440,7 +531,7 @@ Dit is een **nieuwe** plenaire moment in v0.4 (PRD F3.5). Verloop:
 **Geef geen antwoord-suggestie**. De vraag werkt alleen als hij open blijft.
 Een minuut bezinking. Daarna: huiswerkvraag mee voor de volgende les.
 
-### 6.4 Hoe oogst je leerwinst — concrete vragen om te stellen
+### 6.6 Hoe oogst je leerwinst — concrete vragen om te stellen
 
 Aan het eind, kies 1–2 van deze vragen om plenair te stellen:
 
@@ -468,7 +559,7 @@ Informatiemanagement. 24 studenten met laptop. PowerBI vooraf geïnstalleerd
 **00:00–00:05 — Intro casus + consultant-frame**
 - Docent toont landing op de beamer: *"Welkom bij Vento ICT"*
 - Spreekt de 5-minuten-pitch uit (zie sectie 4.1)
-- Studenten letten op: 4 cijfers + 3 tarieven + drempel € 3.000
+- Studenten letten op: 4 cijfers + 3 tarieven + drempel € 3.500
 
 **00:05–00:10 — Random toewijzing**
 - Studenten scannen QR
@@ -484,12 +575,12 @@ Informatiemanagement. 24 studenten met laptop. PowerBI vooraf geïnstalleerd
 **00:14–00:22 — Vragen beantwoorden**
 - Studenten klikken door de vragen
 - Junior begint snel punten te scoren (eigen niveau dekt veel)
-- Strategy raakt achter — fee-meter staat na 5 minuten op € 1.000 / € 3.000
+- Strategy raakt achter — fee-meter staat na 5 minuten op € 1.000 / € 3.500
 - Tactisch zit ertussenin: € 1.500 ongeveer
 - Eerste samenwerkings-tekens: een Strategy student loopt naar een Junior buurman: *"Hé, kan jij voor mij vraag 3 berekenen?"*
 
 **00:22–00:25 — Plenaire samenwerkings-cue**
-- Docent: *"Wie heeft al € 3.000? Niemand? Goed. Strategy consultants: handen omhoog. Wie hebben jullie nodig?"*
+- Docent: *"Wie heeft al € 3.500? Niemand? Goed. Strategy consultants: handen omhoog. Wie hebben jullie nodig?"*
 - Geforceerde matching: drie pairs van Strategy + Junior, twee pairs van Tactisch + Operationeel
 - Binnen 2 minuten begint iedereen 🤝 COLLEGA-cellen aan te klikken
 - Fee-meters lopen op naar € 2.500-3.500 bij meerderheid
@@ -522,11 +613,11 @@ Informatiemanagement. 24 studenten met laptop. PowerBI vooraf geïnstalleerd
 **00:44–00:45 — Slot + identity-reflectie**
 - *"Stak het strategische werk je het meest? Of zou je liever Junior blijven?"*
 - Stilte voor 30 seconden bezinning
-- Reflectie-modal verschijnt voor wie € 3.000 haalde — drie vragen
+- Reflectie-modal verschijnt voor wie € 3.500 haalde — drie vragen
 - Huiswerk-vraag mee voor volgende les
 
 **Resultaten op fee-meter na college**:
-- 18 van 24 studenten haalden € 3.000 of meer (samenwerking werkte)
+- 18 van 24 studenten haalden € 3.500 of meer (samenwerking werkte)
 - 4 zaten op € 2.500-2.999 (bijna)
 - 2 op € 1.500-2.000 (haakten af tijdens PowerBI-import)
 
@@ -645,6 +736,95 @@ vragen". Dat is de Social-pijler in actie.
 
 ---
 
+### 7.5 Voorbeeld-sessie: de DuPont-triangulatie als plenair hoogtepunt
+
+**Setting**: tijdsblok 5b, na de plot-twist (marge-tabel). De docent navigeert
+naar `dupont.html` op de beamer.
+
+**Live-data status verschijnt**:
+> ✓ Live datasets geladen — Omzet € 7.335.530 · NI € 1.428.688 · TA € 3.873.710 · EV eind € −322.018
+
+**00:00–00:01 — Setup**
+- Docent: *"Drie groepen, drie ratio's. Niemand heeft alle data. Junior:
+  Profit Margin uit verkoopfacturen + V&W. Tactisch: Asset Turnover uit balans
+  + V&W. Strategy: Equity Multiplier puur uit balans."*
+
+**00:01–00:03 — Studenten leveren ratio's aan**
+- Junior (na rekenen): PM = 19,48%
+- Tactisch: TAT = 1,89×
+- Strategy: EM = ??? — *"Wacht, EV is negatief?"* (eerste hint van edge-case)
+- Strategy uit balans: TA = 3,87M, EV begin = −1,75M. Maar... EV eind?
+- Docent: *"Wat heb je nog nodig?"*
+- Strategy: *"De NI? Want closing-entry."*
+- Docent: *"Bingo. Vraag het Junior."*
+- Cross-niveau-overleg: NI = 1,43M. EV eind = −1,75M + 1,43M = −0,32M.
+  EM = 3,87M / −0,32M = −12,03×
+
+**00:03–00:04 — De match**
+- PM × TAT × EM = 19,48% × 1,89 × −12,03 = **−442,9%**
+- ROE direct = NI / EV eind = 1,43M / −0,32M = **−443,7%**
+- Δ = 0,003 procentpunt → **MATCH** (groen paneel verschijnt)
+
+**00:04–00:06 — De interpretatie**
+- Docent: *"Wiskundig perfect. Drie groepen, drie ratio's, één getal. Wat
+  betekent ROE = -443% in praktijk?"*
+- Stilte
+- Strategy: *"Dat we 4× de winst verliezen op het EV?"*
+- Docent: *"Bijna. Het betekent dat de noemer onderwater staat. Een ratio die
+  'rendement op aandeelhouders' meet, is leeg als er geen aandeelhouders-kapitaal
+  meer is om op te renderen. Wiskundig correct, betekenis-arm."*
+- *"Wat blijft wel betekenisvol?"*
+- Junior: *"ROA?"*
+- Docent: *"Ja. ROA = 36,9% — dat is operationele prestatie zonder hefboom.
+  Daar zit de echte performance van Vento."*
+
+**Pedagogische winst**: studenten ervaren in 6 minuten dat (1) triangulatie
+werkt, (2) niet alle correcte wiskunde betekenisvolle informatie produceert,
+en (3) verschillende ratio's verschillende vragen beantwoorden. Drie
+abstracties die in een hoorcollege 30 minuten zouden kosten — hier in een
+gesprek opgelost.
+
+### 7.6 Voorbeeld-sessie: de CCC-caveat als methodologie-les
+
+**Setting**: tijdsblok 5c (nuance-fase), na DuPont-Challenge.
+
+**Trigger-vraag** (docent): *"Vraag 15. Tactisch consultants — wat is jullie
+Cash Conversion Cycle?"*
+
+**Antwoord**: *"Snapshot is −178 dagen. Hybrid is +76 dagen."*
+
+**Docent**: *"Een verschil van 254 dagen. Welke gebruikt de CFO?"*
+
+*(stilte)*
+
+**Junior**: *"Hybrid lijkt logischer? -178 dagen klinkt absurd."*
+
+**Docent**: *"Goede intuïtie. Waarom is snapshot −178d misleidend?"*
+
+**Tactisch**: *"Omdat... DPO van 291 dagen kan niet kloppen. Niemand betaalt
+zijn leveranciers na 10 maanden."*
+
+**Docent**: *"Precies. Dus waar komt die 291 vandaan?"*
+
+**Tactisch**: *"Crediteurenpost ÷ COGS × 365... maar de crediteurenpost van
+€ 749K bevat veel meer dan COGS-leveranciers. Overige bedrijfskosten zijn ook
+€ 3,85M en lopen ook via 1600."*
+
+**Docent**: *"Pak. De snapshot-ratio overschat zwaar bij dienstverleners.
+De per-factuur-distributie laat zien dat we onze leveranciers gewoon na
+27 dagen betalen — een normale termijn. Hybrid CCC = +76 dagen is veel
+betrouwbaarder."*
+
+**Take-away**: *"Voor IT-dienstverleners: vertrouw nooit een snapshot-DPO
+zonder validatie via factuur-distributies. Het is een methodologie-keuze met
+beleidsimpact — als je hier op stuurt, stuur je op een illusie."*
+
+**Pedagogische winst**: studenten leren dat een ratio kan misleiden niet door
+fout maar door **definitie**. Methodologie is geen academische luxe maar
+beslissings-kritisch.
+
+---
+
 ## 8. FAQ — studenten
 
 | Vraag | Antwoord-suggestie |
@@ -653,10 +833,13 @@ vragen". Dat is de Social-pijler in actie.
 | *"Wat als ik geen PowerBI heb?"* | *"Excel + Power Query werkt ook. Of werk samen met iemand die wél PowerBI heeft."* |
 | *"Mijn ZIP downloadt niet, wat nu?"* | *"Probeer een andere browser. Werkt het nog niet? Vraag een buurman om de uitgepakte map te delen."* |
 | *"Wat is HHI? Ik begrijp het niet."* | *"Herfindahl-Hirschman Index — meet concentratie. Hoe hoger, hoe meer afhankelijk van weinig partijen. Tussen 0 en 10.000."* |
-| *"Mag ik een vraag overslaan?"* | *"Ja. Sla 'm over en kies een andere die je tijd waard is. Je hoeft niet alles te beantwoorden — je hoeft alleen € 3.000 te halen."* |
+| *"Mag ik een vraag overslaan?"* | *"Ja. Sla 'm over en kies een andere die je tijd waard is. Je hoeft niet alles te beantwoorden — je hoeft alleen € 3.500 te halen."* |
 | *"Klopt mijn antwoord?"* | *"De tool berekent zelf het werkelijke antwoord. Klassificeer eerst, dan zie je hoe je het deed."* |
 | *"Mag ik de antwoorden van iemand anders kopiëren?"* | *"Voor cross-niveau-vragen wel — dat is samenwerking. Binnen je eigen niveau leer je niets door te kopiëren."* |
 | *"Wat als we de drempel niet halen?"* | *"Dat is OK. Het gaat niet om winnen. Het gaat om wat je leert tijdens het proberen."* |
+| *"Klopt mijn Profit Margin als ik 19,48 invul i.p.v. 0,1948?"* | *"De DuPont-tool verwacht **%** — dus 19,48 is goed. Als je 0,1948 invult, kom je 100× lager uit en mismatcht alles."* |
+| *"Waarom is ROE −443% bij Vento? Heb ik een fout gemaakt?"* | *"Nee. ROE = NI / EV. Bij Vento is EV negatief (−€322k). De wiskunde klopt — het is alleen niet betekenisvol meer als 'rendement op aandeelhouders'. Dat is precies de les."* |
+| *"De CCC zegt −178 dagen. Klopt dat?"* | *"Snapshot-CCC: ja, wiskundig. Maar het komt door een DPO van 291d die niet realistisch is voor dienstverleners. Hybride-CCC (+76d) is betrouwbaarder."* |
 
 ---
 
@@ -739,7 +922,7 @@ Schakel over naar analoge fallback:
 
 ### 9.9 Een groep haalt drempel zonder samenwerking
 
-**Symptoom**: één tactische of operationele student haalt € 3.000 zonder ooit op 🤝 COLLEGA te klikken (theoretisch onmogelijk volgens Bijlage A, maar...).
+**Symptoom**: één tactische of operationele student haalt € 3.500 zonder ooit op 🤝 COLLEGA te klikken (theoretisch onmogelijk volgens Bijlage A, maar...).
 
 **Diagnose**:
 - Punten-config is mogelijk te genereus voor een specifieke combinatie
@@ -772,7 +955,7 @@ formuleringen aan, voeg toe of verwijder. Zorg dat:
 
 ### 10.3 Aanpassen van tarieven en drempel
 
-Bovenin `heatmap.html` in de `TARIEVEN` config (in v0.4-implementatie):
+Bovenin `heatmap.html` in de `TARIEVEN` + `FEE_DREMPEL` config:
 
 ```js
 const TARIEVEN = {
@@ -780,10 +963,38 @@ const TARIEVEN = {
   't': 150,  // management consultant per uur
   'o': 100   // junior analyst per uur
 };
-const DREMPEL_FEE = 3000;  // honorarium-doel
+const FEE_DREMPEL = 3500;  // honorarium-doel (v0.5.1: was 3000)
 ```
 
-Pas aan voor andere bedrijven, andere markten of andere ambities.
+Pas aan voor andere bedrijven, andere markten of andere ambities. Let op: bij
+het wijzigen van `MAX_PUNTEN` (totaal beschikbare uren per niveau) verandert
+ook het samenwerkings-balans. Het ontwerp-uitgangspunt is dat de drempel
+**solo onbereikbaar** is voor alle drie de niveaus. Met v0.5.1-config (15 vragen):
+
+| Niveau | Max uren | Solo-fee | Tekort | Sw-bonusen nodig |
+|---|---|---|---|---|
+| Strategisch | 11 | € 2.750 | € 750 | 2× (+€ 1.000) |
+| Tactisch | 22 | € 3.300 | € 200 | 1× (+€ 300) |
+| Operationeel | 27 | € 2.700 | € 800 | 4× (+€ 800) |
+
+Drie niveaus moeten elk samenwerking opzoeken — niet alleen één.
+
+### 10.4 Toevoegen van nieuwe ratio-vragen
+
+Vier-stappen-procedure (zie v0.5.1 commit voor referentie):
+
+1. **`js/engine.js`**: voeg een `vraagN_naam(d)` functie toe met audit trail
+   en optionele `validatie`-block voor triangulatie. Hergebruik gedeelde
+   helpers (`aggregeerOmzet`, `aggregeerNI`, `aggregeerActiva`, etc.) voor
+   consistentie. Voeg toe aan `ANSWER_FUNCTIONS`-array.
+2. **`heatmap.html`**: breid `VRAGEN` (vraag-tekst), `VRAAG_TYPES` (S/T/O),
+   `ANTWOORDEN` (per niveau ja/nee/misschien), `POINTS_CONFIG` (uren per
+   niveau), `MAX_PUNTEN` en `DREMPEL`.
+3. **Test live**: open `dupont.html` voor DuPont-validatie of `heatmap.html`
+   voor de heatmap-modus. Verwacht resultaat = handmatig narekenen op kleine
+   subset van data.
+4. **`DOCENTENHANDLEIDING.md`**: voeg uitleg toe in sectie 6 (plenaire
+   moment) of 7 (worked example).
 
 ---
 

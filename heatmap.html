@@ -328,7 +328,7 @@
           <span class="text-slate-400 text-xs uppercase tracking-wider">Honorarium</span>
           <span id="fee-current" class="text-2xl font-bold text-emerald-300 ml-2">€ 0</span>
           <span class="text-slate-500"> / </span>
-          <span id="fee-drempel" class="text-slate-300">€ 3.000</span>
+          <span id="fee-drempel" class="text-slate-300">€ 3.500</span>
         </div>
         <div class="text-xs text-slate-400 text-right">
           <span id="points-current">0</span> uur
@@ -532,10 +532,14 @@
     "Wat is de omzet per businesslijn (consultancy / hardware / cursussen)?",
     "Welk percentage van onze omzet komt uit recurring abonnementen?",
     "Wat is ons EBIT-resultaat (bedrijfsresultaat) over 2016?",
-    "Wat is onze productconcentratie (HHI of CR-3)?"
+    "Wat is onze productconcentratie (HHI of CR-3)?",
+    "Hoe winstgevend was onze omzet? (Profit Margin: NI / Omzet)",
+    "Hoeveel rendement haalden we op onze activa? (ROA: NI / Total Assets)",
+    "Hoeveel rendement haalden we op het eigen vermogen? (ROE: NI / EV)",
+    "Hoeveel dagen duurde onze cash conversion cycle? (DSI + DSO − DPO)"
   ];
 
-  // Vraag-types per vraag (v0.4.2 — F3.4 herverdeling)
+  // Vraag-types per vraag (v0.5.1 — uitbreiding met 4 ratio-vragen)
   // S = Strategisch  · T = Tactisch  · O = Operationeel
   const VRAAG_TYPES = [
     'O',  // 1  totale omzet
@@ -548,7 +552,11 @@
     'T',  // 8  omzet per businesslijn
     'S',  // 9  abonnementen-percentage
     'T',  // 10 EBIT
-    'S'   // 11 productconcentratie
+    'S',  // 11 productconcentratie
+    'T',  // 12 Profit Margin
+    'S',  // 13 ROA
+    'S',  // 14 ROE (DuPont-validatie)
+    'T'   // 15 Cash Conversion Cycle (snapshot vs hybrid)
   ];
 
   const TYPE_INFO = {
@@ -559,6 +567,7 @@
 
   // v0.4.3 — Punten-config per vraag per niveau [s, t, o]
   // 0 = niet beantwoordbaar voor dat niveau (correcte classificatie = NEE → 0 pt)
+  // v0.5.1 — toegevoegd: vraag 12-15 (PM, ROA, ROE, CCC) — ratio-vragen
   const POINTS_CONFIG = [
     [1, 1, 1],  // 1  omzet
     [0, 2, 2],  // 2  top-10 klanten
@@ -570,16 +579,21 @@
     [1, 2, 2],  // 8  omzet per businesslijn — twee routes
     [1, 2, 2],  // 9  abonnementen-percentage
     [2, 2, 0],  // 10 EBIT — D-aggregatie nodig
-    [2, 2, 1]   // 11 productconcentratie — twee routes
+    [2, 2, 1],  // 11 productconcentratie — twee routes
+    [1, 1, 1],  // 12 PM — alle drie kunnen (O via approximatie)
+    [1, 1, 0],  // 13 ROA — D nodig (S+T hebben balans+V&W)
+    [1, 1, 0],  // 14 ROE — D nodig (DuPont-triangulatie)
+    [0, 1, 0]   // 15 CCC — alleen T heeft alle data voor hybrid; S kan snapshot maar zit op verkeerde lens
   ];
 
-  // Max punten + drempel per niveau (70% van max)
-  const MAX_PUNTEN = { s: 8, t: 18, o: 26 };
-  const DREMPEL    = { s: 6, t: 13, o: 18 };
+  // Max punten + drempel per niveau (70% van max) — v0.5.1: S 8→11, T 18→22, O 26→27
+  const MAX_PUNTEN = { s: 11, t: 22, o: 27 };
+  const DREMPEL    = { s: 8,  t: 16, o: 19 };
 
   // v0.4.4 — Consultant-frame: punten = uren, tarief × uren = fee
+  // v0.5.1 — drempel naar €3.500 i.v.m. 4 nieuwe vragen
   const TARIEVEN = { s: 250, t: 150, o: 100 };  // euro per uur
-  const FEE_DREMPEL = 3000;                      // honorarium-doel
+  const FEE_DREMPEL = 3500;                      // honorarium-doel
   const PERSONA = {
     s: 'Strategy Consultant',
     t: 'Management Consultant',
@@ -595,7 +609,7 @@
     s: {
       titel:      'Strategy Consultant',
       persona:    'Directie / DGA — strategy advisor',
-      opdracht:   'Adviseer Vento ICT op strategisch niveau over kapitaalstructuur, business model en groeistrategieën. Doel: € 3.000 honorarium verdienen.',
+      opdracht:   'Adviseer Vento ICT op strategisch niveau over kapitaalstructuur, business model en groeistrategieën. Doel: € 3.500 honorarium verdienen.',
       focus:      'Kapitaalstructuur, business model, groeistrategieën',
       frustratie: 'Je ziet alleen totalen. Voor detail moet je een collega bellen.',
       kracht:     'Je ziet het bedrijf in één oogopslag. Bank en investeerders praten jouw taal. En jouw uurtarief is het hoogste.',
@@ -605,7 +619,7 @@
     t: {
       titel:      'Management Consultant',
       persona:    'Manager Finance / Manager Sales',
-      opdracht:   'Adviseer Vento ICT op tactisch niveau over optimalisatie van het huidige business model, productmix en werkkapitaal. Doel: € 3.000 honorarium verdienen.',
+      opdracht:   'Adviseer Vento ICT op tactisch niveau over optimalisatie van het huidige business model, productmix en werkkapitaal. Doel: € 3.500 honorarium verdienen.',
       focus:      'Optimalisatie business model, productmix, werkkapitaal',
       frustratie: 'Je weet wélke factuur er staat, niet wanneer hij is betaald.',
       kracht:     'Je kent klanten en leveranciers, én je ziet de totalen.',
@@ -615,7 +629,7 @@
     o: {
       titel:      'Junior Business Analyst',
       persona:    'Debiteurenbeheerder / Magazijnchef',
-      opdracht:   'Adviseer Vento ICT op operationeel niveau over procesoptimalisatie, late betalers en voorraadrotatie. Doel: € 3.000 honorarium verdienen.',
+      opdracht:   'Adviseer Vento ICT op operationeel niveau over procesoptimalisatie, late betalers en voorraadrotatie. Doel: € 3.500 honorarium verdienen.',
       focus:      'Procesoptimalisatie, late betalers, voorraadrotatie',
       frustratie: 'Je hebt 8.000+ regels detail. Het grote plaatje moet je zelf bouwen.',
       kracht:     'Je ziet elke factuur, elke betaling. Je verdient minder per uur, maar je kunt de meeste vragen beantwoorden.',
@@ -627,17 +641,21 @@
   // Verwachte antwoorden — pas aan naar eigen didactische bedoeling.
   // Per rij: [strategisch, tactisch, operationeel]
   const ANTWOORDEN = [
-    ["ja",  "ja",  "ja"],         // 1  omzet
-    ["nee", "ja",  "ja"],         // 2  top-10 klanten
-    ["nee", "nee", "ja"],         // 3  betaaltermijnen
-    ["nee", "ja",  "ja"],         // 4  klantconcentratie
-    ["ja",  "ja",  "misschien"],  // 5  debiteuren open
-    ["nee", "nee", "ja"],         // 6  welke klanten 534k
-    ["nee", "ja",  "ja"],         // 7  Belastingdienst
-    ["ja",  "ja",  "ja"],         // 8  omzet per businesslijn
-    ["ja",  "ja",  "ja"],         // 9  abonnementen-percentage
-    ["ja",  "ja",  "nee"],        // 10 EBIT
-    ["ja",  "ja",  "ja"]          // 11 productconcentratie (twee-routes)
+    ["ja",  "ja",  "ja"],          // 1  omzet
+    ["nee", "ja",  "ja"],          // 2  top-10 klanten
+    ["nee", "nee", "ja"],          // 3  betaaltermijnen
+    ["nee", "ja",  "ja"],          // 4  klantconcentratie
+    ["ja",  "ja",  "misschien"],   // 5  debiteuren open
+    ["nee", "nee", "ja"],          // 6  welke klanten 534k
+    ["nee", "ja",  "ja"],          // 7  Belastingdienst
+    ["ja",  "ja",  "ja"],          // 8  omzet per businesslijn
+    ["ja",  "ja",  "ja"],          // 9  abonnementen-percentage
+    ["ja",  "ja",  "nee"],         // 10 EBIT
+    ["ja",  "ja",  "ja"],          // 11 productconcentratie (twee-routes)
+    ["ja",  "ja",  "ja"],          // 12 Profit Margin (O via approximatie)
+    ["ja",  "ja",  "nee"],         // 13 ROA (geen TA zonder D)
+    ["ja",  "ja",  "nee"],         // 14 ROE (geen EV zonder D)
+    ["misschien", "ja", "nee"]     // 15 CCC (S kan snapshot maar T-lens, O mist voorraden)
   ];
 
   const GROEPEN = ['s', 't', 'o'];

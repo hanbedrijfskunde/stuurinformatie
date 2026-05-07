@@ -120,7 +120,147 @@
     return waarden.reduce((s, w) => s + Math.pow(w / totaal * 100, 2), 0);
   }
 
-  // === Answer-functies (vraag 1 t/m 11) — met audit trail ===
+  // === Financiële aggregaten (gedeeld door v12-v15 + DuPont) ===
+  //
+  // Tekenconventie AFAS-balans/V&W:
+  //   - Balans: debet-saldi positief, credit-saldi negatief
+  //   - Resultatenrekening: omzet (8xxx) credit → negatief in totaal_2016 → ABS()
+  //                         kosten (3xxx-7xxx, 9xxx) debet → positief
+  //   - Eigen vermogen-rekeningen 05xx-06xx zijn credit-accounts; positieve
+  //     waarde = verlies-saldo aan debetzijde = NEGATIEF EV semantisch.
+
+  function aggregeerOmzet(d) {
+    if (!d.resultatenrekening) return null;
+    return d.resultatenrekening
+      .filter(r => r.rekening_id && r.rekening_id.startsWith('8') && r.rekening_id !== '8800')
+      .reduce((s, r) => s + Math.abs(num(r.totaal_2016)), 0);
+  }
+
+  function aggregeerNI(d) {
+    if (!d.resultatenrekening) return null;
+    let omzet = 0, kosten = 0;
+    for (const r of d.resultatenrekening) {
+      const rid = r.rekening_id || '';
+      const v = num(r.totaal_2016);
+      if (rid.startsWith('8') && rid !== '8800') omzet += Math.abs(v);
+      else kosten += v;  // alle overige rekeningen tellen als kosten/baten
+    }
+    return omzet - kosten;
+  }
+
+  function aggregeerCOGS(d) {
+    if (!d.resultatenrekening) return null;
+    // Inkoopkosten = rek 7xxx (handelsinkoop / direct material)
+    return d.resultatenrekening
+      .filter(r => r.rekening_id && r.rekening_id.startsWith('7'))
+      .reduce((s, r) => s + num(r.totaal_2016), 0);
+  }
+
+  function aggregeerActiva(d) {
+    if (!d.balans_eindstand) return null;
+    // Activa = som debet-saldi op vaste activa (0xxx, excl afschrijvingen 02xx en EV 05xx-06xx),
+    // voorraden (30xx), liquide middelen (10xx-12xx), debiteuren (14xx),
+    // te vorderen belastingen-debet (15xx waar saldo > 0), overige vorderingen-debet.
+    let ta = 0;
+    for (const r of d.balans_eindstand) {
+      const rid = r.rekening_id || '';
+      const v = num(r.saldo_eind_2016);
+      const isActiva =
+        (rid.startsWith('01') || rid.startsWith('00')) ||              // bedrijfsmiddelen
+        rid.startsWith('07') || rid.startsWith('08') ||                // financiele vaste activa
+        rid.startsWith('30') ||                                         // voorraden
+        (rid.startsWith('1') &&
+         !rid.startsWith('16') && !rid.startsWith('17') &&
+         !rid.startsWith('18') && !rid.startsWith('19'));               // debiteuren/liquide/btw-vorder
+      if (isActiva && v > 0) ta += v;
+    }
+    return ta;
+  }
+
+  function aggregeerEigenVermogenBegin(d) {
+    if (!d.balans_eindstand) return null;
+    // EV-rekeningen 05xx + 06xx (credit-accounts). Positieve saldi op deze
+    // accounts = verlies-saldo op debetzijde = NEGATIEF EV semantisch.
+    // Daarom: EV = − Σ(saldo). Dit is BEGIN-EV (vóór toevoeging NI 2016) —
+    // de balans toont nog de pre-closing waarde.
+    let raw = 0;
+    for (const r of d.balans_eindstand) {
+      const rid = r.rekening_id || '';
+      if (rid.startsWith('05') || rid.startsWith('06')) {
+        raw += num(r.saldo_eind_2016);
+      }
+    }
+    return -raw;
+  }
+
+  function aggregeerEigenVermogen(d) {
+    // EIND-EV (post-closing) = Begin-EV + NI 2016. Dit is wat ROE
+    // gebruikt in standaardconventie (Ross/Westerfield/Jordan ch.3).
+    const begin = aggregeerEigenVermogenBegin(d);
+    const ni = aggregeerNI(d);
+    if (begin === null || ni === null) return null;
+    return begin + ni;
+  }
+
+  function aggregeerVoorraden(d) {
+    if (!d.balans_eindstand) return null;
+    // Alleen positieve voorraad-saldi (30xx); 3600 'nog te ontvangen
+    // inkoopfacturen' is geen fysieke voorraad maar verplichting.
+    let v = 0;
+    for (const r of d.balans_eindstand) {
+      const rid = r.rekening_id || '';
+      if (rid.startsWith('30') && rid !== '3600' && rid !== '3610') {
+        const s = num(r.saldo_eind_2016);
+        if (s > 0) v += s;
+      }
+    }
+    return v;
+  }
+
+  function aggregeerDebiteuren(d) {
+    if (!d.balans_eindstand) return null;
+    return d.balans_eindstand
+      .filter(r => r.rekening_id && r.rekening_id.startsWith('14'))
+      .reduce((s, r) => s + Math.max(0, num(r.saldo_eind_2016)), 0);
+  }
+
+  function aggregeerCrediteuren(d) {
+    if (!d.balans_eindstand) return null;
+    // Alleen leveranciersschulden — rek 1600 'Crediteuren' + 1601 'Crediteuren
+    // buitenland'. NIET 1610 (emballage), 1615 (betalingen onderweg),
+    // 1650/1651 (rekening courant intercompany) — die zijn geen
+    // leveranciersschuld in DPO-zin.
+    return d.balans_eindstand
+      .filter(r => r.rekening_id === '1600' || r.rekening_id === '1601')
+      .reduce((s, r) => s + Math.abs(num(r.saldo_eind_2016)), 0);
+  }
+
+  function medianBetaaltermijn(facturen, datumKey, factuurKey, bankmutaties, sign) {
+    // Match facturen met bankmutaties op factuurnummer; return medianen
+    // 'sign' = +1 (klantbetalingen, positief bedrag) of −1 (leveranciersbetalingen, negatief)
+    if (!facturen || !bankmutaties) return null;
+    const factuurDt = {};
+    for (const f of facturen) factuurDt[f[factuurKey]] = f[datumKey];
+    const termijnen = [];
+    for (const b of bankmutaties) {
+      const ref = b.factuurreferentie;
+      if (!ref || !factuurDt[ref]) continue;
+      const bedrag = num(b.bedrag);
+      if (sign > 0 && bedrag <= 0) continue;
+      if (sign < 0 && bedrag >= 0) continue;
+      const dagen = Math.floor((new Date(b.datum) - new Date(factuurDt[ref])) / 86400000);
+      if (dagen > 0 && dagen < 365) termijnen.push(dagen);
+    }
+    if (termijnen.length === 0) return null;
+    termijnen.sort((a, b) => a - b);
+    return {
+      mediaan: termijnen[Math.floor(termijnen.length / 2)],
+      gemiddelde: Math.round(termijnen.reduce((a, b) => a + b, 0) / termijnen.length),
+      n: termijnen.length,
+    };
+  }
+
+  // === Answer-functies (vraag 1 t/m 15) — met audit trail ===
   //
   // Elke functie returnt:
   //   { value, formaat?, methode, complexiteit, steps[] }
@@ -224,15 +364,12 @@
     steps.push(`4. Mediaan = ${median} dagen · Gemiddelde = ${gem} dagen`);
 
     // v0.5 — DPO snapshot vs mediaan: bewuste mismatch case
+    // v0.5.1 — gebruikt nu gedeelde helpers (supplier-debt only: 1600+1601)
     let validatie = null;
     if (d.balans_eindstand && d.resultatenrekening) {
-      const crediteuren = d.balans_eindstand
-        .filter(r => r.rekening_id && r.rekening_id.startsWith('16'))
-        .reduce((s, r) => s + Math.abs(num(r.saldo_eind_2016)), 0);
-      const cogs = d.resultatenrekening
-        .filter(r => r.rekening_id && r.rekening_id.startsWith('7'))
-        .reduce((s, r) => s + num(r.totaal_2016), 0);
-      if (cogs > 0) {
+      const crediteuren = aggregeerCrediteuren(d);
+      const cogs = aggregeerCOGS(d);
+      if (cogs > 0 && crediteuren !== null) {
         const dpo_snapshot = Math.round(crediteuren / cogs * 365);
         steps.push(`5. SNAPSHOT-DPO via balans (vergelijking voor docent):`);
         steps.push(`   crediteuren / COGS × 365 = ${fmtEuro(crediteuren)} / ${fmtEuro(cogs)} × 365 = ${dpo_snapshot} dagen`);
@@ -623,6 +760,220 @@
     };
   }
 
+  // === Vraag 12 — Profit Margin (PM = NI / Sales) ===
+
+  function vraag12_profit_margin(d) {
+    const steps = [];
+    const omzet = aggregeerOmzet(d);
+    const ni = aggregeerNI(d);
+    if (omzet === null || ni === null) {
+      return { value: null, reden: 'D_grootboek (resultatenrekening) nodig' };
+    }
+    steps.push(`1. Bron: D_grootboek/resultatenrekening.csv`);
+    steps.push(`2. Omzet = SUM(ABS(totaal_2016)) over rek 8xxx (excl 8800) = ${fmtEuro(omzet)}`);
+    steps.push(`3. Net Income = omzet − Σ(overige rek-saldi) = ${fmtEuro(ni)}`);
+    steps.push(`4. Profit Margin = NI / Omzet = ${fmtEuro(ni)} / ${fmtEuro(omzet)} = ${fmtPct(ni / omzet * 100, 2)}`);
+    steps.push(`5. Interpretatie: voor IT-dienstverlener is ~10-20% gezond; <5% kwetsbaar.`);
+    return {
+      value: fmtPct(ni / omzet * 100, 1),
+      methode: 'D V&W: NI / Omzet',
+      complexiteit: 1,
+      steps,
+    };
+  }
+
+  // === Vraag 13 — ROA (Return on Assets) + DuPont-link ===
+
+  function vraag13_roa(d) {
+    const steps = [];
+    const ni = aggregeerNI(d);
+    const ta = aggregeerActiva(d);
+    const omzet = aggregeerOmzet(d);
+    if (ni === null || ta === null || omzet === null || ta === 0) {
+      return { value: null, reden: 'D_grootboek (balans + V&W) nodig' };
+    }
+    steps.push(`1. Bronnen: balans_eindstand.csv + resultatenrekening.csv`);
+    steps.push(`2. Totale activa = Σ(positieve saldi) op activa-rekeningen (0xxx vaste, 30xx voorraad, 1xxx-debet) = ${fmtEuro(ta)}`);
+    steps.push(`3. Net Income = ${fmtEuro(ni)}`);
+    const roa = ni / ta * 100;
+    steps.push(`4. ROA = NI / TA = ${fmtPct(roa, 2)}`);
+
+    // Triangulatie: ROA = PM × TAT
+    const pm = ni / omzet;
+    const tat = omzet / ta;
+    const roa_dupont = pm * tat * 100;
+    const delta = Math.abs(roa - roa_dupont);
+    steps.push(`5. Triangulatie via DuPont: PM × TAT = ${fmtPct(pm * 100, 2)} × ${fmtNum(tat, 3)} = ${fmtPct(roa_dupont, 2)}`);
+
+    return {
+      value: fmtPct(roa, 1),
+      methode: 'D balans + V&W: NI / TA',
+      complexiteit: 2,
+      steps,
+      validatie: {
+        match: delta < 0.01,
+        delta_pct: delta,
+        waarden: { roa_direct: roa, roa_dupont, pm: pm * 100, tat },
+        interpretatie: `MATCH — algebraïsche identiteit ROA = PM × TAT klopt binnen ` +
+                       `${fmtNum(delta, 4)} procentpunt rondingsruimte. Beide routes ` +
+                       `geven ${fmtPct(roa, 1)}. Validatie: zelfde NI, zelfde TA, alleen ` +
+                       `via een andere decompositie. Dit is geen toeval — het is een wet.`,
+      },
+    };
+  }
+
+  // === Vraag 14 — ROE (Return on Equity) + volledige DuPont ===
+
+  function vraag14_roe(d) {
+    const steps = [];
+    const ni = aggregeerNI(d);
+    const ta = aggregeerActiva(d);
+    const te = aggregeerEigenVermogen(d);
+    const omzet = aggregeerOmzet(d);
+    if (ni === null || ta === null || te === null || omzet === null) {
+      return { value: null, reden: 'D_grootboek (balans + V&W) nodig' };
+    }
+    const teBegin = aggregeerEigenVermogenBegin(d);
+    steps.push(`1. Bronnen: balans_eindstand.csv + resultatenrekening.csv`);
+    steps.push(`2. Net Income 2016 = ${fmtEuro(ni)}`);
+    steps.push(`3. EV begin (uit balans, vóór winstbestemming) = − Σ(saldo op rek 05xx + 06xx) = ${fmtEuro(teBegin)}`);
+    steps.push(`   → opmerkelijk: 0650 'Onverdeeld resultaat' = ${fmtEuro(-teBegin)} positief op debet-zijde = verlies-deficit.`);
+    steps.push(`4. EV eind (post-closing) = EV begin + NI = ${fmtEuro(teBegin)} + ${fmtEuro(ni)} = ${fmtEuro(te)}`);
+    if (te < 0) {
+      steps.push(`   ⚠ EV eind is NEGATIEF — semantische edge-case (verlies-deficit nog groter dan inbreng).`);
+    }
+    if (Math.abs(te) < 1) {
+      return {
+        value: 'n/v (EV ≈ 0)',
+        methode: 'NI / EV — gedeeld door bijna-nul',
+        complexiteit: 2,
+        steps,
+        validatie: { match: false, interpretatie: 'EV ≈ 0 → ratio onbepaald.' },
+      };
+    }
+    const roe_direct = ni / te * 100;
+    steps.push(`5. ROE direct = NI / EV_eind = ${fmtEuro(ni)} / ${fmtEuro(te)} = ${fmtPct(roe_direct, 1)}`);
+
+    const pm = ni / omzet;
+    const tat = omzet / ta;
+    const em = ta / te;
+    const roe_dupont = pm * tat * em * 100;
+    steps.push(`6. DuPont decompositie:`);
+    steps.push(`   · PM (Profit Margin)  = NI / Omzet  = ${fmtPct(pm * 100, 2)}`);
+    steps.push(`   · TAT (Asset Turnover) = Omzet / TA  = ${fmtNum(tat, 3)}×`);
+    steps.push(`   · EM (Equity Multiplier) = TA / EV   = ${fmtNum(em, 2)}×`);
+    steps.push(`7. ROE DuPont = PM × TAT × EM = ${fmtPct(roe_dupont, 1)}`);
+
+    const delta = Math.abs(roe_direct - roe_dupont);
+    const edgeCase = te < 100;
+    let interpretatie;
+    if (edgeCase) {
+      interpretatie =
+        `MATCH wiskundig — de identiteit ROE = PM × TAT × EM klopt (Δ < 0,01 pp). ` +
+        `MAAR betekenisarm: bij negatief EV (€${Math.round(te).toLocaleString('nl-NL')}) ` +
+        `wordt EM negatief, en daarmee ROE negatief — niet omdat de winst slecht is ` +
+        `(NI = ${fmtEuro(ni)} positief!), maar omdat de noemer onderwater staat. ` +
+        `Een hogere ROE is hier juist slechter (verder van solvabiliteit). ` +
+        `Klassiek voorbeeld: een ratio kan correct én misleidend zijn.`;
+    } else {
+      interpretatie =
+        `MATCH — algebraïsche identiteit ROE = PM × TAT × EM klopt binnen ${fmtNum(delta, 4)} pp. ` +
+        `DuPont onthult bronnen: lage PM = margedruk, lage TAT = trage activa, hoge EM = hefboom (=risico).`;
+    }
+    return {
+      value: fmtPct(roe_direct, 1),
+      methode: 'D balans + V&W: NI / EV (en triangulatie via PM × TAT × EM)',
+      complexiteit: 3,
+      steps,
+      validatie: {
+        match: delta < 0.01,
+        delta_pct: delta,
+        waarden: { roe_direct, roe_dupont, pm: pm * 100, tat, em },
+        interpretatie,
+      },
+    };
+  }
+
+  // === Vraag 15 — Cash Conversion Cycle (snapshot vs hybrid) ===
+
+  function vraag15_ccc(d) {
+    const steps = [];
+    const cogs = aggregeerCOGS(d);
+    const voorraden = aggregeerVoorraden(d);
+    const debiteuren = aggregeerDebiteuren(d);
+    const crediteuren = aggregeerCrediteuren(d);
+    const omzet = aggregeerOmzet(d);
+
+    if (cogs === null || voorraden === null || debiteuren === null ||
+        crediteuren === null || omzet === null || cogs === 0 || omzet === 0) {
+      return { value: null, reden: 'D_grootboek (balans + V&W) nodig — inclusief 7xxx COGS' };
+    }
+    steps.push(`1. Bronnen: D_grootboek (balans + V&W)`);
+
+    // Snapshot-route (alleen balans + V&W aggregaten)
+    const dsi = voorraden / cogs * 365;
+    const dso_snap = debiteuren / omzet * 365;
+    const dpo_snap = crediteuren / cogs * 365;
+    const ccc_snap = dsi + dso_snap - dpo_snap;
+    steps.push(`2. SNAPSHOT-route (alleen balans + V&W):`);
+    steps.push(`   · DSI = voorraden / COGS × 365 = ${fmtEuro(voorraden)} / ${fmtEuro(cogs)} × 365 = ${Math.round(dsi)}d`);
+    steps.push(`   · DSO = debiteuren / omzet × 365 = ${fmtEuro(debiteuren)} / ${fmtEuro(omzet)} × 365 = ${Math.round(dso_snap)}d`);
+    steps.push(`   · DPO = crediteuren / COGS × 365 = ${fmtEuro(crediteuren)} / ${fmtEuro(cogs)} × 365 = ${Math.round(dpo_snap)}d`);
+    steps.push(`   · CCC_snapshot = DSI + DSO − DPO = ${Math.round(dsi)} + ${Math.round(dso_snap)} − ${Math.round(dpo_snap)} = ${Math.round(ccc_snap)}d`);
+
+    // Hybride route (DSO en DPO uit feitelijke betaaltermijn-distributies)
+    let validatie = null;
+    let value;
+    if (d.verkoopfacturen && d.bankmutaties && d.inkoopfacturen) {
+      const dsoMed = medianBetaaltermijn(d.verkoopfacturen, 'factuurdatum', 'factuurnummer', d.bankmutaties, +1);
+      const dpoMed = medianBetaaltermijn(d.inkoopfacturen, 'factuurdatum', 'factuurnummer', d.bankmutaties, -1);
+      if (dsoMed && dpoMed) {
+        const ccc_hyb = dsi + dsoMed.mediaan - dpoMed.mediaan;
+        steps.push(`3. HYBRIDE route (mediaan-distributie i.p.v. snapshot voor DSO/DPO):`);
+        steps.push(`   · DSO_mediaan = ${dsoMed.mediaan}d (n=${dsoMed.n} facturen)`);
+        steps.push(`   · DPO_mediaan = ${dpoMed.mediaan}d (n=${dpoMed.n} inkoopfacturen)`);
+        steps.push(`   · CCC_hybride = DSI + DSO_med − DPO_med = ${Math.round(dsi)} + ${dsoMed.mediaan} − ${dpoMed.mediaan} = ${Math.round(ccc_hyb)}d`);
+        validatie = {
+          match: false,
+          delta_pct: Math.abs(ccc_snap - ccc_hyb) / Math.abs(ccc_hyb || 1) * 100,
+          waarden: {
+            ccc_snapshot: Math.round(ccc_snap),
+            ccc_hybride: Math.round(ccc_hyb),
+            dsi: Math.round(dsi),
+            dso_snap: Math.round(dso_snap),
+            dso_med: dsoMed.mediaan,
+            dpo_snap: Math.round(dpo_snap),
+            dpo_med: dpoMed.mediaan,
+          },
+          interpretatie:
+            `BEWUSTE MISMATCH — beide routes wiskundig correct, maar betekenis ` +
+            `verschilt fundamenteel. SNAPSHOT-CCC (${Math.round(ccc_snap)}d) suggereert dat ` +
+            `leveranciers de cyclus financieren — een sterk werkkapitaal-positief signaal. ` +
+            `CAVEAT: de DPO van ${Math.round(dpo_snap)}d is een snapshot-ratio die de ` +
+            `werkelijkheid bij dienstverleners overschat. Crediteurenpost ${fmtEuro(crediteuren)} ` +
+            `bestaat slechts deels uit COGS-gerelateerde inkopen; veel niet-COGS-uitgaven ` +
+            `(overige bedrijfskosten) lopen óók via 1600. De per-factuur-distributie onthult ` +
+            `dat de werkelijke mediaan-betaaltermijn aan leveranciers ${dpoMed.mediaan}d is. ` +
+            `HYBRIDE-CCC (${Math.round(ccc_hyb)}d) is voor dienstverleners betrouwbaarder. ` +
+            `Methodologie matters!`,
+        };
+        value = `snapshot ${Math.round(ccc_snap)}d · hybride ${Math.round(ccc_hyb)}d`;
+      } else {
+        value = `snapshot ${Math.round(ccc_snap)}d (hybride niet beschikbaar — geen factuur-paren)`;
+      }
+    } else {
+      value = `snapshot ${Math.round(ccc_snap)}d (alleen D-route — A+C ontbreekt voor hybride)`;
+    }
+
+    return {
+      value,
+      methode: 'D balans + V&W (snapshot) · A+B+C (hybride mediaan)',
+      complexiteit: 4,
+      steps,
+      validatie,
+    };
+  }
+
   // === Dispatch ===
 
   const ANSWER_FUNCTIONS = [
@@ -630,6 +981,7 @@
     vraag5_open_debiteuren, vraag6_welke_klanten_534k, vraag7_belastingdienst,
     vraag8_omzet_per_businesslijn, vraag9_abonnementen_pct, vraag10_ebit,
     vraag11_productconcentratie,
+    vraag12_profit_margin, vraag13_roa, vraag14_roe, vraag15_ccc,
   ];
 
   function computeAnswer(qIdx) {
@@ -649,63 +1001,39 @@
     }
   }
 
-  // === DuPont-helpers (voor v0.5 ontwerp C — DuPont Challenge) ===
-  // Berekent ROE via twee routes om de algebraïsche identiteit te demonstreren.
-  // Bij Vento is ROE dramatisch negatief door negatief eigen vermogen — een
-  // edge-case die laat zien wanneer een ratio betekenis-arm wordt.
+  // === DuPont-analyse (voor v0.5 ontwerp C — DuPont Challenge) ===
+  // Berekent ROE via twee routes om de algebraïsche identiteit ROE = PM×TAT×EM
+  // te demonstreren. Bij Vento is ROE dramatisch negatief door negatief eigen
+  // vermogen — een edge-case die laat zien wanneer een ratio betekenis-arm wordt.
+  // v0.5.1 — refactor: gebruikt nu gedeelde aggregaten-helpers (consistent
+  // met vraag 12-15) i.p.v. duplicate inline-aggregatie.
 
   function computeDuPont() {
     if (!datasets.balans_eindstand || !datasets.resultatenrekening) {
       return { value: null, reden: 'D_grootboek (balans + V&W) nodig voor DuPont' };
     }
+    const omzet = aggregeerOmzet(datasets);
+    const ni    = aggregeerNI(datasets);
+    const ta    = aggregeerActiva(datasets);
+    const te    = aggregeerEigenVermogen(datasets);
 
-    // Aggregaten uit balans
-    let ta = 0, te = 0;
-    for (const r of datasets.balans_eindstand) {
-      const rid = r.rekening_id || '';
-      const v = num(r.saldo_eind_2016);
-      // Activa: alle debet-saldi op 0xxx-1xxx (excl crediteuren 16xx, schulden 17xx-1Nxx)
-      if (rid.startsWith('0') || (rid.startsWith('1') && !rid.startsWith('15') && !rid.startsWith('16') && !rid.startsWith('17') && !rid.startsWith('18') && !rid.startsWith('19'))) {
-        if (v > 0) ta += v;
-      }
-      // Eigen vermogen (rek 0500-0699 cumulatief)
-      if (rid >= '05' && rid < '07') te += v;
-    }
-    // EV ook negatief mogelijk — neem het netto saldo
-    te = -te; // 0xxx eigen vermogen is normaal credit, dus negatief in onze convention
-
-    // Aggregaten uit resultaat
-    let omzet = 0, ni = 0;
-    for (const r of datasets.resultatenrekening) {
-      const rid = r.rekening_id || '';
-      const v = num(r.totaal_2016);
-      if (rid.startsWith('8')) omzet += Math.abs(v);
-      else ni -= v; // alle kosten/baten af
-    }
-    ni = ni + omzet - omzet; // dummy — herrekenen
-    // Liever: NI = omzet − alle kosten/baten op resultatenrekening
-    ni = 0;
-    for (const r of datasets.resultatenrekening) {
-      const rid = r.rekening_id || '';
-      const v = num(r.totaal_2016);
-      if (rid.startsWith('8') && rid !== '8800') ni += Math.abs(v);
-      else ni -= v;
+    if (omzet === null || ni === null || ta === null || te === null || omzet === 0 || ta === 0) {
+      return { value: null, reden: 'aggregaten niet berekenbaar' };
     }
 
-    // Compute ratios
-    const pm = ni / omzet;
+    const pm  = ni / omzet;
     const tat = omzet / ta;
-    const em = ta / te;
+    const em  = Math.abs(te) < 1 ? null : ta / te;
     const roa = ni / ta;
-    const roe_direct = ni / te;
-    const roe_dupont = pm * tat * em;
+    const roe_direct = Math.abs(te) < 1 ? null : ni / te;
+    const roe_dupont = em === null ? null : pm * tat * em;
 
     return {
       omzet, ni, ta, te,
       pm, tat, em, roa,
       roe_direct, roe_dupont,
-      delta: Math.abs(roe_direct - roe_dupont),
-      match: Math.abs(roe_direct - roe_dupont) < 0.0001,
+      delta: roe_direct === null ? null : Math.abs(roe_direct - roe_dupont),
+      match: roe_direct === null ? false : Math.abs(roe_direct - roe_dupont) < 0.0001,
       edge_case: te < 100,  // bijna-nul of negatief EV
     };
   }

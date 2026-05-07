@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DuPont Challenge — Sturing in lagen</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="js/engine.js"></script>
 <style>
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
   input[type="number"] {
@@ -42,6 +44,11 @@
       controleert het hele systeem.
     </p>
   </header>
+
+  <!-- Live-data status -->
+  <div id="data-status" class="bg-slate-800/40 rounded-lg p-4 mb-6 border border-slate-700 text-sm text-slate-400">
+    <span class="inline-block animate-pulse">⏳ Live datasets worden geladen vanuit data/csv/D_grootboek/...</span>
+  </div>
 
   <section class="bg-slate-800/50 rounded-lg p-6 mb-8 border border-slate-700">
     <h2 class="text-xl font-bold mb-3">De DuPont-identiteit</h2>
@@ -125,6 +132,21 @@
 
   <section id="result-paneel" class="hidden bg-slate-800/60 rounded-lg p-6 mb-8 border-2"></section>
 
+  <!-- Volledige DuPont-analyse — ingevuld op basis van live datasets -->
+  <section id="volledig-paneel" class="hidden bg-slate-800/40 rounded-lg p-6 mb-8 border border-slate-700">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="text-2xl">🔬</span>
+      <h2 class="text-xl md:text-2xl font-bold">Volledige DuPont-analyse</h2>
+      <span class="text-xs uppercase tracking-wider text-slate-400 ml-auto">live uit datasets</span>
+    </div>
+    <p class="text-slate-400 text-sm mb-6">
+      Geen hardcoded waarden meer — alle aggregaten worden direct uit de
+      AFAS-CSV's berekend (zie audit trail).
+    </p>
+
+    <div id="volledig-content" class="space-y-6"></div>
+  </section>
+
   <section class="bg-slate-900/40 rounded-lg p-5 text-sm text-slate-400 leading-relaxed">
     <strong class="text-slate-300">Achtergrond:</strong> de DuPont-identiteit is
     een algebraïsche waarheid — wiskundig moet ROE-direct = ROE-DuPont op
@@ -141,28 +163,22 @@
 </main>
 
 <script>
-  // Vento ICT 2016 — feiten uit het AFAS-rapport (zie ../AFAS-2016-rapport.md)
-  const VENTO = {
-    sales:        7335530,
-    net_income:   1428688,
-    total_assets: 3879131,
-    total_equity: -322018,  // NEGATIEF — cumulatieve verliezen voor 2016
-  };
-
-  const REF = {
-    pm:  VENTO.net_income / VENTO.sales,
-    tat: VENTO.sales / VENTO.total_assets,
-    em:  VENTO.total_assets / VENTO.total_equity,
-    roe_direct: VENTO.net_income / VENTO.total_equity,
-    roe_dupont: 0,
-  };
-  REF.roe_dupont = REF.pm * REF.tat * REF.em;
+  // === Live-data setup ===
+  // Wordt asynchroon geladen via engine.js (gebruikt PapaParse + fetch).
+  // REF wordt gevuld zodra datasets binnen zijn.
+  let REF = null;
 
   function fmt(n, decimals) {
+    if (n === null || n === undefined || Number.isNaN(n)) return '—';
     return Number(n).toLocaleString('nl-NL', {
       minimumFractionDigits: decimals === undefined ? 2 : decimals,
       maximumFractionDigits: decimals === undefined ? 2 : decimals,
     });
+  }
+
+  function fmtEuro(n) {
+    if (n === null || n === undefined || Number.isNaN(n)) return '—';
+    return '€ ' + Math.round(n).toLocaleString('nl-NL');
   }
 
   function makeSpan(text, cls) {
@@ -178,7 +194,236 @@
     return d;
   }
 
+  function makeP(text, cls) {
+    const p = document.createElement('p');
+    if (cls) p.className = cls;
+    if (text) p.textContent = text;
+    return p;
+  }
+
+  async function init() {
+    if (typeof engine === 'undefined') {
+      document.getElementById('data-status').textContent =
+        '⚠ engine.js niet geladen — controleer dat js/engine.js bereikbaar is.';
+      return;
+    }
+    try {
+      await engine.loadDatasets('docent');
+    } catch (err) {
+      document.getElementById('data-status').textContent =
+        '⚠ Fout bij laden datasets: ' + err.message;
+      return;
+    }
+
+    const dp = engine.computeDuPont();
+    if (!dp || dp.value === null) {
+      document.getElementById('data-status').textContent =
+        '⚠ DuPont kon niet berekend worden: ' + (dp && dp.reden ? dp.reden : 'data ontbreekt');
+      return;
+    }
+
+    REF = {
+      omzet:       dp.omzet,
+      ni:          dp.ni,
+      ta:          dp.ta,
+      te:          dp.te,             // EV eind (post-closing)
+      te_begin:    dp.te - dp.ni,     // EV begin = eind − NI (afgeleid)
+      pm:          dp.pm,
+      tat:         dp.tat,
+      em:          dp.em,
+      roa:         dp.roa,
+      roe_direct:  dp.roe_direct,
+      roe_dupont:  dp.roe_dupont,
+      delta:       dp.delta,
+      edge_case:   dp.edge_case,
+    };
+
+    // Update status-banner: toont dat live data geladen is
+    const status = document.getElementById('data-status');
+    status.classList.remove('bg-slate-800/40', 'text-slate-400');
+    status.classList.add('bg-emerald-900/20', 'border-emerald-700', 'text-emerald-300');
+    status.replaceChildren();
+    const ok = makeSpan('✓ Live datasets geladen — ', 'font-bold');
+    status.appendChild(ok);
+    status.appendChild(document.createTextNode(
+      `Omzet ${fmtEuro(REF.omzet)} · NI ${fmtEuro(REF.ni)} · TA ${fmtEuro(REF.ta)} · EV eind ${fmtEuro(REF.te)}`
+    ));
+
+    // Render volledige analyse
+    rendervVolledigeAnalyse();
+    document.getElementById('volledig-paneel').classList.remove('hidden');
+  }
+
+  function rendervVolledigeAnalyse() {
+    const root = document.getElementById('volledig-content');
+    root.replaceChildren();
+
+    // === Blok 1: Aggregaten ===
+    const blok1 = makeDiv('bg-slate-900 rounded-lg p-5');
+    const h1 = document.createElement('h3');
+    h1.className = 'font-bold mb-3 text-slate-200';
+    h1.textContent = '1. Onderliggende aggregaten (uit balans + V&W)';
+    blok1.appendChild(h1);
+
+    const grid = makeDiv('grid grid-cols-2 md:grid-cols-4 gap-3 mb-3');
+    [
+      ['Omzet (8xxx)',    fmtEuro(REF.omzet),    'rek 8xxx excl 8800'],
+      ['Net Income',      fmtEuro(REF.ni),       'omzet − Σ kosten'],
+      ['Total Assets',    fmtEuro(REF.ta),       '0xxx + 30xx + 1xxx-debet'],
+      ['EV begin',        fmtEuro(REF.te_begin), '−Σ saldo 05xx+06xx'],
+    ].forEach(([label, value, hint]) => {
+      const cel = makeDiv('bg-slate-800/60 rounded p-3');
+      cel.appendChild(makeDiv('text-[10px] uppercase tracking-wider text-slate-500')).textContent = label;
+      cel.appendChild(makeDiv('text-base font-mono font-bold mt-0.5')).textContent = value;
+      cel.appendChild(makeDiv('text-[10px] text-slate-500 mt-1')).textContent = hint;
+      grid.appendChild(cel);
+    });
+    blok1.appendChild(grid);
+
+    // EV-decompositie (sleutel-inzicht)
+    const evBox = makeDiv('bg-amber-900/10 border border-amber-700/40 rounded p-4 mt-3');
+    const evTitle = makeDiv('text-sm font-bold text-amber-300 mb-2');
+    evTitle.textContent = '⚠ Closing-entry-aandacht: van EV begin → EV eind';
+    evBox.appendChild(evTitle);
+    const evCalc = makeDiv('font-mono text-sm text-slate-200');
+    evCalc.appendChild(makeSpan('EV eind = EV begin + NI 2016 = ', 'text-slate-400'));
+    evCalc.appendChild(makeSpan(fmtEuro(REF.te_begin), 'text-rose-300'));
+    evCalc.appendChild(makeSpan(' + ', 'text-slate-500'));
+    evCalc.appendChild(makeSpan(fmtEuro(REF.ni), 'text-emerald-300'));
+    evCalc.appendChild(makeSpan(' = ', 'text-slate-500'));
+    evCalc.appendChild(makeSpan(fmtEuro(REF.te), 'text-amber-300 font-bold'));
+    evBox.appendChild(evCalc);
+    const evNote = makeP(
+      'De balans toont de pre-closing waarde. Voor ROE gebruik je de post-closing EV. ' +
+      'Bij Vento blijft het EV negatief — winst alleen herstelt het deficit niet volledig.',
+      'text-xs text-slate-400 mt-2'
+    );
+    evBox.appendChild(evNote);
+    blok1.appendChild(evBox);
+
+    root.appendChild(blok1);
+
+    // === Blok 2: 3-factor decompositie ===
+    const blok2 = makeDiv('bg-slate-900 rounded-lg p-5');
+    const h2 = document.createElement('h3');
+    h2.className = 'font-bold mb-3 text-slate-200';
+    h2.textContent = '2. 3-factor DuPont-decompositie';
+    blok2.appendChild(h2);
+
+    const grid2 = makeDiv('grid grid-cols-1 md:grid-cols-3 gap-3 mb-4');
+    [
+      ['Profit Margin (PM)',  fmt(REF.pm * 100, 2) + '%',  'NI / Omzet',     'emerald'],
+      ['Asset Turnover (TAT)', fmt(REF.tat, 3) + '×',       'Omzet / TA',     'purple'],
+      ['Equity Multiplier (EM)', fmt(REF.em, 2) + '×',      'TA / EV eind',   'blue'],
+    ].forEach(([label, value, formule, kleur]) => {
+      const cel = makeDiv('rounded p-4 border ' +
+        (kleur === 'emerald' ? 'bg-emerald-900/20 border-emerald-700/50' :
+         kleur === 'purple'  ? 'bg-purple-900/20 border-purple-700/50' :
+                               'bg-blue-900/20 border-blue-700/50'));
+      cel.appendChild(makeDiv('text-xs uppercase tracking-wider mb-1 ' +
+        (kleur === 'emerald' ? 'text-emerald-300' :
+         kleur === 'purple'  ? 'text-purple-300' :
+                               'text-blue-300'))).textContent = label;
+      cel.appendChild(makeDiv('text-2xl font-bold font-mono')).textContent = value;
+      cel.appendChild(makeDiv('text-xs text-slate-400 mt-1 font-mono')).textContent = formule;
+      grid2.appendChild(cel);
+    });
+    blok2.appendChild(grid2);
+
+    // Identity check
+    const idBox = makeDiv('bg-slate-800/60 rounded p-4 font-mono text-sm');
+    const r1 = makeDiv('mb-2');
+    r1.appendChild(makeSpan('ROE direct = NI / EV = ', 'text-slate-400'));
+    r1.appendChild(makeSpan(fmt(REF.roe_direct * 100, 2) + '%', 'text-amber-300 font-bold'));
+    idBox.appendChild(r1);
+    const r2 = makeDiv('mb-2');
+    r2.appendChild(makeSpan('ROE DuPont = PM × TAT × EM = ', 'text-slate-400'));
+    r2.appendChild(makeSpan(fmt(REF.pm * 100, 2) + '%', 'text-emerald-300'));
+    r2.appendChild(makeSpan(' × ', 'text-slate-500'));
+    r2.appendChild(makeSpan(fmt(REF.tat, 3), 'text-purple-300'));
+    r2.appendChild(makeSpan(' × ', 'text-slate-500'));
+    r2.appendChild(makeSpan(fmt(REF.em, 2), 'text-blue-300'));
+    r2.appendChild(makeSpan(' = ', 'text-slate-500'));
+    r2.appendChild(makeSpan(fmt(REF.roe_dupont * 100, 2) + '%', 'text-amber-300 font-bold'));
+    idBox.appendChild(r2);
+    const r3 = makeDiv('text-xs text-slate-500 border-t border-slate-700 pt-2 mt-2');
+    r3.textContent = 'Δ = ' + fmt(Math.abs((REF.roe_direct - REF.roe_dupont) * 100), 6) +
+                     ' procentpunt — algebraïsche identiteit klopt op rondingsruimte.';
+    idBox.appendChild(r3);
+    blok2.appendChild(idBox);
+
+    root.appendChild(blok2);
+
+    // === Blok 3: 2-factor (ROA-decompositie) ===
+    const blok3 = makeDiv('bg-slate-900 rounded-lg p-5');
+    const h3 = document.createElement('h3');
+    h3.className = 'font-bold mb-3 text-slate-200';
+    h3.textContent = '3. 2-factor decompositie (ROA-pad)';
+    blok3.appendChild(h3);
+    blok3.appendChild(makeP(
+      'PM × TAT = ROA — de operationele prestatie zonder hefboom. EM splitst dat verder ' +
+      'op naar wat aandeelhouders ervan zien.',
+      'text-sm text-slate-400 mb-3'
+    ));
+    const roaBox = makeDiv('bg-slate-800/60 rounded p-4 font-mono text-sm');
+    const r4 = makeDiv();
+    r4.appendChild(makeSpan('ROA = PM × TAT = ', 'text-slate-400'));
+    r4.appendChild(makeSpan(fmt(REF.pm * 100, 2) + '%', 'text-emerald-300'));
+    r4.appendChild(makeSpan(' × ', 'text-slate-500'));
+    r4.appendChild(makeSpan(fmt(REF.tat, 3), 'text-purple-300'));
+    r4.appendChild(makeSpan(' = ', 'text-slate-500'));
+    r4.appendChild(makeSpan(fmt(REF.roa * 100, 2) + '%', 'text-cyan-300 font-bold'));
+    roaBox.appendChild(r4);
+    blok3.appendChild(roaBox);
+    root.appendChild(blok3);
+
+    // === Blok 4: Edge-case interpretatie ===
+    if (REF.edge_case || REF.te < 0) {
+      const blok4 = makeDiv('bg-rose-900/10 border border-rose-700/40 rounded-lg p-5');
+      const h4 = document.createElement('h3');
+      h4.className = 'font-bold mb-3 text-rose-300';
+      h4.textContent = '4. ⚠ Edge-case: ratio is wiskundig correct, maar betekenis-arm';
+      blok4.appendChild(h4);
+
+      blok4.appendChild(makeP(
+        `Bij Vento is EV eind ${fmtEuro(REF.te)} (negatief). Daardoor:`,
+        'text-sm text-slate-300 mb-2'
+      ));
+      const ul = document.createElement('ul');
+      ul.className = 'list-disc pl-5 text-sm text-slate-400 space-y-1 mb-3';
+      [
+        `EM = TA / EV = ${fmt(REF.em, 2)}× — een NEGATIEVE multiplier (geen normale hefboom).`,
+        `ROE = ${fmt(REF.roe_direct * 100, 1)}% — fors negatief, niet omdat de winst slecht is (NI = ${fmtEuro(REF.ni)} positief!), maar omdat de noemer onderwater staat.`,
+        `Een hogere absolute |ROE| is hier juist slechter (verder van solvabiliteit), niet beter.`,
+        `ROA = ${fmt(REF.roa * 100, 1)}% blijft betekenisvol — dit is waar de operationele prestatie zit.`,
+      ].forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        ul.appendChild(li);
+      });
+      blok4.appendChild(ul);
+
+      blok4.appendChild(makeP(
+        'Les: een ratio die je systeem doorgeeft "klopt", betekent niet dat het iets bruikbaars zegt. ' +
+        'Triangulatie controleert consistentie, niet betekenis.',
+        'text-sm text-rose-200 italic'
+      ));
+
+      root.appendChild(blok4);
+    }
+  }
+
   function bereken() {
+    if (!REF) {
+      const paneel = document.getElementById('result-paneel');
+      paneel.replaceChildren(makeP(
+        'Datasets nog niet geladen — wacht tot status-banner groen is.',
+        'text-amber-300'
+      ));
+      paneel.classList.remove('hidden');
+      paneel.classList.add('border-amber-600');
+      return;
+    }
     const pm  = parseFloat(document.getElementById('pm').value);
     const tat = parseFloat(document.getElementById('tat').value);
     const em  = parseFloat(document.getElementById('em').value);
@@ -192,10 +437,10 @@
     if (isNaN(pm) || isNaN(tat) || isNaN(em)) {
       paneel.classList.remove('hidden');
       paneel.classList.add('border-rose-600');
-      const p = document.createElement('p');
-      p.className = 'text-rose-300';
-      p.textContent = 'Vul alle drie de ratio\'s in voordat je berekent.';
-      paneel.appendChild(p);
+      paneel.appendChild(makeP(
+        'Vul alle drie de ratio\'s in voordat je berekent.',
+        'text-rose-300'
+      ));
       return;
     }
 
@@ -235,9 +480,11 @@
     r1.appendChild(makeSpan(' = ', 'text-slate-500'));
     r1.appendChild(makeSpan(fmt(roe_dupont_pct, 2) + '%', 'text-amber-300 font-bold'));
     ber.appendChild(r1);
-    ber.appendChild(makeDiv('text-slate-400 text-xs')).textContent = '↑ ROE via DuPont';
+    const lbl = makeDiv('text-slate-400 text-xs');
+    lbl.textContent = '↑ ROE via DuPont';
+    ber.appendChild(lbl);
     const r2 = makeDiv('border-t border-slate-700 mt-3 pt-3');
-    r2.appendChild(makeSpan('Werkelijke ROE-direct (NI / TE) = ', 'text-slate-400'));
+    r2.appendChild(makeSpan('Werkelijke ROE-direct (NI / EV eind) = ', 'text-slate-400'));
     r2.appendChild(makeSpan(fmt(roe_direct_pct, 2) + '%', 'text-amber-300 font-bold'));
     ber.appendChild(r2);
     const r3 = makeDiv('mt-2 text-slate-500');
@@ -249,37 +496,47 @@
     const interp = makeDiv('text-sm text-slate-200 leading-relaxed');
 
     if (exact_match) {
-      const p1 = document.createElement('p');
-      p1.className = 'mb-3';
+      const p1 = makeP(null, 'mb-3');
       p1.appendChild(makeSpan('Exact gevalideerd', 'text-emerald-300 font-bold'));
-      p1.appendChild(document.createTextNode(' — de drie ratio\'s, elk onafhankelijk gemeten uit verkoopfacturen, balans en V&W, reproduceren samen het werkelijke ROE op de cent na. Dat is een sluitcontrole op tientallen tussenstappen tegelijkertijd.'));
+      p1.appendChild(document.createTextNode(
+        ' — de drie ratio\'s, elk onafhankelijk gemeten uit verkoopfacturen, balans en V&W, ' +
+        'reproduceren samen het werkelijke ROE op de cent na. Dat is een sluitcontrole op ' +
+        'tientallen tussenstappen tegelijkertijd.'
+      ));
       interp.appendChild(p1);
 
-      const p2 = document.createElement('p');
-      p2.className = 'text-slate-400';
+      const p2 = makeP(null, 'text-slate-400');
       p2.appendChild(makeSpan('Maar: ', 'text-slate-300 font-bold'));
-      p2.appendChild(document.createTextNode('wiskundig correct ≠ pedagogisch zinvol. Bij Vento is ROE = −443% door negatief eigen vermogen. Een ratio die "rendement op aandeelhouders" meet, is leeg als er geen aandeelhouders-kapitaal meer is om op te renderen.'));
+      p2.appendChild(document.createTextNode(
+        'wiskundig correct ≠ pedagogisch zinvol. Bij Vento is ROE = ' +
+        fmt(roe_direct_pct, 0) + '% door negatief eigen vermogen. Een ratio die ' +
+        '"rendement op aandeelhouders" meet, is leeg als er geen aandeelhouders-kapitaal ' +
+        'meer is om op te renderen.'
+      ));
       interp.appendChild(p2);
     } else if (match) {
-      const p1 = document.createElement('p');
-      p1.className = 'mb-3';
+      const p1 = makeP(null, 'mb-3');
       p1.appendChild(makeSpan('Gevalideerd binnen tolerantie', 'text-emerald-300 font-bold'));
-      p1.appendChild(document.createTextNode(' (Δ < 1pp). Kleine afwijking is afronding van je ingevoerde getallen — wiskundig moet de identiteit op 1e-6 sluiten.'));
+      p1.appendChild(document.createTextNode(
+        ' (Δ < 1pp). Kleine afwijking is afronding van je ingevoerde getallen — ' +
+        'wiskundig moet de identiteit op 1e-6 sluiten.'
+      ));
       interp.appendChild(p1);
 
-      const p2 = document.createElement('p');
-      p2.className = 'text-slate-400';
-      p2.textContent = 'Probeer met meer decimalen voor exacte match (klik "Toon werkelijke Vento-waarden").';
-      interp.appendChild(p2);
+      interp.appendChild(makeP(
+        'Probeer met meer decimalen voor exacte match (klik "Toon werkelijke Vento-waarden").',
+        'text-slate-400'
+      ));
     } else {
-      const p1 = document.createElement('p');
-      p1.className = 'mb-3';
+      const p1 = makeP(null, 'mb-3');
       p1.appendChild(makeSpan('Mismatch.', 'text-amber-300 font-bold'));
-      p1.appendChild(document.createTextNode(' Eén van de drie ratio\'s is verkeerd berekend. DuPont sluit altijd — als de identiteit niet klopt, zit er een fout in PM, TAT of EM.'));
+      p1.appendChild(document.createTextNode(
+        ' Eén van de drie ratio\'s is verkeerd berekend. DuPont sluit altijd — ' +
+        'als de identiteit niet klopt, zit er een fout in PM, TAT of EM.'
+      ));
       interp.appendChild(p1);
 
-      const p2 = document.createElement('p');
-      p2.className = 'text-slate-400';
+      const p2 = makeP(null, 'text-slate-400');
       p2.appendChild(makeSpan('Debug-stappen:', 'font-bold'));
       interp.appendChild(p2);
 
@@ -287,7 +544,7 @@
       ol.className = 'list-decimal pl-5 mt-2 text-slate-400 space-y-1';
       ['Werd PM in % ingevoerd of als decimaal? (Het invoerveld verwacht %, dus 19,48 niet 0,1948.)',
        'Klopt het teken van EM? Bij negatief eigen vermogen is EM negatief.',
-       'Welke balans-datum gebruikte je? (Eind-saldo vs gemiddelde.)']
+       'Welke EV-datum gebruikte je? (Pre-closing balans of post-closing = balans + NI?)']
         .forEach(t => {
           const li = document.createElement('li');
           li.textContent = t;
@@ -300,6 +557,7 @@
   }
 
   function onthul() {
+    if (!REF) return;
     document.getElementById('pm').value  = (REF.pm  * 100).toFixed(2);
     document.getElementById('tat').value = REF.tat.toFixed(2);
     document.getElementById('em').value  = REF.em.toFixed(2);
@@ -315,6 +573,9 @@
   document.getElementById('btn-bereken').addEventListener('click', bereken);
   document.getElementById('btn-onthul').addEventListener('click', onthul);
   document.getElementById('btn-reset').addEventListener('click', reset);
+
+  // Start de async dataset-load
+  init();
 </script>
 
 </body>
