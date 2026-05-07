@@ -404,7 +404,7 @@ werkvorm willen overnemen of in eigen context aanpassen.
 publiek meegepushed naar GH Pages zodat andere HBO-docenten het kunnen vinden,
 hergebruiken en bijdragen.
 
-**Beoogde structuur** (10 secties):
+**Beoogde structuur** (11 secties):
 
 **F6.1 Didactische uitgangspunten** — voor docenten die de werkvorm overnemen:
 - PAMS-architectuur per pijler (waar zit Purpose, Autonomy, Mastery, Social in elk fase?)
@@ -412,56 +412,63 @@ hergebruiken en bijdragen.
 - Consultant-frame als identity-bridge naar beroepspraktijk
 - Drie didactische aandachtspunten per fase
 
-**F6.2 Voorbereiding (uitgebreid)**:
+**F6.2 Competenties en skills voor de docent**:
+- 4 categorieën: domein-kennis, tool-vaardigheden, didactische competenties, soft skills
+- Per categorie: *wat je moet kunnen* + *aanvullen waar nodig* (bronnen-tabellen)
+- Specifieke oefen-vaardigheden voor déze werkvorm (HHI in 1 minuut, PowerBI-import, 3-seconden-stilte)
+- Zelf-evaluatie: ben ik klaar? (3 indicatoren met voorgestelde bijscholing)
+- Wanneer mede-begeleider waardevol is
+
+**F6.3 Voorbereiding (uitgebreid)**:
 - Vooraankondiging aan studenten — PowerBI-installatie, laptop meebrengen
 - Mentale voorbereiding docent — drie momenten die niet gemist mogen worden
 - Materialen-checklist (digitaal én hybride backup)
 - Trouble-shooting vooraf (wifi-test, fallback-paden)
 
-**F6.3 Uitleg en introductie**:
+**F6.4 Uitleg en introductie**:
 - Hoe je casus + consultant-frame in 5 minuten introduceert
 - Veelgestelde studenten-vragen + antwoord-suggesties
 - Wat te doen als studenten zich verzetten tegen de rol-toewijzing
 
-**F6.4 Begeleiding tijdens de game**:
+**F6.5 Begeleiding tijdens de game**:
 - Wat te doen als studenten vastlopen op data-understanding
 - Wanneer in te grijpen, wanneer te laten gaan
 - Concrete escalatie-scenarios (groep wil alleen werken, weigert samenwerking,
   of komt al bij € 3.000 zonder cross-niveau-samenwerking)
 - Hoe samenwerking te *forceren* als die niet vanzelf ontstaat
 
-**F6.5 Nabespreking — het plenaire moment uitgewerkt**:
+**F6.6 Nabespreking — het plenaire moment uitgewerkt**:
 - Plot twist over marges (al in draaiboek)
 - Twee-routes-discussie (HHI 5.190 vs. 4.909) — wanneer en hoe
 - Identity-reflectie (welk niveau voelde goed?) — open of besloten?
 - Hoe je leerwinst oogst — concrete vragen om te stellen
 
-**F6.6 Uitgewerkte voorbeelden** (verbatim casuïstiek):
+**F6.7 Uitgewerkte voorbeelden** (verbatim casuïstiek):
 - Voorbeeld-sessie met 24 studenten, 8-8-8-verdeling — verloop minuut-voor-minuut
 - Voorbeeld met scheve 12-6-6-verdeling — wat te doen
 - Voorbeeld plenair gesprek (verbatim transcript wat docent zegt en welke reacties komen)
 - Voorbeeld typisch samenwerkings-moment (Strategy zoekt Operationeel)
 
-**F6.7 FAQ van studenten** (met antwoord-suggesties):
+**F6.8 FAQ van studenten** (met antwoord-suggesties):
 - *"Waarom willekeurig? Mag ik niet kiezen?"* → Autonomy-uitleg
 - *"Wat als ik geen PowerBI heb?"* → fallback Excel + Power Query
 - *"Mijn ZIP downloadt niet"* → debug-stappen
 - *"Wat is HHI?"* → 1-min uitleg
 - *"Mag ik vraag overslaan?"* → strategie-keuze, niet gokken
 
-**F6.8 Troubleshooting voor docent**:
+**F6.9 Troubleshooting voor docent**:
 - Klas is stil → forceer-mechanismen
 - Drempel niet haalbaar binnen tijd → tarieven aanpassen via config
 - PowerBI-import faalt op meerdere apparaten → groeps-import via één laptop
 - Wifi-uitval → analoge fallback (printables)
 
-**F6.9 Customisatie voor andere casussen**:
+**F6.10 Customisatie voor andere casussen**:
 - Vervang CSV-data (zelfde kolomnamen, andere getallen)
 - Pas vragen aan in `heatmap.html` (`VRAGEN` array)
 - Pas tarieven en drempel aan via config-block bovenaan script
 - Verschillende casussen voor verschillende cohort-niveaus
 
-**F6.10 Bijlage: didactische literatuur**:
+**F6.11 Bijlage: didactische literatuur**:
 - Anthony (1965) — management-piramide
 - Sinek (Golden Circle) — Why-How-What
 - CRISP-DM (Cross-Industry Standard Process for Data Mining)
@@ -668,15 +675,16 @@ de auto-compute engine vormt het fundament waar F1, F3, F4 en F5 op leunen.
 
 - [ ] `DOCENTENHANDLEIDING.md` scaffold met TOC en sectie-headers (F6.1–F6.10)
 - [ ] F6.1 Didactische uitgangspunten — uitgewerkt
-- [ ] F6.2 Voorbereiding (uitgebreid) — uitgewerkt incl. troubleshooting
-- [ ] F6.3 Uitleg en introductie — incl. veelgestelde studentenvragen
-- [ ] F6.4 Begeleiding tijdens game — escalatie-scenarios
-- [ ] F6.5 Nabespreking uitgewerkt — verbatim plenair-momenten
-- [ ] F6.6 Uitgewerkte voorbeelden — minimaal 2 sessie-casuïstieken
-- [ ] F6.7 FAQ studenten — 8–10 meest voorkomende vragen
-- [ ] F6.8 Troubleshooting docent — wifi, PowerBI, drempel
-- [ ] F6.9 Customisatie voor andere casussen
-- [ ] F6.10 Bijlage: didactische literatuur (Anthony, Sinek, CRISP-DM, Pink)
+- [ ] F6.2 Competenties en skills voor de docent — uitgewerkt incl. bronnen voor zelf-aanvulling
+- [ ] F6.4 Voorbereiding (uitgebreid) — uitgewerkt incl. troubleshooting
+- [ ] F6.4 Uitleg en introductie — incl. veelgestelde studentenvragen
+- [ ] F6.5 Begeleiding tijdens game — escalatie-scenarios
+- [ ] F6.6 Nabespreking uitgewerkt — verbatim plenair-momenten
+- [ ] F6.7 Uitgewerkte voorbeelden — minimaal 2 sessie-casuïstieken
+- [ ] F6.8 FAQ studenten — 8–10 meest voorkomende vragen
+- [ ] F6.9 Troubleshooting docent — wifi, PowerBI, drempel
+- [ ] F6.10 Customisatie voor andere casussen
+- [ ] F6.11 Bijlage: didactische literatuur (Anthony, Sinek, CRISP-DM, Pink)
 - [ ] Cross-links naar `draaiboek.md` en `PRD-v0.4.md` actief
 
 ### Pre-launch — testing

@@ -12,15 +12,16 @@
 ## Inhoud
 
 1. [Didactische uitgangspunten](#1-didactische-uitgangspunten)
-2. [Voorbereiding (uitgebreid)](#2-voorbereiding-uitgebreid)
-3. [Uitleg en introductie](#3-uitleg-en-introductie)
-4. [Begeleiding tijdens de game](#4-begeleiding-tijdens-de-game)
-5. [Nabespreking](#5-nabespreking)
-6. [Uitgewerkte voorbeelden](#6-uitgewerkte-voorbeelden)
-7. [FAQ — studenten](#7-faq--studenten)
-8. [Troubleshooting voor docent](#8-troubleshooting-voor-docent)
-9. [Customisatie voor andere casussen](#9-customisatie-voor-andere-casussen)
-10. [Bijlage: didactische literatuur](#10-bijlage-didactische-literatuur)
+2. [Competenties en skills voor de docent](#2-competenties-en-skills-voor-de-docent)
+3. [Voorbereiding (uitgebreid)](#3-voorbereiding-uitgebreid)
+4. [Uitleg en introductie](#4-uitleg-en-introductie)
+5. [Begeleiding tijdens de game](#5-begeleiding-tijdens-de-game)
+6. [Nabespreking](#6-nabespreking)
+7. [Uitgewerkte voorbeelden](#7-uitgewerkte-voorbeelden)
+8. [FAQ — studenten](#8-faq--studenten)
+9. [Troubleshooting voor docent](#9-troubleshooting-voor-docent)
+10. [Customisatie voor andere casussen](#10-customisatie-voor-andere-casussen)
+11. [Bijlage: didactische literatuur](#11-bijlage-didactische-literatuur)
 
 ---
 
@@ -70,15 +71,177 @@ hun rol-titel (*"Strategy consultant — wat is jouw advies?"*), niet als
 | **2. Toewijzing** | Studenten laten klagen over hun niveau | Reframe: *"Iedereen krijgt een rol, ook in een echt advies-team"* |
 | **3a. Data Understanding** | Ze pushen naar de vragen | Laten exploreren — *"Wat zie je? Wat verbaast je?"* |
 | **3b. Vragen beantwoorden** | Antwoorden geven | Vragen stellen: *"Hoe zou je dat aanpakken? Wat heb je nodig?"* |
-| **3c. Samenwerking** | Wachten tot het vanzelf gebeurt | Forceren als nodig — zie sectie 4 |
+| **3c. Samenwerking** | Wachten tot het vanzelf gebeurt | Forceren als nodig — zie sectie 5 |
 | **4. Dashboard** | Mooi maken | Het moet kloppen — niet mooi |
 | **5. Plenair** | Hardlopend door alle slides | Tijd nemen voor de plot twist en twee-routes-discussie |
 
 ---
 
-## 2. Voorbereiding (uitgebreid)
+## 2. Competenties en skills voor de docent
 
-### 2.1 Vooraankondiging aan studenten (één week vooraf)
+Deze werkvorm vraagt vier soorten competenties van de docent. Geen daarvan
+is "nice-to-have" — alle vier dragen direct bij aan de pedagogische impact.
+Per categorie staan **bronnen voor zelf-aanvulling** waar je deficiënties
+gericht kunt verkleinen.
+
+### 2.1 Domein-kennis (bedrijfseconomie + informatiemanagement)
+
+**Wat je moet kunnen**:
+
+- Onderscheid tussen **financial accounting** en **management accounting** in
+  1 minuut uitleggen
+- **HHI** (Herfindahl-Hirschman Index) interpreteren en de drempels noemen
+  (<1.500 laag, 1.500–2.500 matig, >2.500 hoog)
+- **Werkkapitaal-cyclus** (DSO, DPO, DSI, CCC) op hoofdlijnen begrijpen
+- Onderscheid **bruto-marge / contributiemarge / operationele marge** kunnen
+  toelichten
+- **ERP versus BI / OLTP versus OLAP** op architectuur-niveau begrijpen —
+  waarom het ene het andere nooit kan vervangen
+- **Aggregatie-niveaus** als concept kunnen articuleren (en waarom hetzelfde
+  concept anders heet bij anderen)
+
+**Aanvullen waar nodig**:
+
+| Bron | Niveau | Tijd |
+|---|---|--:|
+| [Investopedia](https://investopedia.com) — quick-reference voor HHI, CCC, EBIT | Beginner | 30 min/begrip |
+| [AccountingTools.com](https://accountingtools.com) — financial vs. management accounting | Tussen | 1 uur |
+| Coursera — *Financial Accounting Fundamentals* (UVA) | Tussen | 12 uur |
+| Boek: Drs. P. Zonneveldt — *Bedrijfseconomie voor toekomstige managers* | Beginner-Tussen | bron-naslagwerk |
+
+### 2.2 Tool-vaardigheden (PowerBI + CSV)
+
+**Wat je moet kunnen**:
+
+- PowerBI Desktop openen, *Get Data → Folder*, een CSV-import doen
+- *Manage Relationships* gebruiken om tabellen te koppelen via gemeenschappelijke ID's
+- Een eenvoudige visual maken (bar chart, kaart, of measure)
+- Snel inschatten wat een student fout doet bij PowerBI-import
+- Excel + Power Query als fallback kunnen gebruiken
+- CSV-bestand openen en kolomstructuur "lezen"
+
+**Aanvullen waar nodig**:
+
+| Bron | Niveau | Tijd |
+|---|---|--:|
+| [Microsoft Learn — PowerBI](https://learn.microsoft.com/training/powerplatform/power-bi) | Beginner | 4 uur basis |
+| [SQLBI YouTube](https://youtube.com/@SQLBI) (Marco Russo + Alberto Ferrari) | Tussen-Expert | naar behoefte |
+| [DataCamp — Introduction to PowerBI](https://datacamp.com) | Beginner | 4 uur |
+| Mr. Excel (Bill Jelen) tutorials voor Power Query | Beginner-Tussen | naar behoefte |
+
+> **Geruststellende noot**: je hoeft geen expert te zijn. Kunnen
+> *"Get Data → Folder → Combine"* uitvoeren en relaties leggen is ruim
+> voldoende. Voor de rest mag je samen met studenten ontdekken — dat
+> versterkt zelfs de Mastery-pijler (*"docent leert ook nog steeds"*).
+
+### 2.3 Didactische competenties
+
+**Wat je moet kunnen**:
+
+- **Activerend lesgeven** — vragen stellen i.p.v. antwoorden geven
+- **Constructivisme toepassen** — studenten laten ontdekken, niet vertellen
+- **Klassikale facilitatie** — groepsdynamiek lezen, ingrijpen waar nodig
+- **Reflectief lesgeven** — open vragen stellen die niet binair beantwoord
+  hoeven te worden
+- **Adaptief lesgeven** — meebewegen met klas-energie
+- **Bloom-niveaus herkennen** — weten wanneer je op Apply zit en wanneer op
+  Evaluate (en daarop kunnen sturen)
+- **Stilte gebruiken als pedagogisch instrument** — 3 seconden pauze na een
+  belangrijke uitspraak ("kernzin laten landen")
+
+**Aanvullen waar nodig**:
+
+| Bron | Niveau | Tijd |
+|---|---|--:|
+| Wiggins & McTighe — *Understanding by Design* | Tussen | bron-naslagwerk |
+| Marzano — *Effective Teaching Strategies* | Tussen | research-based |
+| Pink — *Drive* (motivationele theorie achter PAMS) | Beginner | 4 uur lezen |
+| HAN-DocentUniversiteit — interne bijscholing facilitatie | Variabel | curricula-cyclus |
+| Vereniging Hogescholen — workshops activerend onderwijs | Variabel | losse sessies |
+
+### 2.4 Soft skills en persoonlijke kwaliteiten
+
+**Wat helpt**:
+
+- **Improvisatievermogen** — niet uit het lood laten slaan door onverwachte
+  studenten-vragen of escalaties
+- **Empathie** — herkennen wanneer een student afhaakt door de inhoud vs.
+  iets persoonlijks (en weten dat het verschil ertoe doet)
+- **Authentieke aanwezigheid** — de Sinek-pitch geloofwaardig brengen
+  vereist dat jij zelf gelooft dat dit relevant is voor studenten
+- **Tolerantie voor ambiguïteit** — de twee-routes-discussie vereist dat je
+  zelf comfortabel bent met *"geen enkel antwoord is écht juist"*
+- **Coaching-mindset** — niet de expert-rol, maar de begeleider-rol
+- **Growth mindset over jezelf** — "ik weet het niet" plenair durven zeggen,
+  als modelling-gedrag voor studenten
+
+**Aanvullen waar nodig**:
+
+| Bron | Niveau | Tijd |
+|---|---|--:|
+| Schein — *Humble Inquiry* (vragen stellen i.p.v. vertellen) | Tussen | 3 uur lezen |
+| Heron — *Six-Category Intervention Analysis* | Tussen-Expert | facilitatiekader |
+| Dweck — *Mindset* (growth mindset cultiveren) | Beginner | 4 uur lezen |
+| HAN MA Educatie / NHL Hogeschool MA Leren&Innoveren | Expert | meerjaars-traject |
+
+### 2.5 Specifieke oefen-vaardigheden voor déze werkvorm
+
+Voorafgaand aan het eerste college zijn dit de zes vaardigheden om bewust op
+te oefenen:
+
+| Vaardigheid | Hoe te oefenen | Tijd |
+|---|---|--:|
+| HHI in 1 minuut uitleggen | Schrijf het op, oefen voor de spiegel of een collega | 30 min |
+| ZIP downloaden + uitpakken + importeren in PowerBI | Doe het zelf eenmalig met de demo-set | 30 min |
+| Marge-tabel uit het hoofd kennen | Print 'm uit, herinner de hoofdlijnen | 15 min |
+| 3-seconden-stilte na een uitspraak | Oefen met collega's of vrienden | onbewust |
+| Twee-routes-discussie modereren zonder antwoord te geven | Speel mentaal het scenario af | 1 uur |
+| Identity-reflectie open stellen zonder normatief te zijn | Schrijf je vraag uit, oefen neutrale toon | 30 min |
+
+### 2.6 Zelf-evaluatie: ben ik klaar?
+
+Drie indicatoren om eerlijk tegen jezelf op te lossen:
+
+1. **Kun je in 30 seconden uitleggen wat het verschil is tussen *financial*
+   en *management* accounting?**
+   - Zo niet → eerst 1 uur AccountingTools lezen of een YouTube-uitleg kijken.
+
+2. **Kun je een PowerBI-import zelfstandig doen, met inbegrip van *Manage
+   Relationships*?**
+   - Zo niet → eerst de Microsoft Learn quickstart doorlopen (~2 uur).
+
+3. **Voel je je comfortabel met *"ik weet het niet"* plenair zeggen voor
+   24 studenten?**
+   - Zo niet → de twee-routes-discussie wordt lastig voor je. Oefen het in
+     een minder kritische context (bijv. een case-bespreking of werkgroep)
+     vóór deze werkvorm.
+
+> Als het antwoord op een van deze drie *"nee"* is — geen reden om af te
+> zien van het college. Wel reden om gericht bij te scholen voordat je voor
+> 24 studenten gaat staan. Een werkvorm met deze gevolgen voor PAMS-pijlers
+> verdient een goed-voorbereide docent.
+
+### 2.7 Wanneer mede-begeleider waardevol is
+
+Voor docenten die **zowel** weinig domein-ervaring **als** weinig PowerBI-
+ervaring hebben: overweeg een mede-begeleider in te zetten voor het eerste
+college. Bijvoorbeeld:
+
+- Een collega-docent uit accountancy (voor financial vs. management accounting)
+- Een student-assistent uit Bedrijfskunde-Informatica (voor PowerBI-tooling)
+- Een externe stagiair-consultant van een advies-bureau (voor consultant-frame
+  authenticiteit)
+
+Mede-begeleiders zijn vooral waardevol in tijdsblok 3a (Data Understanding —
+PowerBI-import) en 5b (plot twist — financial detail). Twee mensen lopen
+sneller rond, en de docent-rol blijft pedagogisch coherent terwijl tools
+elders worden opgelost.
+
+---
+
+## 3. Voorbereiding (uitgebreid)
+
+### 3.1 Vooraankondiging aan studenten (één week vooraf)
 
 Stuur deze e-mail of Brightspace-bericht:
 
@@ -93,7 +256,7 @@ Stuur deze e-mail of Brightspace-bericht:
 >
 > *Geen voorbereiding nodig qua kennis. We gaan vanaf 0 uitleggen.*
 
-### 2.2 Mentale voorbereiding docent — drie momenten die niet gemist mogen worden
+### 3.2 Mentale voorbereiding docent — drie momenten die niet gemist mogen worden
 
 1. **Tijdsblok 1 minute 4**: na de uitleg over de drempel, even stilte. Dat
    moment waarop studenten beseffen *"oh — dit is geen makkie"* — dat moet
@@ -106,7 +269,7 @@ Stuur deze e-mail of Brightspace-bericht:
 3. **Tijdsblok 5b minute 40**: na de marge-tabel. *Pauze*. Laat het bezinken.
    Als je gelijk doorratelt verlies je het effect.
 
-### 2.3 Materialen-checklist
+### 3.3 Materialen-checklist
 
 **Direct vóór college:**
 
@@ -122,7 +285,7 @@ Stuur deze e-mail of Brightspace-bericht:
 - [ ] Geprinte vraagkaartjes (3 stapels van 11)
 - [ ] Datasets op USB-stick (zip per niveau) als wifi uitvalt
 
-### 2.4 Trouble-shooting vooraf
+### 3.4 Trouble-shooting vooraf
 
 | Probleem | Oplossing |
 |---|---|
@@ -133,9 +296,9 @@ Stuur deze e-mail of Brightspace-bericht:
 
 ---
 
-## 3. Uitleg en introductie
+## 4. Uitleg en introductie
 
-### 3.1 De 5-minuten-pitch (verbatim suggestie)
+### 4.1 De 5-minuten-pitch (verbatim suggestie)
 
 > *"Welkom. Vandaag worden jullie ingehuurd door EnYoi ICT Services — een
 > Nederlandse IT-dienstverlener uit Leusden. In 2016 maakten ze € 7,3 miljoen
@@ -155,7 +318,7 @@ Stuur deze e-mail of Brightspace-bericht:
 >
 > *"Pakken jullie je laptops? We beginnen."*
 
-### 3.2 Veelgestelde studenten-vragen tijdens introductie
+### 4.2 Veelgestelde studenten-vragen tijdens introductie
 
 | Vraag | Antwoord-suggestie |
 |---|---|
@@ -164,7 +327,7 @@ Stuur deze e-mail of Brightspace-bericht:
 | *"Kunnen we samenwerken?"* | *"Sterker nog: dat moet, anders haal je de € 3.000 niet."* |
 | *"Telt dit voor een cijfer?"* | *(Afhankelijk van curriculum — wees eerlijk. Bij 'nee' is dat OK; de game heeft eigen drempel.)* |
 
-### 3.3 Wat te doen als studenten zich verzetten tegen de rol-toewijzing
+### 4.3 Wat te doen als studenten zich verzetten tegen de rol-toewijzing
 
 Soms gebeurt het: een student wil per se "strategisch" zijn omdat dat het
 hoogste klinkt. Reframe:
@@ -176,9 +339,9 @@ hoogste klinkt. Reframe:
 
 ---
 
-## 4. Begeleiding tijdens de game
+## 5. Begeleiding tijdens de game
 
-### 4.1 Wat te doen als studenten vastlopen op Data Understanding
+### 5.1 Wat te doen als studenten vastlopen op Data Understanding
 
 **Symptoom**: 5 minuten in fase 3a, en de student zit nog steeds met PowerBI
 te kloten zonder data te zien.
@@ -190,7 +353,7 @@ te kloten zonder data te zien.
 4. Loop ze stap-voor-stap door: Get Data → Folder → uitgepakte map → Combine
 5. Niet de muisknoppen overnemen — laat ze klikken
 
-### 4.2 Wanneer ingrijpen, wanneer laten gaan
+### 5.2 Wanneer ingrijpen, wanneer laten gaan
 
 | Situatie | Ingrijpen? | Hoe |
 |---|---|---|
@@ -200,7 +363,7 @@ te kloten zonder data te zien.
 | Student haalt al € 2.500 in 12 min | Nee, complimenteren | *"Goed bezig. Welke vragen zijn nog open?"* |
 | Twee studenten ruzie over wie iets doet | Ja, mediëren | *"In een advies-team verdeel je het werk. Wat is logisch?"* |
 
-### 4.3 Concrete escalatie-scenarios
+### 5.3 Concrete escalatie-scenarios
 
 **Scenario A — Klas is stil, niemand zoekt samenwerking**
 
@@ -221,7 +384,7 @@ Loop naar ze toe. *"Wat is moeilijk? Niet de tool? Dan iets anders."* Soms
 is het frustratie over PowerBI, soms over de rol, soms is er iets buiten
 het college. Erken het, geef korte hulp, niet doorbomen.
 
-### 4.4 Hoe samenwerking forceren als die niet vanzelf ontstaat
+### 5.4 Hoe samenwerking forceren als die niet vanzelf ontstaat
 
 Drie escalatie-niveaus:
 
@@ -234,9 +397,9 @@ Drie escalatie-niveaus:
 
 ---
 
-## 5. Nabespreking
+## 6. Nabespreking
 
-### 5.1 Plot twist en nuance (al in draaiboek tijdsblok 5b–c)
+### 6.1 Plot twist en nuance (al in draaiboek tijdsblok 5b–c)
 
 Verbatim opgenomen in het draaiboek. Lees deze opnieuw vlak voor het college
 zodat de timing in je hoofd zit.
@@ -244,7 +407,7 @@ zodat de timing in je hoofd zit.
 **Belangrijkste detail**: na de marge-tabel **3 seconden stilte** voordat je
 de zinger uitspreekt. Pauzes zijn pedagogische gereedschap.
 
-### 5.2 Twee-routes-discussie (HHI 5.190 vs. 4.909)
+### 6.2 Twee-routes-discussie (HHI 5.190 vs. 4.909)
 
 Dit is een **nieuwe** plenaire moment in v0.4 (PRD F3.5). Verloop:
 
@@ -267,7 +430,7 @@ Dit is een **nieuwe** plenaire moment in v0.4 (PRD F3.5). Verloop:
 > *"Derde les: beslissingen op verschillende niveaus vereisen verschillende
 > aggregaties."*
 
-### 5.3 Identity-reflectie (1 minuut, plenair)
+### 6.3 Identity-reflectie (1 minuut, plenair)
 
 > *"Tot slot — vandaag heb je een rol gespeeld als consultant op één niveau.
 > Stak het strategische werk je het meest? Of zou je liever Junior Analyst
@@ -277,7 +440,7 @@ Dit is een **nieuwe** plenaire moment in v0.4 (PRD F3.5). Verloop:
 **Geef geen antwoord-suggestie**. De vraag werkt alleen als hij open blijft.
 Een minuut bezinking. Daarna: huiswerkvraag mee voor de volgende les.
 
-### 5.4 Hoe oogst je leerwinst — concrete vragen om te stellen
+### 6.4 Hoe oogst je leerwinst — concrete vragen om te stellen
 
 Aan het eind, kies 1–2 van deze vragen om plenair te stellen:
 
@@ -288,27 +451,27 @@ Aan het eind, kies 1–2 van deze vragen om plenair te stellen:
 
 ---
 
-## 6. Uitgewerkte voorbeelden
+## 7. Uitgewerkte voorbeelden
 
 > Deze sectie wordt aangevuld na het eerste college met echte casuïstiek.
 > Hieronder een placeholder met de structuur.
 
-### 6.1 Voorbeeld-sessie: 24 studenten, 8-8-8-verdeling
+### 7.1 Voorbeeld-sessie: 24 studenten, 8-8-8-verdeling
 
 *[Placeholder — wordt ingevuld na eerste college: minuut-voor-minuut
 verloop met aandachtspunten en wat goed/minder goed liep.]*
 
-### 6.2 Voorbeeld-sessie: scheve 12-6-6-verdeling
+### 7.2 Voorbeeld-sessie: scheve 12-6-6-verdeling
 
 *[Placeholder — wat te doen als de random toewijzing niet evenredig uitpakt,
 of een groep meer studenten heeft dan de twee andere.]*
 
-### 6.3 Voorbeeld plenair gesprek (verbatim transcript)
+### 7.3 Voorbeeld plenair gesprek (verbatim transcript)
 
 *[Placeholder — verbatim uitwerking van een typisch nabespreking-gesprek met
 studenten-reacties en docent-reacties.]*
 
-### 6.4 Voorbeeld typisch samenwerkings-moment
+### 7.4 Voorbeeld typisch samenwerkings-moment
 
 *[Placeholder — Strategy consultant vraagt Junior Analyst om hulp bij vraag 6
 (welke klanten betalen € 534k). Hoe verloopt dat, wat zegt de tool, wat doet
@@ -316,7 +479,7 @@ de docent.]*
 
 ---
 
-## 7. FAQ — studenten
+## 8. FAQ — studenten
 
 | Vraag | Antwoord-suggestie |
 |---|---|
@@ -331,13 +494,13 @@ de docent.]*
 
 ---
 
-## 8. Troubleshooting voor docent
+## 9. Troubleshooting voor docent
 
-### 8.1 Klas is stil — niemand zoekt samenwerking
+### 9.1 Klas is stil — niemand zoekt samenwerking
 
-Zie sectie 4.4. Drie escalatie-niveaus.
+Zie sectie 5.4. Drie escalatie-niveaus.
 
-### 8.2 Drempel niet haalbaar binnen tijd
+### 9.2 Drempel niet haalbaar binnen tijd
 
 Symptoom: minute 23, niemand komt boven € 1.500.
 
@@ -350,12 +513,12 @@ Symptoom: minute 23, niemand komt boven € 1.500.
    v0.4.x als geïmplementeerd)*.
 3. Verleng fase 3 met 5 minuten — kort fase 4 in.
 
-### 8.3 PowerBI-import faalt op meerdere apparaten
+### 9.3 PowerBI-import faalt op meerdere apparaten
 
 Schakel over naar groeps-import: één laptop met werkende PowerBI per niveau,
 de rest kijkt mee. Vraag-classificatie blijft individueel via de tool.
 
-### 8.4 Wifi-uitval
+### 9.4 Wifi-uitval
 
 Schakel over naar analoge fallback:
 1. Print rolkaarten (achterin draaiboek) en deel uit
@@ -366,15 +529,15 @@ Schakel over naar analoge fallback:
 
 ---
 
-## 9. Customisatie voor andere casussen
+## 10. Customisatie voor andere casussen
 
-### 9.1 Vervangen van CSV-data
+### 10.1 Vervangen van CSV-data
 
 In de map `datasets/` regenereer je nieuwe CSVs. Belangrijk: behoud de
 **kolomnamen exact** zoals beschreven in de PRD (F2.4). De auto-compute engine
 werkt op standaard-veldnamen — andere namen breken alle 11 vragen.
 
-### 9.2 Aanpassen van vragen
+### 10.2 Aanpassen van vragen
 
 Open `heatmap.html`, zoek de `VRAGEN` array bovenaan het script-blok. Pas
 formuleringen aan, voeg toe of verwijder. Zorg dat:
@@ -382,7 +545,7 @@ formuleringen aan, voeg toe of verwijder. Zorg dat:
 - De answer-functions (later in F2 implementatie) overeenkomen met de
   vraag-tekst
 
-### 9.3 Aanpassen van tarieven en drempel
+### 10.3 Aanpassen van tarieven en drempel
 
 Bovenin `heatmap.html` in de `TARIEVEN` config (in v0.4-implementatie):
 
@@ -399,7 +562,7 @@ Pas aan voor andere bedrijven, andere markten of andere ambities.
 
 ---
 
-## 10. Bijlage: didactische literatuur
+## 11. Bijlage: didactische literatuur
 
 **Anthony, R. N. (1965).** *Planning and Control Systems: A Framework for
 Analysis.* Harvard Business School. — De klassieke management-piramide
