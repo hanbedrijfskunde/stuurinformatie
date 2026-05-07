@@ -178,6 +178,40 @@ function vraag1(datasets) {
 `factuurdatum`, `bedrag_incl_btw`, etc.). Nieuwe CSVs die dezelfde
 kolomstructuur volgen zijn direct compatibel.
 
+**F2.7 Rapport-categorie kolom op `rekeningschema.csv`** (nieuw in v0.4)
+
+Het rekeningschema bevat naast `rekening_id`, `omschrijving` en `type` (Balans
+of Resultaat) een vierde kolom `rapport_categorie`. Deze koppelt elke rekening
+aan zijn standaard-rapportagepost — vergelijkbaar met de `leadCode` in een
+echte XAF-export of het Nederlandse RGS (Referentie GrootboekSchema).
+
+Voorbeelden:
+
+```
+rekening_id,omschrijving,type,rapport_categorie
+0100,Bedrijfsinventaris,Balans,Vaste activa
+0500,Aandelenkapitaal,Balans,Eigen vermogen
+1100,Bank,Balans,Liquide middelen
+1400,Debiteuren,Balans,Debiteuren
+4000,Bruto lonen,Resultaat,Personeelskosten
+8100,Omzet Consultancy,Resultaat,Omzet
+```
+
+**Waarom**: studenten kunnen nu in PowerBI een visual maken zoals
+*"Personeelskosten naar maand"* zonder eerst handmatig 22 rekeningen te
+selecteren. Aggregatie wordt declaratief in plaats van expliciet.
+
+**Caveat (geen kasstroom-categorie)**: een `kasstroom_categorie`-kolom is
+bewust *niet* toegevoegd. Kasstroom is een afgeleide rapportage (directe
+methode op bank-mutaties, of indirecte methode op netto-resultaat +
+correcties), niet een eigenschap van een grootboekrekening. Het blijft
+afleidings-werk — pedagogisch waardevol.
+
+**Customisatie**: de mapping is een **eenvoudige heuristic** op basis van
+rekening-ID-prefixes (0xxx → Vaste activa, 4xxx → Personeelskosten, etc.).
+Docenten kunnen deze finetunen in `genereer_datasets.py` voor specifieke
+rekeningschema-conventies of casussen.
+
 **F2.5** Bij ontbrekende data: `null` met `reden`.
 
 **F2.6** UI-flow:
@@ -218,7 +252,7 @@ kolomstructuur volgen zijn direct compatibel.
 > van de vraagsteller. Een operationeel medewerker kan een strategische vraag
 > stellen — de vraag is dan strategisch, niet operationeel.
 
-**F3.4** Herverdeling van de 10 vragen voor v0.4:
+**F3.4** Herverdeling van de **11 vragen** voor v0.4:
 
 | # | Huidige formulering (deel) | Type |
 |--:|---|:--:|
@@ -232,10 +266,49 @@ kolomstructuur volgen zijn direct compatibel.
 | 8 | Omzet per businesslijn (consultancy/hardware/cursus)? | Tactisch |
 | 9 | Percentage recurring abonnementen-omzet? | **Strategisch** |
 | 10 | Wat is ons EBIT-resultaat? | Tactisch |
+| **11** | **Wat is onze productconcentratie (HHI)?** | **Strategisch** |
 
-(2 strategisch, 3 tactisch, 5 operationeel — bewust scheef omdat operationele
+(3 strategisch, 3 tactisch, 5 operationeel — bewust scheef omdat operationele
 vragen het laagdrempeligst zijn voor een eerste oefening, en strategische
 vragen het meeste gewicht krijgen via complexiteit-punten)
+
+**F3.5 Twee-routes-discussie (cruciaal didactisch moment in v0.4)**
+
+Voor minstens twee vragen — **vraag 8 (omzet per businesslijn)** en **vraag 11
+(productconcentratie)** — bestaan **twee geldige berekenroutes** die
+**verschillende getallen** opleveren:
+
+| Route | Bron | Granulariteit | Voorbeeld HHI bij EnYoi |
+|---|---|--:|--:|
+| Via **businesslijn** | `verkoopfacturen.csv` group by `businesslijn` | 5 buckets | **5.190** |
+| Via **omzetrekening** | `resultatenrekening.csv` + `rekeningschema.csv` (join) | 11 buckets | **4.909** |
+
+Beide kloppen. Het verschil ontstaat doordat **HHI gevoelig is voor het aantal
+buckets** — fewer buckets, larger relative shares, higher HHI. Dat is geen
+fout, maar een fundamenteel kenmerk van concentratie-metingen.
+
+**De drie niveaus komen tot verschillende getallen**:
+- **Strategisch** (alleen D): kan alleen via omzetrekening → HHI 4.909
+- **Operationeel** (alleen A): kan alleen via businesslijn → HHI 5.190
+- **Tactisch** (A + D): kan beide en kan ze vergelijken
+
+**Plenair moment** (in tijdsblok 5 of 3c):
+
+1. Docent vraagt elke groep: *"Wat is jullie HHI?"*
+2. Verschillende getallen verschijnen
+3. *"Wie heeft gelijk?"* → discussie ontstaat
+4. *"Beiden. Want jullie meten een ander ding — Strategisch ziet 11 productlijnen, Operationeel ziet 5 businesslijnen."*
+5. *"Welke is de echte HHI? — er is geen 'echte'. Er is alleen een HHI per gekozen indeling."*
+
+**Drie didactische take-aways** die hier landen:
+
+1. **Aggregatieniveau is een keuze, geen feit** — vraag bij elk getal: *"hoe gedefinieerd?"*
+2. **Verschillende rapporten geven verschillende getallen door methodologie, niet door fouten** — onderzoek het verschil, niet de "fout"
+3. **Beslissingen op verschillende managementniveaus vereisen verschillende aggregaties** — bestuur grof (M&A), product-management fijn (portfolio), operatie per-SKU
+
+> **Pedagogisch gewicht**: dit moment landt **conceptueel naast de plot twist
+> over marges**. Beide gaan over: *"hetzelfde bedrijf, verschillende verhalen,
+> allemaal waar."*
 
 ### F5 — Consultant-frame (rol + verdienmodel)
 
@@ -444,12 +517,14 @@ de auto-compute engine vormt het fundament waar F1, F3, F4 en F5 op leunen.
 
 - [ ] CSV-loader via `fetch()` + PapaParse via CDN toegevoegd
 - [ ] Parse-resultaat gecached in `localStorage` na eerste laden (perf)
-- [ ] 10 answer-functions geschreven (één per `VRAGEN`-entry)
+- [ ] **11** answer-functions geschreven (één per `VRAGEN`-entry, incl. vraag 11 productconcentratie)
 - [ ] Standaard-veldnamen contract gedocumenteerd (`klantnummer`, `factuurdatum`, …)
 - [ ] Per functie: ontbrekende-data fallback met `{ value: null, reden: '…' }`
+- [ ] **Twee-routes-vragen** (8 en 11) berekenen *beide* uitkomsten en tonen ze naast elkaar bij feedback
 - [ ] Unit tests tegen huidige hardcoded `ANTWOORDEN` als regressie-vangnet
 - [ ] Integratie in heatmap.html matrix-fase (cell-click toont berekend antwoord)
 - [ ] Mismatch-uitleg (S5) bij elke verkeerde classificatie
+- [ ] **Rapport_categorie-kolom** in `rekeningschema.csv` beschikbaar voor aggregatie (zie F2.7)
 
 ### v0.4.2 — Vraag-taxonomie (F3)
 
@@ -524,23 +599,29 @@ de auto-compute engine vormt het fundament waar F1, F3, F4 en F5 op leunen.
 | 5 | ja | ja | misschien | 1 | 1 | 4 | D direct, of A+C reconstructie |
 | 6 | nee | nee | ja | — | — | 4 | A+C, niet uit D |
 | 7 | nee | ja | ja | — | 3 | 3 | B + sourceID-filter |
-| 8 | ja | ja | ja | 1 | 2 | 2 | D direct, A met groupby |
+| 8 | ja | ja | ja | 1 | 2 | 2 | D direct, A met groupby — **twee routes met andere getallen** |
 | 9 | ja | ja | ja | 1 | 2 | 2 | D direct (rek 8091), A met filter |
 | 10 | ja | ja | nee | 2 | 2 | — | D-aggregatie nodig |
+| **11** | **ja** | **ja** | **ja** | **2** | **2** | **1** | Productconcentratie — **twee routes**: D (omzetrekening, 11 buckets, HHI=4.909) of A (businesslijn, 5 buckets, HHI=5.190) |
 
-**Max punten = max uren** per niveau (alleen werkend):
+**Max punten = max uren** per niveau (alleen werkend, **incl. vraag 11**):
 
 | Niveau | Vragen oplosbaar | Max uren | Tarief | **Max fee solo** |
 |---|--:|--:|--:|--:|
-| Strategisch | 6 | 6 | € 250 | **€ 1.500** |
-| Tactisch | 8 | 16 | € 150 | **€ 2.400** |
-| Operationeel | 9 | 25 | € 100 | **€ 2.500** |
+| Strategisch | 7 | 8 | € 250 | **€ 2.000** |
+| Tactisch | 9 | 18 | € 150 | **€ 2.700** |
+| Operationeel | 10 | 26 | € 100 | **€ 2.600** |
 
 **Slaagdrempel-suggestie: € 3.000 honorarium**. Geen enkel niveau haalt dit
 zelfstandig:
-- Strategisch komt **€ 1.500 tekort** → móét samenwerken
-- Tactisch komt **€ 600 tekort** → moet beperkt samenwerken
-- Operationeel komt **€ 500 tekort** → moet beperkt samenwerken
+- Strategisch komt **€ 1.000 tekort** → móét samenwerken
+- Tactisch komt **€ 300 tekort** → moet beperkt samenwerken
+- Operationeel komt **€ 400 tekort** → moet beperkt samenwerken
+
+(Vraag 11 verkleint het tekort voor alle drie niveaus iets — de drempel
+blijft onhaalbaar zonder samenwerking, maar de marge wordt smaller. Bij
+implementatie eventueel drempel verhogen naar **€ 3.500** om dezelfde
+samenwerkings-druk te behouden.)
 
 Cross-niveau bonus (+2 uren per question): bij elke samenwerking levert de extra
 coördinatie-tijd je tarief × 2 extra op. Strategisch profiteert hier het meest van
