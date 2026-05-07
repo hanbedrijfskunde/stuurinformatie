@@ -78,12 +78,12 @@ handmatig te bouwen.
 
 ### PAMS-coverage check
 
-| Dimensie | Stories | Gedekt | Implementatie-eisen |
+| Dimensie | Stories | Gedekt | Versterkt door F5 (consultant-frame) |
 |---|---|:--:|---|
-| **Purpose** | S4 | ✓ | Reflectie-vraag aan eind (Idee C); expliciete S/T/O-uitleg (F3.3) |
-| **Autonomy** | S2 | ✓ | Punten-zichtbaar-vooraf (F1); volgorde van vragen niet vastgelegd; drempel haalbaar met subset |
-| **Mastery** | S1, S5 | ✓ | Live punten-counter; per-vraag uitleg na lock-in; geen straf bij fout |
-| **Social** | S3 | ✓ | Cross-niveau-bonus (F1.C3); samenwerkings-mechaniek (F4-Optie-B); drempel onhaalbaar zonder samenwerking (Bijlage A) |
+| **Purpose** | S4 | ✓ | Bedrijfskundig adviseur is reëel HBO-uitstroomprofiel — game = carrière-rol-spelen |
+| **Autonomy** | S2 | ✓ | Hoog-tarief-vragen kiezen vs. veel-laag-tarief-vragen = strategische projectkeuze |
+| **Mastery** | S1, S5 | ✓ | Fee in euro is concretere groei-meter dan abstracte punten |
+| **Social** | S3 | ✓ | Strategy consultants subcontracten data-analisten = exact het echte consulting-model |
 
 **Aandachtspunten per pijler bij implementatie:**
 
@@ -224,6 +224,51 @@ kolomstructuur volgen zijn direct compatibel.
 vragen het laagdrempeligst zijn voor een eerste oefening, en strategische
 vragen het meeste gewicht krijgen via complexiteit-punten)
 
+### F5 — Consultant-frame (rol + verdienmodel)
+
+De student wordt geplaatst in de rol van **bedrijfskundig adviseur**, ingehuurd
+door EnYoi om op een specifiek niveau business-vragen te beantwoorden. Punten
+uit F1 vertalen naar **uren × uurtarief = honorarium (fee)**.
+
+**F5.1 Uurtarief per niveau** (marktconform, vastgesteld voor v0.4):
+
+| Niveau | Persona | Uurtarief |
+|---|---|--:|
+| Strategisch | Strategy consultant / Senior advisor | **€ 250** |
+| Tactisch | Management consultant | **€ 150** |
+| Operationeel | Junior business analyst | **€ 100** |
+
+**F5.2 Uren-conversie**: 1 complexiteits-punt uit F1 = 1 declarabel uur.
+
+**F5.3 Fee-berekening**:
+```
+fee_per_vraag = uren × uurtarief_van_jouw_niveau
+totaal_fee    = som over alle correct voltooide vragen
+```
+
+**F5.4 Slaagdrempel als fee-doel**: bijvoorbeeld **€ 3.000 honorarium**. De
+drempel is bewust zo gekozen dat geen enkel niveau het alleen kan halen
+(zie aangepaste Bijlage A).
+
+**F5.5 UI-elementen**:
+- **Rolkaart-uitbreiding** op landing: *"Welkom — EnYoi heeft je ingehuurd als
+  [Strategy / Management / Junior] consultant tegen € [tarief]/u. Verdien
+  minimaal € 3.000 honorarium om de opdracht succesvol af te ronden."*
+- **Fee-meter** in matrix-header (naast voortgangsbalk): *"€ 1.250 verdiend ·
+  doel € 3.000 · 12,5 uren gewerkt"*
+- **Per-vraag indicator**: kleine euro-prijs op iedere cel (*"4u × €100 = €400"*)
+
+**F5.6 Stakeholder-framing per vraag** (sluit aan op Idee B uit sectie 5):
+elke vraag wordt geformuleerd als verzoek van een client-stakeholder, bijv.
+*"De CFO wil voor de board-meeting weten of onze top-10 klanten 80% van de
+omzet leveren. Hoeveel kost het je om dit antwoord op te leveren?"*
+
+> **Pedagogische winst van het consultant-frame**: het is niet alleen een
+> game-skin maar een rol die studenten in hun toekomstige carrière daadwerkelijk
+> kunnen aannemen. Bedrijfskundig adviseur is een mainstream HBO-uitstroomprofiel.
+> De fee-mechaniek leert ze tegelijk omgaan met *time-to-deliver* — een vaardigheid
+> die hun stage en eerste baan direct nodig hebben.
+
 ### F4 — Samenwerkings-mechaniek (cross-level)
 
 Drie ontwerp-opties:
@@ -312,10 +357,16 @@ versterkt collectieve mastery.
 | **v0.4.1** | F2 — auto-compute engine + answer-functions per vraag | 8–12u |
 | **v0.4.2** | F3 — vraag-taxonomie + uitleg-paneel + visuele onderscheiding | 3–4u |
 | **v0.4.3** | F1 — punten-mechaniek + voortgangsbalk + slaagdrempel | 4–6u |
-| **v0.4.4** | F4-Optie-B — samenwerking via handmatige invoer | 3–4u |
-| **v0.4.5** | Polish — ideeën C/D/E + bug-fixes na eerste college | 4–6u |
+| **v0.4.4** | F5 — consultant-frame: tarief, uren, fee-meter, rolkaart | 3–5u |
+| **v0.4.5** | F4-Optie-B — samenwerking via handmatige invoer | 3–4u |
+| **v0.4.6** | Polish — ideeën C/D/E + bug-fixes na eerste college | 4–6u |
 
-**Totaal**: ~22–32u werk, gefaseerd over 2–3 sessies.
+**Totaal**: ~25–37u werk, gefaseerd over 2–3 sessies.
+
+> F5 (consultant-frame) komt bewust *na* F1 omdat de fee-berekening leunt op de
+> punten-engine. Maar F5 voelt voor studenten als de hoofdfeature — overweeg
+> visuele framing-elementen al vroeg te tonen (bijv. uurtarief op de rolkaart
+> vanaf v0.4.2).
 
 ## 10. Risico's en mitigaties
 
@@ -330,7 +381,90 @@ versterkt collectieve mastery.
 ## 11. Volgende stap
 
 Dit PRD bespreken, prioriteiten vaststellen, en starten met **v0.4.1 (F2)** —
-de auto-compute engine vormt het fundament waar F1, F3 en F4 op leunen.
+de auto-compute engine vormt het fundament waar F1, F3, F4 en F5 op leunen.
+
+## 12. Implementation Checklist
+
+### Pre-implementation — docent-akkoord vereist
+
+- [ ] Slaagdrempel vastgesteld (suggestie: **€ 3.000 honorarium**)
+- [ ] Uurtarieven per niveau bevestigd (S=€250 · T=€150 · O=€100)
+- [ ] Samenwerkings-optie A/B/C gekozen (advies: **B**)
+- [ ] Punten-feedback timing (advies: **direct + voortgangsbalk**)
+- [ ] Multiple attempts toestaan (advies: **ja** — leerproces voorop)
+- [ ] CRISP-DM Data-Understanding-frame behouden (advies: **ja**)
+- [ ] Eindwaardering binair vs. gradiënt — bronzen/zilveren/gouden adviseur?
+
+### v0.4.1 — Auto-compute engine (F2)
+
+- [ ] CSV-loader via `fetch()` + PapaParse via CDN toegevoegd
+- [ ] Parse-resultaat gecached in `localStorage` na eerste laden (perf)
+- [ ] 10 answer-functions geschreven (één per `VRAGEN`-entry)
+- [ ] Standaard-veldnamen contract gedocumenteerd (`klantnummer`, `factuurdatum`, …)
+- [ ] Per functie: ontbrekende-data fallback met `{ value: null, reden: '…' }`
+- [ ] Unit tests tegen huidige hardcoded `ANTWOORDEN` als regressie-vangnet
+- [ ] Integratie in heatmap.html matrix-fase (cell-click toont berekend antwoord)
+- [ ] Mismatch-uitleg (S5) bij elke verkeerde classificatie
+
+### v0.4.2 — Vraag-taxonomie (F3)
+
+- [ ] 3 categorieën met kleur + icoon (kompas / tandwielen / sleutel)
+- [ ] Uitleg-paneel uitklapbaar bovenaan matrix met S/T/O-definities
+- [ ] 10 vragen herverdeeld per F3.4 (2 strategisch · 3 tactisch · 5 operationeel)
+- [ ] Visuele markering per vraag in matrix (icoon naast nummer)
+- [ ] Plenaire 30-sec uitleg toegevoegd aan draaiboek tijdsblok 3a
+
+### v0.4.3 — Punten-mechaniek (F1)
+
+- [ ] Complexiteit-tabel per vraag in `js/complexity.js` (datasets × joins × cross-niveau)
+- [ ] Live punten-counter in matrix-header
+- [ ] Voortgangsbalk met drempel-doel
+- [ ] localStorage: `state.points` + `state.completedQuestions`
+- [ ] Configuratie-array `POINTS_CONFIG` zodat tweaken triviaal is
+
+### v0.4.4 — Consultant-frame (F5)
+
+- [ ] Rolkaart op landing uitgebreid met persona + uurtarief + opdracht
+- [ ] `TARIEVEN`-config met euro-bedrag per niveau
+- [ ] Fee-meter naast voortgangsbalk in matrix-header
+- [ ] Fee-display per vraag in matrix-cellen (*"4u × €100 = €400"*)
+- [ ] Stakeholder-frame per vraag (Idee B): client-persona + verzoek
+- [ ] Slot-bericht bij drempel-bereiken: *"Opdracht voltooid — fee € X verdiend"*
+
+### v0.4.5 — Samenwerkings-mechaniek (F4 — Optie B)
+
+- [ ] *"Vraag een [niveau]-consultant"*-knop bij ontbrekende data
+- [ ] Manuele invoer-veld voor antwoord-van-collega
+- [ ] +2 uren cross-niveau bonus toegekend bij invoer
+- [ ] Logging in `localStorage`: wie hielp wie (voor docent-replay)
+- [ ] Anti-cheat-check: eenvoudige plausibiliteit (bijv. tegen berekend antwoord)
+
+### v0.4.6 — Polish
+
+- [ ] Idee C — drie reflectie-vragen na drempel-bereiken
+- [ ] Idee D — replay-modus voor docent (samenwerkings-events)
+- [ ] Idee E — groepsbalk per niveau (collectieve mastery)
+- [ ] Bug-log na eerste college doornemen
+- [ ] Punten/tarief-balans her-kalibreren indien nodig
+
+### Pre-launch — testing
+
+- [ ] Test op iPhone Safari + Android Chrome (mobile-first)
+- [ ] Test alle drie de niveaus solo → kun je drempel halen? (zou **nee** moeten zijn)
+- [ ] Test met mock-samenwerking → kun je drempel halen? (zou **ja** moeten zijn)
+- [ ] Test docent-modus + antwoordsleutel-toggle
+- [ ] Test offline (na eerste laden, wifi uit)
+- [ ] Test op slecht 3G-netwerk
+- [ ] Plenaire dry-run met 1-2 student-vrijwilligers
+- [ ] PAMS-coverage achteraf verifiëren — voelt elke pijler opgenomen?
+
+### Post-launch — iteratie
+
+- [ ] Eerste college: feedback verzamelen via reflectievragen (Idee C)
+- [ ] Slaagdrempel her-kalibreren na 1-2 sessies indien nodig
+- [ ] Bug-log bijhouden in GitHub Issues
+- [ ] v0.5 backlog opbouwen — wat ontbreekt nog?
+- [ ] Eventueel: andere casus-CSV-set toevoegen (test schaalbaarheid)
 
 ---
 
@@ -349,10 +483,21 @@ de auto-compute engine vormt het fundament waar F1, F3 en F4 op leunen.
 | 9 | ja | ja | ja | 1 | 2 | 2 | D direct (rek 8091), A met filter |
 | 10 | ja | ja | nee | 2 | 2 | — | D-aggregatie nodig |
 
-Max punten per niveau:
-- Strategisch: 1+1+1+1+1+2 = **6 punten** (uit 6 vragen die ze JA kunnen)
-- Tactisch: 1+2+3+1+3+2+2+2 = **16 punten** (uit 8 vragen)
-- Operationeel: 1+2+4+3+4+4+3+2+2 = **25 punten** (uit 9 vragen)
+**Max punten = max uren** per niveau (alleen werkend):
 
-Slaagdrempel-suggestie: **20 punten**. Strategisch komt er nooit zonder
-samenwerking. Tactisch en Operationeel halen 't met moeite.
+| Niveau | Vragen oplosbaar | Max uren | Tarief | **Max fee solo** |
+|---|--:|--:|--:|--:|
+| Strategisch | 6 | 6 | € 250 | **€ 1.500** |
+| Tactisch | 8 | 16 | € 150 | **€ 2.400** |
+| Operationeel | 9 | 25 | € 100 | **€ 2.500** |
+
+**Slaagdrempel-suggestie: € 3.000 honorarium**. Geen enkel niveau haalt dit
+zelfstandig:
+- Strategisch komt **€ 1.500 tekort** → móét samenwerken
+- Tactisch komt **€ 600 tekort** → moet beperkt samenwerken
+- Operationeel komt **€ 500 tekort** → moet beperkt samenwerken
+
+Cross-niveau bonus (+2 uren per question): bij elke samenwerking levert de extra
+coördinatie-tijd je tarief × 2 extra op. Strategisch profiteert hier het meest van
+(€ 500 per samenwerking) — wat reflecteert dat coördinatie-werk in de senior-rol
+hoger gewaardeerd wordt.
