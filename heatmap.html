@@ -229,6 +229,26 @@
       <span id="level-name" class="font-bold"></span>
     </div>
 
+    <!-- v0.4.3 — Punten-meter -->
+    <div id="points-meter" class="hidden mt-3 bg-slate-800/60 rounded-lg px-4 py-3 max-w-2xl">
+      <div class="flex items-baseline justify-between gap-3 mb-2">
+        <div>
+          <span class="text-slate-400 text-xs uppercase tracking-wider">Score</span>
+          <span id="points-current" class="text-2xl font-bold text-emerald-300 ml-2">0</span>
+          <span class="text-slate-500"> / </span>
+          <span id="points-max" class="text-slate-300">0</span>
+          <span class="text-slate-400 text-sm ml-1">punten</span>
+        </div>
+        <div class="text-xs text-slate-400">
+          drempel: <span id="points-drempel" class="text-slate-200 font-mono"></span>
+        </div>
+      </div>
+      <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+        <div id="points-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width:0%"></div>
+      </div>
+      <div id="points-status" class="mt-2 text-xs text-slate-400"></div>
+    </div>
+
     <div id="docent-banner" class="hidden mt-3 inline-flex items-center gap-2 bg-amber-900/40 border border-amber-700 rounded-lg px-4 py-2">
       <span class="text-amber-300 text-sm font-bold">Docent-modus</span>
       <span class="text-slate-400 text-xs">— alle drie kolommen interactief, antwoordsleutel beschikbaar</span>
@@ -435,6 +455,26 @@
     'O': { naam: 'Operationeel',kleur: 'emerald', label: 'O' }
   };
 
+  // v0.4.3 — Punten-config per vraag per niveau [s, t, o]
+  // 0 = niet beantwoordbaar voor dat niveau (correcte classificatie = NEE → 0 pt)
+  const POINTS_CONFIG = [
+    [1, 1, 1],  // 1  omzet
+    [0, 2, 2],  // 2  top-10 klanten
+    [0, 0, 4],  // 3  betaaltermijnen — A+C join
+    [0, 3, 3],  // 4  klantconcentratie
+    [1, 1, 4],  // 5  debiteuren — operationeel reconstrueren
+    [0, 0, 4],  // 6  welke klanten 534k
+    [0, 3, 3],  // 7  Belastingdienst — B+sourceID
+    [1, 2, 2],  // 8  omzet per businesslijn — twee routes
+    [1, 2, 2],  // 9  abonnementen-percentage
+    [2, 2, 0],  // 10 EBIT — D-aggregatie nodig
+    [2, 2, 1]   // 11 productconcentratie — twee routes
+  ];
+
+  // Max punten + drempel per niveau (70% van max)
+  const MAX_PUNTEN = { s: 8, t: 18, o: 26 };
+  const DREMPEL    = { s: 6, t: 13, o: 18 };
+
   // Verwachte antwoorden — pas aan naar eigen didactische bedoeling.
   // Per rij: [strategisch, tactisch, operationeel]
   const ANTWOORDEN = [
@@ -614,6 +654,9 @@
     document.getElementById('docent-banner').classList.add('hidden');
     document.getElementById('toggle-key').classList.add('hidden');
     document.getElementById('docent-howto').classList.add('hidden');
+    document.getElementById('points-meter').classList.remove('hidden');
+    document.getElementById('points-max').textContent = MAX_PUNTEN[lvl];
+    document.getElementById('points-drempel').textContent = DREMPEL[lvl];
     buildRows();
     render();
     // Auto-compute engine: laad datasets in achtergrond (v0.4.1)
@@ -633,11 +676,57 @@
     document.getElementById('docent-banner').classList.remove('hidden');
     document.getElementById('toggle-key').classList.remove('hidden');
     document.getElementById('docent-howto').classList.remove('hidden');
+    document.getElementById('points-meter').classList.add('hidden');
     buildRows();
     render();
     // Auto-compute engine: laad ALLE datasets voor docent
     if (window.engine) {
       window.engine.loadDatasets('docent').catch(err => console.error('Dataset load:', err));
+    }
+  }
+
+  // v0.4.3 — Punten-berekening + voortgangsbalk
+  function calculatePoints(targetLevel) {
+    if (!targetLevel) return 0;
+    const groepIdx = GROEPEN.indexOf(targetLevel);
+    if (groepIdx < 0) return 0;
+    let punten = 0;
+    for (const [key, value] of Object.entries(state)) {
+      const [qStr, g] = key.split('-');
+      if (g !== targetLevel) continue;
+      const q = parseInt(qStr);
+      if (isNaN(q) || q >= ANTWOORDEN.length) continue;
+      const verwacht = ANTWOORDEN[q][groepIdx];
+      if (value === verwacht) {
+        punten += (POINTS_CONFIG[q] && POINTS_CONFIG[q][groepIdx]) || 0;
+      }
+    }
+    return punten;
+  }
+
+  function updatePointsMeter() {
+    if (!level || isDocent) return;
+    const huidig = calculatePoints(level);
+    const max    = MAX_PUNTEN[level] || 0;
+    const drempel = DREMPEL[level] || 0;
+    const pct = max > 0 ? Math.min(100, (huidig / max) * 100) : 0;
+
+    document.getElementById('points-current').textContent = huidig;
+    document.getElementById('points-bar').style.width = pct + '%';
+
+    const bar = document.getElementById('points-bar');
+    bar.className = 'h-full transition-all duration-300 ' +
+      (huidig >= drempel ? 'bg-emerald-400' :
+       huidig >= drempel * 0.6 ? 'bg-amber-400' : 'bg-emerald-500');
+
+    const status = document.getElementById('points-status');
+    if (huidig >= drempel) {
+      status.textContent = '✓ Drempel bereikt — opdracht voltooid (zonder samenwerking)';
+      status.className = 'mt-2 text-xs text-emerald-300 font-semibold';
+    } else {
+      const teGaan = drempel - huidig;
+      status.textContent = `${teGaan} ${teGaan === 1 ? 'punt' : 'punten'} te gaan tot drempel`;
+      status.className = 'mt-2 text-xs text-slate-400';
     }
   }
 
@@ -852,6 +941,9 @@
         btn.appendChild(badge);
       }
     });
+
+    // v0.4.3 — punten-meter live updaten na elke render
+    updatePointsMeter();
   }
 
   function toggleKey() {
