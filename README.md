@@ -4,7 +4,7 @@ Statische werkvorm-tool voor het college **Sturing in lagen** uit de module
 Informatiemanagement (HBO Bedrijfskunde, HAN). Studenten ervaren in 45 minuten dat
 informatie in een organisatie verspreid zit over meerdere systemen, en dat
 elke managementlaag andere data kan zien — gebaseerd op echte boekhoudgegevens
-van EnYoi ICT Services B.V. (boekjaar 2016).
+van Vento ICT B.V. (boekjaar 2016).
 
 🌐 **Live:** [hanbedrijfskunde.github.io/stuurinformatie](https://hanbedrijfskunde.github.io/stuurinformatie/)
 

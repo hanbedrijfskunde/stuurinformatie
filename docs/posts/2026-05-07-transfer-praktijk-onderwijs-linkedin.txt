@@ -1,0 +1,25 @@
+𝗪𝗮𝘁 𝗲𝗲𝗻 𝗔𝗜-𝗼𝗽𝗱𝗿𝗮𝗰𝗵𝘁 𝗺𝗲 𝗹𝗲𝗲𝗿𝗱𝗲 𝗼𝘃𝗲𝗿 𝗯𝗲𝗱𝗿𝗶𝗷𝗳𝘀𝗸𝘂𝗻𝗱𝗲-𝗼𝗻𝗱𝗲𝗿𝘄𝗶𝗷𝘀.
+
+Recent werkte ik als AI Engineer aan een agentic systeem voor de adviespraktijk van een accountantskantoor — bedoeld om analyses uit te voeren ter ondersteuning van adviseurs. Een interessante opdracht. Maar het meest leerzame moment had niets met de techniek te maken.
+
+Tijdens het bouwen merkte ik dat de échte uitdaging niet in de agents zat. Het draaide om een oudere bedrijfskundige vraag: wie heeft welke informatie nodig, en waar leeft die? We leren studenten dat directie totalen wil, managers afdelingscijfers, en operationele medewerkers de losse transacties.
+
+Maar wat ik in de praktijk zag, was juist het omgekeerde: de échte strategische vragen — waar verdienen we eigenlijk geld op, en waar lekt het weg? — zijn alleen te beantwoorden door dóór de detaildata heen te graven.
+
+𝗦𝘁𝗿𝗮𝘁𝗲𝗴𝗶𝘀𝗰𝗵 𝗶𝗻𝘇𝗶𝗰𝗵𝘁 𝗼𝗻𝘁𝘀𝘁𝗮𝗮𝘁 𝗻𝗶𝗲𝘁 𝗯𝗼𝘃𝗲𝗻𝗶𝗻 𝗱𝗲 𝗽𝗶𝗿𝗮𝗺𝗶𝗱𝗲, 𝗺𝗮𝗮𝗿 𝗼𝗻𝗱𝗲𝗿𝗶𝗻.
+
+Dat is precies het soort observatie waarvan ik wil dat onze studenten HBO Bedrijfskunde haar zelf maken — zodat ze in hun eerste functie snel de juiste stappen nemen.
+
+Maar hoe breng je zo'n inzicht het klaslokaal in zónder het plat te slaan tot een hoofdstuk uit een tekstboek?
+
+Mijn poging: een module met een role-play game waarin studenten als consultant op drie niveaus — strategy, management, junior — samen een adviesopdracht voor een onderneming klaren. Niemand haalt zijn honorariumdoel alleen. Samenwerking dwars door de aggregatieniveaus is de enige route.
+
+Geen agentic systeem in de klas. Wél hetzelfde inzicht: 𝘀𝘁𝘂𝘂𝗿𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗲 𝗶𝘀 𝗲𝗲𝗻 𝗼𝗻𝘁𝘄𝗲𝗿𝗽𝘃𝗿𝗮𝗮𝗴, 𝗴𝗲𝗲𝗻 𝗿𝗮𝗽𝗽𝗼𝗿𝘁𝗲𝗲𝗿𝘃𝗿𝗮𝗮𝗴.
+
+Wat ik besefte: het ontwerpen van deze module veranderde hoe ik wederom naar mijn praktijkcasus keek. De transfer bleek twee kanten op te werken.
+
+Welke ervaring uit jullie praktijk verdient eigenlijk een plek in het curriculum?
+
+→ De game is publiek beschikbaar voor collega-docenten. Link in de eerste reactie.
+
+#onderwijsinnovatie #praktijkleren #bedrijfskunde #hbo

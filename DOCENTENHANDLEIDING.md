@@ -67,7 +67,7 @@ hun rol-titel (*"Strategy consultant — wat is jouw advies?"*), niet als
 
 | Fase | Niet doen | Wel doen |
 |---|---|---|
-| **1. Intro** | Veel theorie over EnYoi geven | Snel overschakelen naar consultant-frame en drempel |
+| **1. Intro** | Veel theorie over Vento ICT geven | Snel overschakelen naar consultant-frame en drempel |
 | **2. Toewijzing** | Studenten laten klagen over hun niveau | Reframe: *"Iedereen krijgt een rol, ook in een echt advies-team"* |
 | **3a. Data Understanding** | Ze pushen naar de vragen | Laten exploreren — *"Wat zie je? Wat verbaast je?"* |
 | **3b. Vragen beantwoorden** | Antwoorden geven | Vragen stellen: *"Hoe zou je dat aanpakken? Wat heb je nodig?"* |
@@ -300,7 +300,7 @@ Stuur deze e-mail of Brightspace-bericht:
 
 ### 4.1 De 5-minuten-pitch (verbatim suggestie)
 
-> *"Welkom. Vandaag worden jullie ingehuurd door EnYoi ICT Services — een
+> *"Welkom. Vandaag worden jullie ingehuurd door Vento ICT — een
 > Nederlandse IT-dienstverlener uit Leusden. In 2016 maakten ze € 7,3 miljoen
 > omzet, maar begonnen het jaar met een eigen vermogen van min € 1,75 miljoen.*
 >
@@ -309,7 +309,7 @@ Stuur deze e-mail of Brightspace-bericht:
 > junior business analyst tegen € 100. Jullie krijgen willekeurig een rol
 > toegewezen.*
 >
-> *Doel: € 3.000 honorarium verdienen door business-vragen van EnYoi te
+> *Doel: € 3.000 honorarium verdienen door business-vragen van Vento ICT te
 > beantwoorden. Maar één regel: dat doel ga je niet alleen halen. Sommige
 > vragen vereisen data die jouw niveau niet heeft. Dan moet je samenwerken
 > met een collega van een ander niveau. Net als in de echte wereld."*
@@ -466,7 +466,7 @@ Informatiemanagement. 24 studenten met laptop. PowerBI vooraf geïnstalleerd
 (checkpoint één week eerder).
 
 **00:00–00:05 — Intro casus + consultant-frame**
-- Docent toont landing op de beamer: *"Welkom bij EnYoi ICT Services"*
+- Docent toont landing op de beamer: *"Welkom bij Vento ICT"*
 - Spreekt de 5-minuten-pitch uit (zie sectie 4.1)
 - Studenten letten op: 4 cijfers + 3 tarieven + drempel € 3.000
 

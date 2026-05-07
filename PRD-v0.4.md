@@ -278,7 +278,7 @@ Voor minstens twee vragen — **vraag 8 (omzet per businesslijn)** en **vraag 11
 (productconcentratie)** — bestaan **twee geldige berekenroutes** die
 **verschillende getallen** opleveren:
 
-| Route | Bron | Granulariteit | Voorbeeld HHI bij EnYoi |
+| Route | Bron | Granulariteit | Voorbeeld HHI bij Vento ICT |
 |---|---|--:|--:|
 | Via **businesslijn** | `verkoopfacturen.csv` group by `businesslijn` | 5 buckets | **5.190** |
 | Via **omzetrekening** | `resultatenrekening.csv` + `rekeningschema.csv` (join) | 11 buckets | **4.909** |
@@ -313,7 +313,7 @@ fout, maar een fundamenteel kenmerk van concentratie-metingen.
 ### F5 — Consultant-frame (rol + verdienmodel)
 
 De student wordt geplaatst in de rol van **bedrijfskundig adviseur**, ingehuurd
-door EnYoi om op een specifiek niveau business-vragen te beantwoorden. Punten
+door Vento ICT om op een specifiek niveau business-vragen te beantwoorden. Punten
 uit F1 vertalen naar **uren × uurtarief = honorarium (fee)**.
 
 **F5.1 Uurtarief per niveau** (marktconform, vastgesteld voor v0.4):
@@ -337,7 +337,7 @@ drempel is bewust zo gekozen dat geen enkel niveau het alleen kan halen
 (zie aangepaste Bijlage A).
 
 **F5.5 UI-elementen**:
-- **Rolkaart-uitbreiding** op landing: *"Welkom — EnYoi heeft je ingehuurd als
+- **Rolkaart-uitbreiding** op landing: *"Welkom — Vento ICT heeft je ingehuurd als
   [Strategy / Management / Junior] consultant tegen € [tarief]/u. Verdien
   minimaal € 3.000 honorarium om de opdracht succesvol af te ronden."*
 - **Fee-meter** in matrix-header (naast voortgangsbalk): *"€ 1.250 verdiend ·

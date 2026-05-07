@@ -1,5 +1,5 @@
 leveranciernummer,leveranciernaam,contactpersoon,telefoon,email,kvk_nummer,straat,huisnummer,postcode,plaats,land,iban
-S50000,EnYoi ICT Services B.V.,,033-4341800,k.zandbergen@enyoi.afas,354652,Philipsstraat,9,3833 LC,Leusden,NL,
+S50000,Vento ICT B.V.,,033-4341800,k.zandbergen@vento.nl,354652,Philipsstraat,9,3833 LC,Leusden,NL,
 S50001,Belastingdienst,,0800-0543,leuk@belastingdienst.afas,,Stationsplein,51,7311 NZ,Apeldoorn,NL,NL86INGB0002445588
 S50002,Schoonmaakbedrijf Clean B.V.,,033-3987214,info@schoonmaakbedrijf-clean.afas,38123727,Stadsring,37,3811 HN,Amersfoort,NL,NL95INGB0004082010
 S50003,Corporate Express,,036-5476700,info@cexp.afas,33272529,Rondebeltweg,102,1329 BH,Almere,NL,NL92RABO0300401094
@@ -41,7 +41,7 @@ S50039,TMG b.v. (Telegraaf Media Groep),,020-5859111,info@telegraaf.afas,,Basisw
 S50040,Tempo Team Uitzendbureau,,033-4651055,amersfoort@tempo-team.afas,,Hellestraat,11,3811 LK,Amersfoort,NL,NL08INGB0001254280
 S50041,Longfonds,,033-4341212,info@longfonds.afas,40506839,Stationsplein,127,3818 LE,Amersfoort,NL,NL95INGB0000055055
 S50042,Ikea Amersfoort,,0900-2354532,meubelen@ikea.afas,,Euroweg,101,3825 HB,Amersfoort,NL,NL34INGB0004959697
-S50090,EnYoi Holding B.V.,,033-4341888,info@enyoyhold.afas,,Philipsstraat,11,3833 LC,Leusden,NL,
+S50090,Vento Holding B.V.,,033-4341888,info@ventoholding.nl,,Philipsstraat,11,3833 LC,Leusden,NL,
 S50500,ARBO Dienst,,010-4491257,info@arbo-rotterdam.afas,,Kleiweg,343,3045 PK,Rotterdam,NL,NL09RABO0171254848
 S50894,Canon Nederland,,020-7149400,sales@canon.afas,,Bovenkerkerweg,59,1185 XB,Amstelveen,NL,NL14RABO0108756300
 S50903,Caliber Europe BV,,0416-699000,caliber@audio.afas,18127431,Parallelweg,2,4261 GA,Wijk en Aalburg,NL,NL85RABO0373355114
