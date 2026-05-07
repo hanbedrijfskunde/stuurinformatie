@@ -20,6 +20,7 @@
   .cell-ja       { background: rgb(16 185 129); }
   .cell-misschien{ background: rgb(245 158 11); }
   .cell-nee      { background: rgb(244 63 94); }
+  .cell-samenwerking { background: rgb(59 130 246); } /* blue-500 — v0.4.5 */
 
   .verwacht-badge {
     font-size: 0.72rem;
@@ -412,7 +413,9 @@
       <span class="inline-block px-1.5 py-0.5 rounded bg-slate-700">leeg</span> →
       <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-500">JA</span> →
       <span class="inline-block px-1.5 py-0.5 rounded bg-amber-500">MISSCHIEN</span> →
-      <span class="inline-block px-1.5 py-0.5 rounded bg-rose-500">NEE</span>
+      <span class="inline-block px-1.5 py-0.5 rounded bg-rose-500">NEE</span> →
+      <span class="inline-block px-1.5 py-0.5 rounded bg-blue-500">🤝 COLLEGA</span>
+      <span class="ml-2 text-slate-500">(samenwerking: +2 uren bonus)</span>
     </p>
 
     <p id="docent-howto" class="hidden mt-8 text-xs text-slate-500 leading-relaxed max-w-3xl">
@@ -513,8 +516,16 @@
   ];
 
   const GROEPEN = ['s', 't', 'o'];
-  const STATES  = ['', 'ja', 'misschien', 'nee'];
-  const LABELS  = { '': '', 'ja': 'JA', 'misschien': 'MISSCHIEN', 'nee': 'NEE' };
+  const STATES  = ['', 'ja', 'misschien', 'nee', 'samenwerking'];
+  const LABELS  = {
+    '': '',
+    'ja': 'JA',
+    'misschien': 'MISSCHIEN',
+    'nee': 'NEE',
+    'samenwerking': '🤝 COLLEGA'
+  };
+  // v0.4.5 — Cross-niveau-samenwerking levert +2 uren bonus
+  const SAMENWERKING_BONUS_UREN = 2;
   const LEVEL_NAMES = {
     's': 'Strategisch (D)',
     't': 'Tactisch (A · B · D)',
@@ -709,31 +720,40 @@
   }
 
   // v0.4.3 — Punten-berekening + voortgangsbalk
+  // v0.4.5 — Samenwerking telt +2 uren cross-niveau bonus
   function calculatePoints(targetLevel) {
-    if (!targetLevel) return 0;
+    if (!targetLevel) return { uren: 0, samenwerkingen: 0 };
     const groepIdx = GROEPEN.indexOf(targetLevel);
-    if (groepIdx < 0) return 0;
-    let punten = 0;
+    if (groepIdx < 0) return { uren: 0, samenwerkingen: 0 };
+    let uren = 0;
+    let samenwerkingen = 0;
     for (const [key, value] of Object.entries(state)) {
       const [qStr, g] = key.split('-');
       if (g !== targetLevel) continue;
       const q = parseInt(qStr);
       if (isNaN(q) || q >= ANTWOORDEN.length) continue;
-      const verwacht = ANTWOORDEN[q][groepIdx];
-      if (value === verwacht) {
-        punten += (POINTS_CONFIG[q] && POINTS_CONFIG[q][groepIdx]) || 0;
+
+      if (value === 'samenwerking') {
+        // Cross-niveau-samenwerking: +2 uren ongeacht eigen niveau-capaciteit
+        uren += SAMENWERKING_BONUS_UREN;
+        samenwerkingen += 1;
+      } else if (value === ANTWOORDEN[q][groepIdx]) {
+        // Correcte zelfstandige classificatie
+        uren += (POINTS_CONFIG[q] && POINTS_CONFIG[q][groepIdx]) || 0;
       }
     }
-    return punten;
+    return { uren, samenwerkingen };
   }
 
   function updatePointsMeter() {
     if (!level || isDocent) return;
-    const uren    = calculatePoints(level);
+    const { uren, samenwerkingen } = calculatePoints(level);
     const tarief  = TARIEVEN[level] || 0;
     const fee     = uren * tarief;
     const maxUren = MAX_PUNTEN[level] || 0;
     const maxFee  = maxUren * tarief;
+    const soloFee = (uren - samenwerkingen * SAMENWERKING_BONUS_UREN) * tarief;
+    const samenwerkingsFee = samenwerkingen * SAMENWERKING_BONUS_UREN * tarief;
     const pctFee  = FEE_DREMPEL > 0 ? Math.min(100, (fee / FEE_DREMPEL) * 100) : 0;
 
     document.getElementById('points-current').textContent = uren;
@@ -747,16 +767,22 @@
 
     const status = document.getElementById('points-status');
     if (fee >= FEE_DREMPEL) {
-      status.textContent = `✓ Honorarium-doel bereikt — opdracht voltooid! (€ ${fee.toLocaleString('nl-NL')} verdiend)`;
+      const samenwerkingsTxt = samenwerkingen > 0
+        ? ` · met ${samenwerkingen} samenwerking${samenwerkingen === 1 ? '' : 'en'} (${fmtEuro(samenwerkingsFee)})`
+        : '';
+      status.textContent = `✓ Honorarium-doel bereikt — opdracht voltooid! ${fmtEuro(fee)} verdiend${samenwerkingsTxt}`;
       status.className = 'mt-2 text-xs text-emerald-300 font-semibold';
-    } else if (fee >= maxFee) {
-      // Bereikt max maar niet drempel — samenwerking nodig
+    } else if (soloFee >= maxFee && samenwerkingen === 0) {
+      // Solo-max bereikt zonder samenwerking — expliciete samenwerkings-cue
       const tekort = FEE_DREMPEL - fee;
-      status.textContent = `⚠ Max alleen-werkend bereikt (${fmtEuro(maxFee)}) — ${fmtEuro(tekort)} tekort. Tijd voor samenwerking met een ander niveau.`;
+      status.textContent = `⚠ Solo-max bereikt (${fmtEuro(maxFee)}) — ${fmtEuro(tekort)} tekort. Vraag een collega van een ander niveau om hulp (klik door tot 🤝 COLLEGA voor +${SAMENWERKING_BONUS_UREN}u bonus).`;
       status.className = 'mt-2 text-xs text-amber-300 font-semibold';
     } else {
       const teGaan = FEE_DREMPEL - fee;
-      status.textContent = `${fmtEuro(teGaan)} te gaan tot honorarium-doel · ${uren}u × ${fmtEuro(tarief)}/u`;
+      const samenwerkingsTxt = samenwerkingen > 0
+        ? ` · ${samenwerkingen} samenwerking${samenwerkingen === 1 ? '' : 'en'}`
+        : '';
+      status.textContent = `${fmtEuro(teGaan)} te gaan · ${uren}u × ${fmtEuro(tarief)}/u${samenwerkingsTxt}`;
       status.className = 'mt-2 text-xs text-slate-400';
     }
   }
