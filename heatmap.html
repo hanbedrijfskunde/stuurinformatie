@@ -88,6 +88,55 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen">
 
+<!-- v0.4.6 Idee C — Reflectie-modal bij drempel-bereiken (3 meta-vragen) -->
+<div id="reflectie-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[60] flex items-center justify-center p-4 overflow-y-auto">
+  <div class="bg-slate-800 border border-emerald-700 rounded-lg max-w-2xl w-full p-6 my-8">
+    <div class="flex items-start justify-between gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-1">Opdracht voltooid</div>
+        <h2 class="text-2xl font-bold">Voordat je gaat — drie reflectie-vragen</h2>
+      </div>
+      <button id="reflectie-skip" class="text-slate-500 hover:text-white text-sm">overslaan</button>
+    </div>
+
+    <p class="text-slate-300 text-sm mb-6">
+      Je hebt het honorarium-doel bereikt. Voordat je het college verlaat,
+      neem 30 seconden om deze drie vragen te beantwoorden — voor jezelf,
+      niet voor een cijfer.
+    </p>
+
+    <div class="space-y-5">
+      <div>
+        <label class="block text-emerald-300 font-semibold mb-2 text-sm">
+          1. Welk vraag-type was lastigst voor jou? Waarom?
+        </label>
+        <textarea id="reflectie-1" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-100 text-sm focus:border-emerald-500 focus:outline-none" placeholder="Bijv: De strategische vragen, omdat ik daar geen data voor had..."></textarea>
+      </div>
+      <div>
+        <label class="block text-purple-300 font-semibold mb-2 text-sm">
+          2. Welke samenwerking leverde het meeste op?
+        </label>
+        <textarea id="reflectie-2" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-100 text-sm focus:border-purple-500 focus:outline-none" placeholder="Bijv: Met de operationele consultant voor vraag 6..."></textarea>
+      </div>
+      <div>
+        <label class="block text-amber-300 font-semibold mb-2 text-sm">
+          3. In je stage of toekomstige werk: op welk niveau zit jij? Hoe weet je dat?
+        </label>
+        <textarea id="reflectie-3" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-100 text-sm focus:border-amber-500 focus:outline-none" placeholder="Bijv: Ik werk meestal operationeel omdat..."></textarea>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3 items-center justify-between">
+      <button id="reflectie-bewaar" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-white font-bold transition">
+        Bewaar &amp; sluit
+      </button>
+      <p class="text-xs text-slate-500">
+        Je antwoorden worden lokaal bewaard — alleen jij ziet ze.
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- ===================================================================
      Stap 0 — Landing (random toewijzing zichtbaar maken)
      =================================================================== -->
@@ -418,12 +467,20 @@
       <span class="ml-2 text-slate-500">(samenwerking: +2 uren bonus)</span>
     </p>
 
-    <p id="docent-howto" class="hidden mt-8 text-xs text-slate-500 leading-relaxed max-w-3xl">
-      <strong>Docent-modus:</strong> deze view ziet alleen wat je in <em>deze</em> browser hebt
-      ingevuld. Studenten vullen op hun eigen apparaten in — die zie je hier níét automatisch.
-      Voor het plenaire moment vraag je groepen verbaal hun antwoorden te delen, en typt ze
-      hier kort in. Daarna onthul je de antwoordsleutel met <kbd>K</kbd> of de knop.
-    </p>
+    <div id="docent-howto" class="hidden mt-8 max-w-3xl">
+      <p class="text-xs text-slate-500 leading-relaxed">
+        <strong>Docent-modus:</strong> deze view ziet alleen wat je in <em>deze</em> browser hebt
+        ingevuld. Studenten vullen op hun eigen apparaten in — die zie je hier níét automatisch.
+        Voor het plenaire moment vraag je groepen verbaal hun antwoorden te delen, en typt ze
+        hier kort in. Daarna onthul je de antwoordsleutel met <kbd>K</kbd> of de knop.
+      </p>
+      <div class="mt-3">
+        <button id="export-samenw-log" class="text-xs px-3 py-1.5 rounded bg-blue-900/40 hover:bg-blue-700 transition text-blue-300 hover:text-white">
+          Exporteer samenwerkings-log (dit apparaat)
+        </button>
+        <span class="text-xs text-slate-600 ml-2">— logt elke 🤝 COLLEGA-klik met tijdstip</span>
+      </div>
+    </div>
 
   </main>
 
@@ -571,9 +628,12 @@
     }
   };
 
-  const STORAGE_KEY  = 'heatmap-v02';
-  const LEVEL_KEY    = 'heatmap-level';
-  const DATASEEN_KEY = 'heatmap-data-seen';
+  const STORAGE_KEY     = 'heatmap-v02';
+  const LEVEL_KEY       = 'heatmap-level';
+  const DATASEEN_KEY    = 'heatmap-data-seen';
+  const REFLECTIE_KEY   = 'heatmap-reflectie';
+  const SAMENW_LOG_KEY  = 'heatmap-samenwerking-log';
+  const REFL_SHOWN_KEY  = 'heatmap-reflectie-shown';
 
   let state    = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   let level    = null;
@@ -624,6 +684,10 @@
     document.getElementById('answer-close').addEventListener('click', () => {
       document.getElementById('answer-panel').classList.add('hidden');
     });
+    // v0.4.6 — reflectie-modal + samenwerkings-log handlers
+    document.getElementById('reflectie-bewaar').addEventListener('click', bewaarReflectie);
+    document.getElementById('reflectie-skip').addEventListener('click', skipReflectie);
+    document.getElementById('export-samenw-log').addEventListener('click', exportSamenwerkingsLog);
 
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -772,6 +836,10 @@
         : '';
       status.textContent = `✓ Honorarium-doel bereikt — opdracht voltooid! ${fmtEuro(fee)} verdiend${samenwerkingsTxt}`;
       status.className = 'mt-2 text-xs text-emerald-300 font-semibold';
+      // v0.4.6 — toon reflectie-modal éénmaal bij eerste drempel-bereik
+      if (!isDocent && localStorage.getItem(REFL_SHOWN_KEY) !== 'true') {
+        setTimeout(showReflectieModal, 600);
+      }
     } else if (soloFee >= maxFee && samenwerkingen === 0) {
       // Solo-max bereikt zonder samenwerking — expliciete samenwerkings-cue
       const tekort = FEE_DREMPEL - fee;
@@ -848,8 +916,50 @@
     else state[key] = nxt;
     save();
     render();
+    // v0.4.6 Idee D — log samenwerkings-event voor docent-replay
+    if (nxt === 'samenwerking') logSamenwerking(q, g);
     // Toon berekend antwoord voor deze vraag (v0.4.1)
     showAnswerPanel(q);
+  }
+
+  // v0.4.6 Idee D — Samenwerkings-log
+  function logSamenwerking(q, g) {
+    try {
+      const log = JSON.parse(localStorage.getItem(SAMENW_LOG_KEY) || '[]');
+      log.push({ vraag: q + 1, niveau: g, ts: new Date().toISOString() });
+      localStorage.setItem(SAMENW_LOG_KEY, JSON.stringify(log));
+    } catch (e) { /* ignore */ }
+  }
+
+  function exportSamenwerkingsLog() {
+    try {
+      const log = JSON.parse(localStorage.getItem(SAMENW_LOG_KEY) || '[]');
+      if (log.length === 0) {
+        alert('Geen samenwerkings-events gelogd op dit apparaat.');
+        return;
+      }
+      // Format als leesbare tekst
+      const lines = ['Samenwerkings-log (lokaal apparaat):', ''];
+      for (const e of log) {
+        const naam = LEVEL_NAMES[e.niveau] || e.niveau;
+        const tijd = new Date(e.ts).toLocaleTimeString('nl-NL');
+        lines.push(`  ${tijd}  vraag ${e.vraag}  (${naam})`);
+      }
+      lines.push('', `Totaal: ${log.length} samenwerkingen`);
+      const text = lines.join('\n');
+      // Probeer clipboard, fallback naar prompt
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text)
+          .then(() => alert('Log gekopieerd naar klembord:\n\n' + text))
+          .catch(() => prompt('Selecteer + kopieer:', text));
+      } else {
+        prompt('Selecteer + kopieer:', text);
+      }
+      // Ook console-dump voor power-users
+      console.table(log);
+    } catch (e) {
+      alert('Fout bij exporteren: ' + e.message);
+    }
   }
 
   function showAnswerPanel(qIdx) {
@@ -1051,7 +1161,41 @@
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(LEVEL_KEY);
     localStorage.removeItem(DATASEEN_KEY);
+    localStorage.removeItem(REFLECTIE_KEY);
+    localStorage.removeItem(REFL_SHOWN_KEY);
+    localStorage.removeItem(SAMENW_LOG_KEY);
     location.reload();
+  }
+
+  // v0.4.6 Idee C — Reflectie-modal bij drempel-bereiken
+  function showReflectieModal() {
+    const modal = document.getElementById('reflectie-modal');
+    if (!modal) return;
+    // Pre-vullen indien al ingevuld
+    try {
+      const eerder = JSON.parse(localStorage.getItem(REFLECTIE_KEY) || '{}');
+      if (eerder.r1) document.getElementById('reflectie-1').value = eerder.r1;
+      if (eerder.r2) document.getElementById('reflectie-2').value = eerder.r2;
+      if (eerder.r3) document.getElementById('reflectie-3').value = eerder.r3;
+    } catch (e) { /* ignore */ }
+    modal.classList.remove('hidden');
+    localStorage.setItem(REFL_SHOWN_KEY, 'true');
+  }
+
+  function bewaarReflectie() {
+    const r = {
+      r1: document.getElementById('reflectie-1').value.trim(),
+      r2: document.getElementById('reflectie-2').value.trim(),
+      r3: document.getElementById('reflectie-3').value.trim(),
+      bewaard_op: new Date().toISOString(),
+      niveau: level
+    };
+    localStorage.setItem(REFLECTIE_KEY, JSON.stringify(r));
+    document.getElementById('reflectie-modal').classList.add('hidden');
+  }
+
+  function skipReflectie() {
+    document.getElementById('reflectie-modal').classList.add('hidden');
   }
 
   init();

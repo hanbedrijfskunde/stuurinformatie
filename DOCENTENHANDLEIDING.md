@@ -453,29 +453,195 @@ Aan het eind, kies 1–2 van deze vragen om plenair te stellen:
 
 ## 7. Uitgewerkte voorbeelden
 
-> Deze sectie wordt aangevuld na het eerste college met echte casuïstiek.
-> Hieronder een placeholder met de structuur.
+> **Status**: deze sectie bevat **hypothetische voorbeelden** geschreven vóór
+> het eerste college. Na elke daadwerkelijke sessie kunnen ze worden vervangen
+> of aangevuld met echte casuïstiek. De scenario's zijn ontworpen om te tonen
+> hoe een ideaal-typische werkvorm verloopt en welke afwijkingen kunnen
+> optreden.
 
-### 7.1 Voorbeeld-sessie: 24 studenten, 8-8-8-verdeling
+### 7.1 Voorbeeld-sessie: 24 studenten, evenwichtige 8-8-8-verdeling
 
-*[Placeholder — wordt ingevuld na eerste college: minuut-voor-minuut
-verloop met aandachtspunten en wat goed/minder goed liep.]*
+**Context**: woensdagochtend 09:00, jaar 2 Bedrijfskunde, blok 4 module
+Informatiemanagement. 24 studenten met laptop. PowerBI vooraf geïnstalleerd
+(checkpoint één week eerder).
+
+**00:00–00:05 — Intro casus + consultant-frame**
+- Docent toont landing op de beamer: *"Welkom bij EnYoi ICT Services"*
+- Spreekt de 5-minuten-pitch uit (zie sectie 4.1)
+- Studenten letten op: 4 cijfers + 3 tarieven + drempel € 3.000
+
+**00:05–00:10 — Random toewijzing**
+- Studenten scannen QR
+- Eerste verdeling valt: 9-7-8 (S-T-O)
+- Docent: *"Goed verdeeld."* Geen rebalancing nodig.
+- Een student protesteert: *"Mag ik liever Strategy?"* Docent: *"Geef Junior eerst een eerlijke kans — over 5 minuten weet je waarom."*
+
+**00:10–00:14 — PowerBI import**
+- Een paar studenten hebben PowerBI-installatie-issues. Docent loopt rond, helpt
+- Junior-studenten zijn als eersten klaar (kleinste dataset paradox: minste files maar meest content)
+- Strategy-studenten hebben moeite met het feit dat balans/V&W alleen rekening-IDs bevatten — *"Waar is mijn omschrijving?"* — eerste merge-puzzle ontdekt
+
+**00:14–00:22 — Vragen beantwoorden**
+- Studenten klikken door de vragen
+- Junior begint snel punten te scoren (eigen niveau dekt veel)
+- Strategy raakt achter — fee-meter staat na 5 minuten op € 1.000 / € 3.000
+- Tactisch zit ertussenin: € 1.500 ongeveer
+- Eerste samenwerkings-tekens: een Strategy student loopt naar een Junior buurman: *"Hé, kan jij voor mij vraag 3 berekenen?"*
+
+**00:22–00:25 — Plenaire samenwerkings-cue**
+- Docent: *"Wie heeft al € 3.000? Niemand? Goed. Strategy consultants: handen omhoog. Wie hebben jullie nodig?"*
+- Geforceerde matching: drie pairs van Strategy + Junior, twee pairs van Tactisch + Operationeel
+- Binnen 2 minuten begint iedereen 🤝 COLLEGA-cellen aan te klikken
+- Fee-meters lopen op naar € 2.500-3.500 bij meerderheid
+
+**00:25–00:36 — Adviesdashboard**
+- Studenten tekenen op A4 hun KSF + 2 KPIs
+- Docent loopt rond, daagt uit met *"Hoe weet je dat?"*
+- Drie groepen van 3-4 studenten formeren spontaan op basis van niveau
+
+**00:36–00:39 — Korte presentaties**
+- Drie groepen presenteren elk 1 minuut
+- Strategy: focus op kapitaalstructuur
+- Tactisch: werkkapitaal + DSI
+- Operationeel: voorraadrotatie + late betalers
+
+**00:39–00:42 — Plot twist**
+- Docent toont marge-tabel
+- 3 seconden stilte
+- Zinger: *"Hardware is 21% van de omzet maar slechts 8% van de marge"*
+- Zichtbare reactie: vier studenten van Junior-niveau leunen achterover
+- *"Welke groep had de data om dit zelf te ontdekken?"* — discussie
+
+**00:42–00:44 — Twee-routes-discussie (vraag 11)**
+- Docent vraagt: *"Wat was jullie HHI voor productconcentratie?"*
+- Junior: *"5.190."* Strategy: *"4.909."*
+- Vraagteken in de zaal
+- Docent: *"Wie heeft gelijk? — beiden. Want jullie meten een ander ding."*
+- Aha-moment, vooral bij de Tactische groep
+
+**00:44–00:45 — Slot + identity-reflectie**
+- *"Stak het strategische werk je het meest? Of zou je liever Junior blijven?"*
+- Stilte voor 30 seconden bezinning
+- Reflectie-modal verschijnt voor wie € 3.000 haalde — drie vragen
+- Huiswerk-vraag mee voor volgende les
+
+**Resultaten op fee-meter na college**:
+- 18 van 24 studenten haalden € 3.000 of meer (samenwerking werkte)
+- 4 zaten op € 2.500-2.999 (bijna)
+- 2 op € 1.500-2.000 (haakten af tijdens PowerBI-import)
+
+**Achteraf**: 17 studenten vulden de reflectie-vragen in. De *"identity"-vraag*
+leverde de mooiste antwoorden — drie studenten schreven dat ze nu twijfelen of
+ze naar Strategy of naar Operationeel willen voor hun stage.
 
 ### 7.2 Voorbeeld-sessie: scheve 12-6-6-verdeling
 
-*[Placeholder — wat te doen als de random toewijzing niet evenredig uitpakt,
-of een groep meer studenten heeft dan de twee andere.]*
+**Context**: zelfde college, maar de random toewijzing pakt scheef uit:
+12 Strategy, 6 Tactisch, 6 Operationeel.
+
+**Waarom dit gebeurt**: pure random toewijzing kan met 24 trekkingen scheef
+uitpakken — de wiskunde zegt dat 12-6-6 of erger optreedt in ~5% van de
+gevallen.
+
+**Tijdsblok 2 — herrandomisatie**:
+- Docent ziet 12 Strategy en 6 elk voor andere niveaus
+- Vraagt: *"Wie heeft Strategy gekregen — wie van jullie wil opnieuw randomizen?"*
+- 4 studenten klikken "Begin opnieuw" → 1 wordt T, 2 worden O, 1 blijft S
+- Nieuwe verdeling: 9-7-8. Goed genoeg.
+
+**Pedagogische winst van deze rondselverwarring**:
+- Studenten ervaren dat *"random"* niet altijd *"eerlijk"* uitvalt
+- Mooi haakje voor een mini-discussie over *steekproeven en kansrekening* —
+  zonder dat je het didactisch hebt gepland
+- *"In de echte wereld zijn projectteams ook nooit perfect verdeeld"*
+
+**Alternatief — geen rebalancing**:
+Als de docent zegt *"laat maar staan, 12-6-6 werkt ook"*, dan:
+- Strategy is overrepresented → meer concurrentie binnen die groep
+- Operationeel & Tactisch worden cruciaal — er staan meer mensen in de rij voor hun data
+- Samenwerkings-momenten worden intensiever per persoon
+
+Beide werken. Welke je kiest hangt af van de groepsdynamiek.
 
 ### 7.3 Voorbeeld plenair gesprek (verbatim transcript)
 
-*[Placeholder — verbatim uitwerking van een typisch nabespreking-gesprek met
-studenten-reacties en docent-reacties.]*
+**Setting**: tijdsblok 5b, plot twist, 24 studenten.
+
+> **Docent**: *"Goed. Hier zien jullie de marge-tabel. Eén minuut stil
+> kijken — wat valt op?"*
+>
+> *(stilte, 60 seconden, studenten lezen de tabel)*
+>
+> **Docent**: *"Junior consultants — wat zien jullie?"*
+>
+> **Student 1 (Junior)**: *"Hardware is 33-40% marge, consultancy is 99%."*
+>
+> **Docent**: *"Goed. Wat betekent dat?"*
+>
+> **Student 1**: *"Hardware is bijna niet winstgevend?"*
+>
+> **Docent**: *"Niet helemaal — 33% marge is op zich gezond. Maar..."*
+>
+> *(wacht)*
+>
+> **Student 2 (Strategy)**: *"Het is maar 8% van de totale marge?"*
+>
+> **Docent**: *"Precies. Hardware is 21% van de omzet maar slechts 8% van
+> de marge. En het bindt al ons voorraad-cash. Wat is de strategische
+> conclusie?"*
+>
+> **Student 3 (Tactisch)**: *"Stop met hardware?"*
+>
+> **Docent**: *"Misschien. Of optimaliseer het. Maar hier is de werkelijke
+> vraag: WIE had de data om dit zelf te ontdekken?"*
+>
+> **Student 1 (Junior)**: *"Wij?"*
+>
+> **Docent**: *"Jullie. Niet Strategy — die had de data niet. Niet Tactisch
+> — die had het maar half. Strategisch inzicht ontstaat hier in de meest
+> atomaire data van het operationele niveau. De piramide klopt niet."*
+>
+> *(stilte, ~5 seconden)*
+>
+> **Student 2 (Strategy)**: *"Maar hoe weet de directie dit dan?"*
+>
+> **Docent**: *"Vraag. Vandaar dat goede directies vaak een Business
+> Analyst hebben — iemand die voor hen door de operationele data graaft."*
 
 ### 7.4 Voorbeeld typisch samenwerkings-moment
 
-*[Placeholder — Strategy consultant vraagt Junior Analyst om hulp bij vraag 6
-(welke klanten betalen € 534k). Hoe verloopt dat, wat zegt de tool, wat doet
-de docent.]*
+**Setting**: tijdsblok 3c, ~22 minuten in.
+
+Strategy student "Daan" heeft fee-meter op € 1.500. Junior-buurman "Lina"
+heeft fee-meter op € 2.400. Daan loopt naar Lina:
+
+> **Daan**: *"Hé, kun je voor mij vraag 6 doen? Welke klanten moeten samen
+> die € 534.000 betalen?"*
+>
+> **Lina**: *(opent haar PowerBI-rapport)* *"Even kijken... Top-3 zijn:
+> Rijder Autogroep met € 41.000, Bema Betonmortel met € 32.000, en
+> Tijhuis Market met € 28.000. Plus nog een lange staart."*
+>
+> **Daan**: *"OK, kan ik dat hier invullen?"*
+>
+> *(Daan klikt door op vraag 6 in zijn matrix tot 🤝 COLLEGA — blauwe cel)*
+> *(Daan's fee-meter springt naar € 2.000 — +2u × € 250 = € 500 bonus)*
+>
+> **Daan**: *"Mooi. Drie meer en ik haal de drempel."*
+>
+> **Lina**: *(grijnst)* *"Welkom bij Operationeel — de echte werkwerkers."*
+>
+> **Daan**: *"Ja ja. Bedankt."* *(loopt terug, gaat verder met andere
+> vragen)*
+
+**Wat docent observeert**: het samenwerkings-moment is informeel,
+professioneel, en duurt < 2 minuten. Lina heeft niets verloren — haar eigen
+matrix blijft compleet. Daan heeft alleen wat hij al wist (vraag 6 kan
+hij niet alleen) bevestigd én een bonus binnengehaald.
+
+**Pedagogische winst**: studenten ervaren *consulting as a profession* —
+data ophalen voor een collega is normaal werk, geen "verraad" of "hulp
+vragen". Dat is de Social-pijler in actie.
 
 ---
 
@@ -526,6 +692,65 @@ Schakel over naar analoge fallback:
 3. Datasets op USB-stick — laat circuleren
 4. Antwoorden verzamelen via plenair klassikaal — gebruik whiteboard als
    matrix-vervanger
+
+### 9.5 Antwoord-paneel toont *"Data wordt geladen — antwoord verschijnt zometeen"* en blijft hangen
+
+**Symptoom**: student klikt cel, ziet de "data wordt geladen"-melding en het antwoord verschijnt nooit.
+
+**Diagnose**: het is mogelijk dat de browser de oude versie van de tool uit cache gebruikt — vóór bug-fix `d7cb5e0` (mei 2026) was er een laad-volgorde-issue waarbij de auto-compute engine niet op tijd geladen was bij refresh.
+
+**Oplossing**:
+1. Hard refresh in de browser: Cmd+Shift+R (Mac) of Ctrl+Shift+R (Windows/Linux)
+2. Als dat niet werkt: open DevTools (F12), tab Network, vink *"Disable cache"* aan, refresh
+3. Als dat niet werkt: open DevTools, tab Console — kopieer eventuele JavaScript-fouten en stuur ze door naar de docent of GitHub-issue
+
+**Preventie**: in de tool zit nu een retry-mechanisme dat bij eerste klik zelf de datasets probeert te laden als ze nog niet beschikbaar zijn. Een tweede klik op dezelfde cel ~1-2 seconden later zou meestal het antwoord tonen.
+
+### 9.6 PowerBI op Mac werkt niet (geen native versie)
+
+**Symptoom**: Mac-studenten kunnen PowerBI Desktop niet installeren — die is alleen voor Windows.
+
+**Oplossingen** (meerdere opties, kies wat past):
+1. **Excel + Power Query**: native op Mac, ondersteunt dezelfde merge-functionaliteit als PowerBI's Power Query. Slechts iets minder visueel.
+2. **Parallels Desktop / VMware**: virtuele Windows-omgeving met PowerBI — overkill voor één college, maar werkt.
+3. **PowerBI Service (web)**: gratis online versie — beperkter dan Desktop maar werkt cross-platform. Vereist Microsoft account.
+4. **Werk in duo met Windows-buurman**: Mac-student kijkt mee, doet samenwerkingsklik in eigen tool.
+
+**Aanbeveling vooraf**: vraag in vooraankondiging *"Heb je Mac of Windows?"* uit. Bij meer dan 3 Macs in de groep, plan duo's vooraf.
+
+### 9.7 Random toewijzing pakt scheef uit (>50% in één niveau)
+
+**Symptoom**: 12 of meer studenten krijgen hetzelfde niveau bij eerste random toewijzing.
+
+**Diagnose**: pure random met 24 trekkingen kan dit ~5% van de tijd opleveren.
+
+**Oplossing**:
+1. Vraag plenair: *"Wie heeft [over-vertegenwoordigd niveau] gekregen — wie wil opnieuw randomizen?"*
+2. 4-6 studenten klikken "Begin opnieuw" → meestal binnen 1-2 herrandomisaties is balans hersteld
+3. Alternatief: laat de scheefheid staan en bespreek het tijdens college als *"reëel gegeven dat projectteams nooit perfect verdeeld zijn"*
+
+### 9.8 Studenten openen elkaars datasets (peeken)
+
+**Symptoom**: een student typt manueel de URL `?docent` of bekijkt de bron-CSVs in een ander tabblad.
+
+**Diagnose**: de tool is bewust open — dit is een *eer-systeem*, niet een gesloten examen.
+
+**Aanpak**: noem expliciet aan begin van college: *"Niet stiekem in andere mappen kijken — dat breekt het experiment voor jezelf. De tool werkt op vertrouwen."* Een enkele student die peekt, leert minder, maar bederft het experiment niet voor anderen.
+
+### 9.9 Een groep haalt drempel zonder samenwerking
+
+**Symptoom**: één tactische of operationele student haalt € 3.000 zonder ooit op 🤝 COLLEGA te klikken (theoretisch onmogelijk volgens Bijlage A, maar...).
+
+**Diagnose**:
+- Punten-config is mogelijk te genereus voor een specifieke combinatie
+- Of: student heeft een vraag ingevuld als JA terwijl het verwacht NEE was, en de tool gaf onbedoeld punten
+
+**Oplossing**:
+1. Eerst checken: heeft de student inderdaad alles correct? Open de antwoordsleutel (`K`) in jouw docent-modus
+2. Als de student voor één vraag JA gaf terwijl het NEE moest zijn — dat is de glitch
+3. Niet stoppen, maar plenair benoemen: *"X heeft de drempel gehaald zonder samenwerking — laten we kijken hoe!"* — leer-moment
+
+**Preventie**: in v0.5+ kunnen we een strictere validatie toevoegen die alleen punten geeft als de classificatie matcht én engine de waarde heeft berekend.
 
 ---
 
