@@ -224,23 +224,31 @@
     <div class="text-sm uppercase tracking-widest text-slate-400">Stap 2 van 2 · Welke vragen kun jij beantwoorden?</div>
     <h1 class="text-2xl md:text-3xl font-bold mt-1">Live heatmap — kunnen jullie deze vraag beantwoorden?</h1>
 
-    <div id="level-info" class="hidden mt-3 inline-flex items-center gap-3 bg-slate-800 rounded-lg px-4 py-2">
-      <span class="text-slate-400 text-sm">Jij bent:</span>
-      <span id="level-name" class="font-bold"></span>
+    <div id="level-info" class="hidden mt-3 flex flex-wrap items-center gap-3">
+      <div class="inline-flex items-center gap-3 bg-slate-800 rounded-lg px-4 py-2">
+        <span class="text-slate-400 text-sm">Jij bent:</span>
+        <span id="level-name" class="font-bold"></span>
+      </div>
+      <div id="persona-card" class="inline-flex items-center gap-2 bg-slate-800/60 rounded-lg px-4 py-2 text-sm">
+        <span class="text-slate-400">Rol:</span>
+        <span id="persona-naam" class="font-semibold"></span>
+        <span class="text-slate-500">·</span>
+        <span class="text-emerald-300 font-mono"><span id="persona-tarief"></span>/u</span>
+      </div>
     </div>
 
-    <!-- v0.4.3 — Punten-meter -->
+    <!-- v0.4.4 — Honorarium-meter (consultant-frame) -->
     <div id="points-meter" class="hidden mt-3 bg-slate-800/60 rounded-lg px-4 py-3 max-w-2xl">
       <div class="flex items-baseline justify-between gap-3 mb-2">
         <div>
-          <span class="text-slate-400 text-xs uppercase tracking-wider">Score</span>
-          <span id="points-current" class="text-2xl font-bold text-emerald-300 ml-2">0</span>
+          <span class="text-slate-400 text-xs uppercase tracking-wider">Honorarium</span>
+          <span id="fee-current" class="text-2xl font-bold text-emerald-300 ml-2">€ 0</span>
           <span class="text-slate-500"> / </span>
-          <span id="points-max" class="text-slate-300">0</span>
-          <span class="text-slate-400 text-sm ml-1">punten</span>
+          <span id="fee-drempel" class="text-slate-300">€ 3.000</span>
         </div>
-        <div class="text-xs text-slate-400">
-          drempel: <span id="points-drempel" class="text-slate-200 font-mono"></span>
+        <div class="text-xs text-slate-400 text-right">
+          <span id="points-current">0</span> uur
+          (max <span id="points-max">0</span>)
         </div>
       </div>
       <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
@@ -475,6 +483,19 @@
   const MAX_PUNTEN = { s: 8, t: 18, o: 26 };
   const DREMPEL    = { s: 6, t: 13, o: 18 };
 
+  // v0.4.4 — Consultant-frame: punten = uren, tarief × uren = fee
+  const TARIEVEN = { s: 250, t: 150, o: 100 };  // euro per uur
+  const FEE_DREMPEL = 3000;                      // honorarium-doel
+  const PERSONA = {
+    s: 'Strategy Consultant',
+    t: 'Management Consultant',
+    o: 'Junior Business Analyst'
+  };
+
+  function fmtEuro(n) {
+    return '€ ' + n.toLocaleString('nl-NL', { maximumFractionDigits: 0 });
+  }
+
   // Verwachte antwoorden — pas aan naar eigen didactische bedoeling.
   // Per rij: [strategisch, tactisch, operationeel]
   const ANTWOORDEN = [
@@ -656,7 +677,9 @@
     document.getElementById('docent-howto').classList.add('hidden');
     document.getElementById('points-meter').classList.remove('hidden');
     document.getElementById('points-max').textContent = MAX_PUNTEN[lvl];
-    document.getElementById('points-drempel').textContent = DREMPEL[lvl];
+    document.getElementById('persona-naam').textContent = PERSONA[lvl];
+    document.getElementById('persona-tarief').textContent = fmtEuro(TARIEVEN[lvl]);
+    document.getElementById('fee-drempel').textContent = fmtEuro(FEE_DREMPEL);
     buildRows();
     render();
     // Auto-compute engine: laad datasets in achtergrond (v0.4.1)
@@ -706,26 +729,34 @@
 
   function updatePointsMeter() {
     if (!level || isDocent) return;
-    const huidig = calculatePoints(level);
-    const max    = MAX_PUNTEN[level] || 0;
-    const drempel = DREMPEL[level] || 0;
-    const pct = max > 0 ? Math.min(100, (huidig / max) * 100) : 0;
+    const uren    = calculatePoints(level);
+    const tarief  = TARIEVEN[level] || 0;
+    const fee     = uren * tarief;
+    const maxUren = MAX_PUNTEN[level] || 0;
+    const maxFee  = maxUren * tarief;
+    const pctFee  = FEE_DREMPEL > 0 ? Math.min(100, (fee / FEE_DREMPEL) * 100) : 0;
 
-    document.getElementById('points-current').textContent = huidig;
-    document.getElementById('points-bar').style.width = pct + '%';
+    document.getElementById('points-current').textContent = uren;
+    document.getElementById('fee-current').textContent = fmtEuro(fee);
+    document.getElementById('points-bar').style.width = pctFee + '%';
 
     const bar = document.getElementById('points-bar');
     bar.className = 'h-full transition-all duration-300 ' +
-      (huidig >= drempel ? 'bg-emerald-400' :
-       huidig >= drempel * 0.6 ? 'bg-amber-400' : 'bg-emerald-500');
+      (fee >= FEE_DREMPEL ? 'bg-emerald-400' :
+       fee >= FEE_DREMPEL * 0.6 ? 'bg-amber-400' : 'bg-emerald-500');
 
     const status = document.getElementById('points-status');
-    if (huidig >= drempel) {
-      status.textContent = '✓ Drempel bereikt — opdracht voltooid (zonder samenwerking)';
+    if (fee >= FEE_DREMPEL) {
+      status.textContent = `✓ Honorarium-doel bereikt — opdracht voltooid! (€ ${fee.toLocaleString('nl-NL')} verdiend)`;
       status.className = 'mt-2 text-xs text-emerald-300 font-semibold';
+    } else if (fee >= maxFee) {
+      // Bereikt max maar niet drempel — samenwerking nodig
+      const tekort = FEE_DREMPEL - fee;
+      status.textContent = `⚠ Max alleen-werkend bereikt (${fmtEuro(maxFee)}) — ${fmtEuro(tekort)} tekort. Tijd voor samenwerking met een ander niveau.`;
+      status.className = 'mt-2 text-xs text-amber-300 font-semibold';
     } else {
-      const teGaan = drempel - huidig;
-      status.textContent = `${teGaan} ${teGaan === 1 ? 'punt' : 'punten'} te gaan tot drempel`;
+      const teGaan = FEE_DREMPEL - fee;
+      status.textContent = `${fmtEuro(teGaan)} te gaan tot honorarium-doel · ${uren}u × ${fmtEuro(tarief)}/u`;
       status.className = 'mt-2 text-xs text-slate-400';
     }
   }
