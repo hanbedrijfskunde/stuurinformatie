@@ -267,6 +267,65 @@
     </div>
   </details>
 
+  <!-- v0.4.2 — Vraag-types uitleg (S/T/O) -->
+  <details class="max-w-6xl mx-auto mb-8 bg-slate-800/50 rounded-lg border border-slate-700/50">
+    <summary class="cursor-pointer px-5 py-3 text-slate-300 font-semibold text-sm uppercase tracking-wider select-none hover:bg-slate-800 transition rounded-lg">
+      Vraag-types · S / T / O uitleg
+    </summary>
+    <div class="px-5 pb-5 pt-1">
+      <p class="text-slate-300 text-sm mb-4">
+        Elke vraag heeft een <em>type</em> dat aangeeft over wélke beslissing
+        deze vraag gaat — onafhankelijk van jouw eigen niveau.
+        <strong>Een operationeel medewerker kan dus prima een strategische vraag stellen.</strong>
+      </p>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-blue-900/30 border border-blue-700/50 rounded p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-blue-500 text-white text-sm font-bold">S</span>
+            <div class="text-blue-300 font-bold">Strategisch</div>
+          </div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Vragen over <em>voortbestaan</em> en <em>richting</em>: bedreigingen
+            voor het business model, marktpositie, kapitaalstructuur, M&amp;A.
+          </p>
+          <p class="text-slate-400 text-xs italic mt-2">
+            Karakter: <em>existentieel</em> — "Wat doet ons stoppen?"
+          </p>
+        </div>
+        <div class="bg-purple-900/30 border border-purple-700/50 rounded p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-purple-500 text-white text-sm font-bold">T</span>
+            <div class="text-purple-300 font-bold">Tactisch</div>
+          </div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Vragen over <em>optimaliseren</em> van het huidige business model:
+            productmix, pricing, marges, klantsegmentatie.
+          </p>
+          <p class="text-slate-400 text-xs italic mt-2">
+            Karakter: <em>optimaliserend</em> — "Wat doet ons beter scoren?"
+          </p>
+        </div>
+        <div class="bg-emerald-900/30 border border-emerald-700/50 rounded p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-emerald-500 text-white text-sm font-bold">O</span>
+            <div class="text-emerald-300 font-bold">Operationeel</div>
+          </div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Vragen over <em>processen soepel laten draaien</em>: klanten op tijd
+            laten betalen, voorraden binnen norm, foutpercentages.
+          </p>
+          <p class="text-slate-400 text-xs italic mt-2">
+            Karakter: <em>procesmatig</em> — "Wat doet ons soepeler draaien?"
+          </p>
+        </div>
+      </div>
+      <p class="text-slate-400 text-xs mt-4">
+        In de matrix hieronder zie je de letter <strong>S</strong>, <strong>T</strong>
+        of <strong>O</strong> naast elke vraag — gekleurd volgens dit schema.
+      </p>
+    </div>
+  </details>
+
   <main class="max-w-6xl mx-auto">
 
     <table class="w-full text-sm md:text-base border-separate border-spacing-y-1">
@@ -350,22 +409,46 @@
     "Hoeveel betaalden we aan de Belastingdienst aan BTW + loonheffing?",
     "Wat is de omzet per businesslijn (consultancy / hardware / cursussen)?",
     "Welk percentage van onze omzet komt uit recurring abonnementen?",
-    "Wat is ons EBIT-resultaat (bedrijfsresultaat) over 2016?"
+    "Wat is ons EBIT-resultaat (bedrijfsresultaat) over 2016?",
+    "Wat is onze productconcentratie (HHI of CR-3)?"
   ];
+
+  // Vraag-types per vraag (v0.4.2 — F3.4 herverdeling)
+  // S = Strategisch  · T = Tactisch  · O = Operationeel
+  const VRAAG_TYPES = [
+    'O',  // 1  totale omzet
+    'T',  // 2  top-10 klanten
+    'O',  // 3  betaaltermijnen
+    'S',  // 4  klantconcentratie
+    'O',  // 5  debiteuren totaal
+    'O',  // 6  welke klanten 534k
+    'O',  // 7  Belastingdienst
+    'T',  // 8  omzet per businesslijn
+    'S',  // 9  abonnementen-percentage
+    'T',  // 10 EBIT
+    'S'   // 11 productconcentratie
+  ];
+
+  const TYPE_INFO = {
+    'S': { naam: 'Strategisch', kleur: 'blue',    label: 'S' },
+    'T': { naam: 'Tactisch',    kleur: 'purple',  label: 'T' },
+    'O': { naam: 'Operationeel',kleur: 'emerald', label: 'O' }
+  };
 
   // Verwachte antwoorden — pas aan naar eigen didactische bedoeling.
   // Per rij: [strategisch, tactisch, operationeel]
   const ANTWOORDEN = [
-    ["ja",  "ja",  "ja"],
-    ["nee", "ja",  "ja"],
-    ["nee", "nee", "ja"],
-    ["nee", "ja",  "ja"],
-    ["ja",  "ja",  "misschien"],
-    ["nee", "nee", "ja"],
-    ["nee", "ja",  "ja"],
-    ["ja",  "ja",  "ja"],
-    ["ja",  "ja",  "ja"],
-    ["ja",  "ja",  "nee"]
+    ["ja",  "ja",  "ja"],         // 1  omzet
+    ["nee", "ja",  "ja"],         // 2  top-10 klanten
+    ["nee", "nee", "ja"],         // 3  betaaltermijnen
+    ["nee", "ja",  "ja"],         // 4  klantconcentratie
+    ["ja",  "ja",  "misschien"],  // 5  debiteuren open
+    ["nee", "nee", "ja"],         // 6  welke klanten 534k
+    ["nee", "ja",  "ja"],         // 7  Belastingdienst
+    ["ja",  "ja",  "ja"],         // 8  omzet per businesslijn
+    ["ja",  "ja",  "ja"],         // 9  abonnementen-percentage
+    ["ja",  "ja",  "nee"],        // 10 EBIT
+    ["ja",  "ja",  "ja"]          // 11 productconcentratie (twee-routes)
   ];
 
   const GROEPEN = ['s', 't', 'o'];
@@ -572,11 +655,21 @@
       nrSpan.className = 'text-slate-500 mr-2 font-mono text-sm';
       nrSpan.textContent = `${i + 1}.`;
 
+      // v0.4.2 — type-badge (S / T / O) met kleurcodering
+      const typeBadge = document.createElement('span');
+      const type = VRAAG_TYPES[i];
+      const typeColors = { S: 'bg-blue-500', T: 'bg-purple-500', O: 'bg-emerald-500' };
+      typeBadge.className =
+        `inline-flex items-center justify-center w-5 h-5 rounded text-white text-xs font-bold mr-2 ` +
+        (typeColors[type] || 'bg-slate-600');
+      typeBadge.textContent = type;
+      typeBadge.title = (TYPE_INFO[type] || {}).naam || type;
+
       const txtSpan = document.createElement('span');
       txtSpan.className = 'text-slate-100';
       txtSpan.textContent = vraag;
 
-      tdVraag.append(nrSpan, txtSpan);
+      tdVraag.append(nrSpan, typeBadge, txtSpan);
       tr.appendChild(tdVraag);
 
       GROEPEN.forEach(g => {
