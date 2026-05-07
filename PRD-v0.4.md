@@ -387,6 +387,97 @@ Mastery-vraag.
 > een professionele voorbereiding waarin studenten niet alleen leren *wat te
 > doen* maar ook *wie te zijn*.
 
+### F6 — Uitgebreide docentenhandleiding
+
+Naast het bestaande **draaiboek** (45-min lesson plan: *wat en wanneer*) komt
+een **docentenhandleiding** met de *waarom en hoe* — voor docenten die de
+werkvorm willen overnemen of in eigen context aanpassen.
+
+**Verschil met draaiboek:**
+
+| Document | Doel | Vorm |
+|---|---|---|
+| `draaiboek.md` | Lesson plan voor één college | 45-min schedule met fase-indeling |
+| `DOCENTENHANDLEIDING.md` | Comprehensive guide voor *meerdere* docenten | Didactische context, scenario's, voorbeelden, troubleshooting |
+
+**Locatie**: [`platform/DOCENTENHANDLEIDING.md`](DOCENTENHANDLEIDING.md) —
+publiek meegepushed naar GH Pages zodat andere HBO-docenten het kunnen vinden,
+hergebruiken en bijdragen.
+
+**Beoogde structuur** (10 secties):
+
+**F6.1 Didactische uitgangspunten** — voor docenten die de werkvorm overnemen:
+- PAMS-architectuur per pijler (waar zit Purpose, Autonomy, Mastery, Social in elk fase?)
+- CRISP-DM Data Understanding-frame als didactische ruggengraat
+- Consultant-frame als identity-bridge naar beroepspraktijk
+- Drie didactische aandachtspunten per fase
+
+**F6.2 Voorbereiding (uitgebreid)**:
+- Vooraankondiging aan studenten — PowerBI-installatie, laptop meebrengen
+- Mentale voorbereiding docent — drie momenten die niet gemist mogen worden
+- Materialen-checklist (digitaal én hybride backup)
+- Trouble-shooting vooraf (wifi-test, fallback-paden)
+
+**F6.3 Uitleg en introductie**:
+- Hoe je casus + consultant-frame in 5 minuten introduceert
+- Veelgestelde studenten-vragen + antwoord-suggesties
+- Wat te doen als studenten zich verzetten tegen de rol-toewijzing
+
+**F6.4 Begeleiding tijdens de game**:
+- Wat te doen als studenten vastlopen op data-understanding
+- Wanneer in te grijpen, wanneer te laten gaan
+- Concrete escalatie-scenarios (groep wil alleen werken, weigert samenwerking,
+  of komt al bij € 3.000 zonder cross-niveau-samenwerking)
+- Hoe samenwerking te *forceren* als die niet vanzelf ontstaat
+
+**F6.5 Nabespreking — het plenaire moment uitgewerkt**:
+- Plot twist over marges (al in draaiboek)
+- Twee-routes-discussie (HHI 5.190 vs. 4.909) — wanneer en hoe
+- Identity-reflectie (welk niveau voelde goed?) — open of besloten?
+- Hoe je leerwinst oogst — concrete vragen om te stellen
+
+**F6.6 Uitgewerkte voorbeelden** (verbatim casuïstiek):
+- Voorbeeld-sessie met 24 studenten, 8-8-8-verdeling — verloop minuut-voor-minuut
+- Voorbeeld met scheve 12-6-6-verdeling — wat te doen
+- Voorbeeld plenair gesprek (verbatim transcript wat docent zegt en welke reacties komen)
+- Voorbeeld typisch samenwerkings-moment (Strategy zoekt Operationeel)
+
+**F6.7 FAQ van studenten** (met antwoord-suggesties):
+- *"Waarom willekeurig? Mag ik niet kiezen?"* → Autonomy-uitleg
+- *"Wat als ik geen PowerBI heb?"* → fallback Excel + Power Query
+- *"Mijn ZIP downloadt niet"* → debug-stappen
+- *"Wat is HHI?"* → 1-min uitleg
+- *"Mag ik vraag overslaan?"* → strategie-keuze, niet gokken
+
+**F6.8 Troubleshooting voor docent**:
+- Klas is stil → forceer-mechanismen
+- Drempel niet haalbaar binnen tijd → tarieven aanpassen via config
+- PowerBI-import faalt op meerdere apparaten → groeps-import via één laptop
+- Wifi-uitval → analoge fallback (printables)
+
+**F6.9 Customisatie voor andere casussen**:
+- Vervang CSV-data (zelfde kolomnamen, andere getallen)
+- Pas vragen aan in `heatmap.html` (`VRAGEN` array)
+- Pas tarieven en drempel aan via config-block bovenaan script
+- Verschillende casussen voor verschillende cohort-niveaus
+
+**F6.10 Bijlage: didactische literatuur**:
+- Anthony (1965) — management-piramide
+- Sinek (Golden Circle) — Why-How-What
+- CRISP-DM (Cross-Industry Standard Process for Data Mining)
+- Pink (Drive) — autonomy/mastery/purpose
+- HBO Bedrijfskunde uitstroomprofielen (DUO/HBO-raad)
+
+**F6 — implementatie-keuze**: schrijven als één markdown-document met heldere
+TOC, hyperlinks naar relevante secties van het draaiboek en PRD. Geschat 30–50
+A4 pagina's bij volledige uitwerking — opgebouwd over meerdere iteraties na
+het eerste college.
+
+> **Pedagogische winst voor docenten**: dit document maakt de werkvorm
+> *uitvoerbaar door anderen* zonder dat ze de hele PRD hoeven te lezen. Andere
+> HBO-Bedrijfskunde-docenten kunnen het college zelf draaien zonder met jou
+> te overleggen — schaalbaarheid van pedagogische impact.
+
 ### F4 — Samenwerkings-mechaniek (cross-level)
 
 Drie ontwerp-opties:
@@ -478,8 +569,14 @@ versterkt collectieve mastery.
 | **v0.4.4** | F5 — consultant-frame: tarief, uren, fee-meter, rolkaart | 3–5u |
 | **v0.4.5** | F4-Optie-B — samenwerking via handmatige invoer | 3–4u |
 | **v0.4.6** | Polish — ideeën C/D/E + bug-fixes na eerste college | 4–6u |
+| **v0.4.7** | F6 — Docentenhandleiding (uitgebreide guide voor andere docenten) | 6–10u |
 
-**Totaal**: ~25–37u werk, gefaseerd over 2–3 sessies.
+**Totaal**: ~31–47u werk, gefaseerd over 3–4 sessies.
+
+> F6 (docentenhandleiding) komt **na** het eerste college bewust — pas dan
+> heb je echte casuïstiek en troubleshooting-data om in F6.6 (uitgewerkte
+> voorbeelden) en F6.8 (troubleshooting) op te nemen. Een handleiding
+> geschreven *voor* het eerste college mist de echte ervaring.
 
 > F5 (consultant-frame) komt bewust *na* F1 omdat de fee-berekening leunt op de
 > punten-engine. Maar F5 voelt voor studenten als de hoofdfeature — overweeg
@@ -566,6 +663,21 @@ de auto-compute engine vormt het fundament waar F1, F3, F4 en F5 op leunen.
 - [ ] Idee E — groepsbalk per niveau (collectieve mastery)
 - [ ] Bug-log na eerste college doornemen
 - [ ] Punten/tarief-balans her-kalibreren indien nodig
+
+### v0.4.7 — Docentenhandleiding (F6)
+
+- [ ] `DOCENTENHANDLEIDING.md` scaffold met TOC en sectie-headers (F6.1–F6.10)
+- [ ] F6.1 Didactische uitgangspunten — uitgewerkt
+- [ ] F6.2 Voorbereiding (uitgebreid) — uitgewerkt incl. troubleshooting
+- [ ] F6.3 Uitleg en introductie — incl. veelgestelde studentenvragen
+- [ ] F6.4 Begeleiding tijdens game — escalatie-scenarios
+- [ ] F6.5 Nabespreking uitgewerkt — verbatim plenair-momenten
+- [ ] F6.6 Uitgewerkte voorbeelden — minimaal 2 sessie-casuïstieken
+- [ ] F6.7 FAQ studenten — 8–10 meest voorkomende vragen
+- [ ] F6.8 Troubleshooting docent — wifi, PowerBI, drempel
+- [ ] F6.9 Customisatie voor andere casussen
+- [ ] F6.10 Bijlage: didactische literatuur (Anthony, Sinek, CRISP-DM, Pink)
+- [ ] Cross-links naar `draaiboek.md` en `PRD-v0.4.md` actief
 
 ### Pre-launch — testing
 
