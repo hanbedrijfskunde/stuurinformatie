@@ -6,7 +6,7 @@
 <title>Vraagkaartjes-heatmap — Sturing in lagen</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script src="js/engine.js" defer></script>
+<script src="js/engine.js"></script>
 <style>
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
   .cell {
@@ -862,11 +862,30 @@
     const content = document.getElementById('answer-content');
     content.replaceChildren();
 
-    if (!window.engine || Object.keys(window.engine.datasets).length === 0) {
+    if (!window.engine) {
+      const err = document.createElement('div');
+      err.className = 'text-rose-400 text-sm';
+      err.textContent = 'Engine niet beschikbaar — refresh de pagina (Cmd/Ctrl+Shift+R) om opnieuw te laden.';
+      content.appendChild(err);
+      return;
+    }
+
+    if (Object.keys(window.engine.datasets).length === 0) {
       const loading = document.createElement('div');
       loading.className = 'text-slate-400 text-sm italic';
-      loading.textContent = 'Data wordt geladen — probeer opnieuw te klikken over enkele seconden.';
+      loading.textContent = 'Data wordt nu geladen — antwoord verschijnt zometeen...';
       content.appendChild(loading);
+      // Trigger laden + retry
+      const niveauVoorLoad = isDocent ? 'docent' : level;
+      window.engine.loadDatasets(niveauVoorLoad)
+        .then(() => showAnswerPanel(qIdx))
+        .catch(e => {
+          content.replaceChildren();
+          const errDiv = document.createElement('div');
+          errDiv.className = 'text-rose-400 text-sm';
+          errDiv.textContent = 'Fout bij laden van datasets: ' + e.message;
+          content.appendChild(errDiv);
+        });
       return;
     }
 
