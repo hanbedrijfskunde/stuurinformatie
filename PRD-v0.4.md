@@ -485,6 +485,46 @@ het eerste college.
 > HBO-Bedrijfskunde-docenten kunnen het college zelf draaien zonder met jou
 > te overleggen — schaalbaarheid van pedagogische impact.
 
+### F7 — Triangulatie & validatie (v0.5)
+
+Studenten leren niet alleen analyse-uitkomsten *produceren*, maar ook
+*controleren*. Geïnspireerd op Ross/Westerfield/Jordan ch.3 (DuPont identity)
+en de sluit-controles uit het AFAS-rapport sectie 1.2.
+
+**F7.1 Audit trail per antwoord** — elke `vraagN`-functie in `engine.js`
+retourneert een `steps[]`-array met leesbare berekenstappen. UI toont dit
+als uitklapbaar *"Bekijk berekening"*-paneel onder elk antwoord.
+Pedagogisch: studenten zien *waarom* een getal klopt, niet alleen *dat* het klopt.
+
+**F7.2 Verify-block voor twee-routes-vragen** — vragen 8 en 11 krijgen een
+`validatie`-object met `match`, `delta_pct`, `interpretatie`. UI: gekleurd
+block (groen=match, amber=mismatch) onder de twee routes met expliciet
+*"BEWUSTE MISMATCH — beide kloppen, andere methodologie"*.
+
+**F7.3 DPO bewuste mismatch (vraag 3)** — engine berekent naast de
+factuurnr-join-mediaan (27 dagen) ook snapshot-DPO via crediteuren / COGS ×
+365 (291 dagen). Validatie-block toont beide met uitleg waarom dienstverleners
+een misleidende snapshot-DPO hebben.
+
+**F7.4 DuPont Challenge (`dupont.html`)** — aparte pagina, gelinkt vanaf
+`index.html` als bonus tijdsblok 5-tile. Drie input-velden (PM/TAT/EM)
+gekleurd per niveau. *Bereken*-knop toetst ROE = PM × TAT × EM tegen
+ROE-direct (NI/TE). Drie uitkomst-toestanden:
+- Exact match (Δ < 0,01%): edge-case-uitleg
+- Match binnen tolerantie (Δ < 1pp): afronding-uitleg
+- Mismatch: debug-stappen (PM in % vs decimaal, EM-teken, balans-datum)
+
+**F7.5 Edge-case interpretatie** — bij Vento is ROE = −443% door negatief
+eigen vermogen. DuPont Challenge benoemt dit als *"wiskundig correct,
+betekenis-arm"*. Pedagogisch moment: wanneer hou je op met een ratio te
+gebruiken?
+
+**PAMS-koppeling F7**:
+- **Mastery**: triangulatie geeft zelf-vertrouwen in eigen analyse
+- **Purpose**: een echte adviseur moet outputs kunnen verantwoorden
+- **Autonomy**: student kiest zelf welke routes te valideren
+- **Social**: DuPont vereist alle drie de niveaus samen
+
 ### F4 — Samenwerkings-mechaniek (cross-level)
 
 Drie ontwerp-opties:

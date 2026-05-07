@@ -1122,6 +1122,10 @@
           valueDiv.textContent = data.value;
           box.appendChild(valueDiv);
         }
+        // v0.5 — audit trail per route
+        if (data.steps && data.steps.length > 0) {
+          box.appendChild(buildAuditTrail(data.steps, 'Route-stappen'));
+        }
         content.appendChild(box);
       }
     } else if (Array.isArray(result.value)) {
@@ -1168,6 +1172,81 @@
       meth.textContent = 'Berekend via: ' + result.methode;
       content.appendChild(meth);
     }
+
+    // v0.5 ontwerp B — Audit trail (steps[]) als uitklapbare details
+    if (result.steps && result.steps.length > 0 && result.formaat !== 'twee-routes') {
+      content.appendChild(buildAuditTrail(result.steps, 'Bekijk berekening'));
+    }
+
+    // v0.5 ontwerp A — Validatie-block (Verify-result)
+    if (result.validatie) {
+      content.appendChild(buildValidatieBlock(result.validatie));
+    }
+  }
+
+  // v0.5 ontwerp B — bouw uitklapbare audit-trail
+  function buildAuditTrail(steps, label) {
+    const det = document.createElement('details');
+    det.className = 'mt-4 bg-slate-900/40 rounded border border-slate-700/50';
+    const sum = document.createElement('summary');
+    sum.className = 'cursor-pointer px-3 py-2 text-xs uppercase tracking-wider text-slate-400 hover:bg-slate-800 hover:text-slate-200 select-none rounded';
+    sum.textContent = (label || 'Audit trail') + ' · klik om uit te klappen';
+    det.appendChild(sum);
+    const ol = document.createElement('ol');
+    ol.className = 'px-5 py-3 text-sm text-slate-200 space-y-1 font-mono';
+    for (const s of steps) {
+      const li = document.createElement('li');
+      li.textContent = s;
+      ol.appendChild(li);
+    }
+    det.appendChild(ol);
+    return det;
+  }
+
+  // v0.5 ontwerp A — bouw validatie-block
+  function buildValidatieBlock(validatie) {
+    const wrap = document.createElement('div');
+    const isMatch = validatie.match === true;
+    wrap.className = 'mt-4 rounded p-4 border-2 ' +
+      (isMatch ? 'bg-emerald-900/30 border-emerald-600' : 'bg-amber-900/30 border-amber-600');
+
+    const header = document.createElement('div');
+    header.className = 'flex items-center gap-2 mb-2';
+    const icon = document.createElement('span');
+    icon.className = isMatch ? 'text-emerald-400 font-bold text-lg' : 'text-amber-400 font-bold text-lg';
+    icon.textContent = isMatch ? '✓' : '⚠';
+    const title = document.createElement('span');
+    title.className = isMatch ? 'text-emerald-300 font-bold' : 'text-amber-300 font-bold';
+    title.textContent = isMatch ? 'Triangulatie geslaagd — routes komen overeen' : 'Triangulatie onthult een verschil';
+    header.append(icon, title);
+    wrap.appendChild(header);
+
+    if (validatie.delta_pct !== null && validatie.delta_pct !== undefined) {
+      const delta = document.createElement('div');
+      delta.className = 'text-xs text-slate-300 mb-2 font-mono';
+      delta.textContent = 'Δ = ' + validatie.delta_pct.toFixed(2) + '%';
+      wrap.appendChild(delta);
+    }
+
+    if (validatie.waarden) {
+      const w = document.createElement('div');
+      w.className = 'text-xs text-slate-300 mb-2 font-mono space-y-1';
+      for (const [k, v] of Object.entries(validatie.waarden)) {
+        const line = document.createElement('div');
+        line.textContent = `  ${k.padEnd(20)} = ${v}`;
+        w.appendChild(line);
+      }
+      wrap.appendChild(w);
+    }
+
+    if (validatie.interpretatie) {
+      const interp = document.createElement('p');
+      interp.className = 'text-sm text-slate-200 leading-relaxed mt-2';
+      interp.textContent = validatie.interpretatie;
+      wrap.appendChild(interp);
+    }
+
+    return wrap;
   }
 
   function save() {

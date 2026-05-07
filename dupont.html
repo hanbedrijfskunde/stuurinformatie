@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DuPont Challenge — Sturing in lagen</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  input[type="number"] {
+    background: rgb(15 23 42);
+    border: 1px solid rgb(71 85 105);
+    color: rgb(241 245 249);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    width: 100%;
+    font-size: 1.25rem;
+    font-family: ui-monospace, monospace;
+  }
+  input[type="number"]:focus {
+    outline: none;
+    border-color: rgb(16 185 129);
+  }
+  .corner-nav { transition: opacity 0.2s ease; }
+</style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+
+<a href="index.html" class="corner-nav fixed top-4 right-4 text-sm text-slate-500 hover:text-white transition">
+  ← overzicht
+</a>
+
+<main class="max-w-5xl mx-auto p-6 md:p-12">
+
+  <header class="mb-10">
+    <div class="text-sm uppercase tracking-widest text-slate-400">Tijdsblok 5 · DuPont Challenge</div>
+    <h1 class="text-3xl md:text-4xl font-bold mt-1 mb-3">Test je triangulatie: ROE via DuPont</h1>
+    <p class="text-slate-300 text-lg">
+      De ultieme controle of je hele ratio-systeem klopt. ROE kan op twee
+      manieren — als beide routes hetzelfde getal opleveren, weet je dat
+      <em>tientallen</em> tussenstappen onderweg consistent zijn. Eén match
+      controleert het hele systeem.
+    </p>
+  </header>
+
+  <section class="bg-slate-800/50 rounded-lg p-6 mb-8 border border-slate-700">
+    <h2 class="text-xl font-bold mb-3">De DuPont-identiteit</h2>
+    <div class="bg-slate-900 rounded p-4 mb-4 text-center">
+      <div class="text-xl md:text-2xl font-mono">
+        <span class="text-amber-300">ROE</span>
+        <span class="text-slate-500">=</span>
+        <span class="text-emerald-300">Profit Margin</span>
+        <span class="text-slate-500">×</span>
+        <span class="text-purple-300">Total Asset Turnover</span>
+        <span class="text-slate-500">×</span>
+        <span class="text-blue-300">Equity Multiplier</span>
+      </div>
+      <div class="text-sm md:text-base font-mono mt-3 text-slate-400">
+        <span>NI / Sales</span>
+        <span class="mx-3">×</span>
+        <span>Sales / TA</span>
+        <span class="mx-3">×</span>
+        <span>TA / TE</span>
+        <span class="mx-3 text-slate-600">→</span>
+        <span class="text-slate-300">Sales en TA vallen weg → NI / TE</span>
+      </div>
+    </div>
+    <p class="text-slate-300 text-sm">
+      Wiskundig is dit een <strong>algebraïsche identiteit</strong> (Sales en
+      TA vallen tegen elkaar weg). Maar in de boekhouding-praktijk zijn de
+      drie ratio's onafhankelijk gemeten: PM uit factuurdata, TAT uit
+      balans+V&amp;W, EM puur uit balans. Als ze samen het juiste ROE
+      reproduceren, weet je dat je hele systeem intern consistent is.
+    </p>
+  </section>
+
+  <section class="bg-slate-800/40 rounded-lg p-6 mb-8 border border-slate-700">
+    <div class="text-sm uppercase tracking-widest text-slate-400 mb-2">Plenair</div>
+    <h2 class="text-xl font-bold mb-2">Vul de drie ratio's in</h2>
+    <p class="text-slate-300 text-sm mb-6">
+      Elke groep levert één ratio aan vanuit hun eigen niveau. Niemand kan
+      het alleen — DuPont vereist samenwerking.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+      <div class="bg-emerald-900/20 border-2 border-emerald-500 rounded-lg p-5">
+        <div class="text-xs uppercase tracking-wider text-emerald-300 font-bold mb-1">Junior Analyst (€100/u)</div>
+        <h3 class="font-bold mb-2">Profit Margin</h3>
+        <p class="text-xs text-slate-400 mb-3">NI ÷ Sales · uit verkoopfacturen + V&amp;W</p>
+        <input id="pm" type="number" step="0.01" placeholder="bv. 19.48" />
+        <div class="text-xs text-slate-500 mt-1">% (decimaal — bijv. 19,48)</div>
+      </div>
+
+      <div class="bg-purple-900/20 border-2 border-purple-500 rounded-lg p-5">
+        <div class="text-xs uppercase tracking-wider text-purple-300 font-bold mb-1">Management (€150/u)</div>
+        <h3 class="font-bold mb-2">Asset Turnover</h3>
+        <p class="text-xs text-slate-400 mb-3">Sales ÷ TA · uit balans + V&amp;W</p>
+        <input id="tat" type="number" step="0.01" placeholder="bv. 1.89" />
+        <div class="text-xs text-slate-500 mt-1">× (multiplier)</div>
+      </div>
+
+      <div class="bg-blue-900/20 border-2 border-blue-500 rounded-lg p-5">
+        <div class="text-xs uppercase tracking-wider text-blue-300 font-bold mb-1">Strategy (€250/u)</div>
+        <h3 class="font-bold mb-2">Equity Multiplier</h3>
+        <p class="text-xs text-slate-400 mb-3">TA ÷ TE · puur uit balans</p>
+        <input id="em" type="number" step="0.01" placeholder="bv. -12.05" />
+        <div class="text-xs text-slate-500 mt-1">× (let op: kan negatief)</div>
+      </div>
+
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <button id="btn-bereken" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-white font-bold transition">
+        Bereken ROE via DuPont →
+      </button>
+      <button id="btn-onthul" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 hover:text-white transition text-sm">
+        Toon werkelijke Vento-waarden
+      </button>
+      <button id="btn-reset" class="px-4 py-3 bg-slate-800 hover:bg-rose-900 rounded-lg text-slate-400 hover:text-white transition text-sm">
+        Wis
+      </button>
+    </div>
+  </section>
+
+  <section id="result-paneel" class="hidden bg-slate-800/60 rounded-lg p-6 mb-8 border-2"></section>
+
+  <section class="bg-slate-900/40 rounded-lg p-5 text-sm text-slate-400 leading-relaxed">
+    <strong class="text-slate-300">Achtergrond:</strong> de DuPont-identiteit is
+    een algebraïsche waarheid — wiskundig moet ROE-direct = ROE-DuPont op
+    1e-6 nauwkeurig. Dat is de <em>triangulatie</em>: dezelfde uitkomst via
+    twee onafhankelijke wegen = bewijs dat je systeem klopt.
+    <br><br>
+    Bij Vento 2016 levert de identiteit een dramatisch getal op: ROE = −443%.
+    Dat is niet door een fout — het is wiskundig correct, maar betekenis-arm.
+    Ratio-analyse heeft <strong>grenzen</strong>: bij bijna-nul of negatief
+    eigen vermogen produceert de noemer waarden die geen "rendement op
+    aandeelhouders" meer representeren.
+  </section>
+
+</main>
+
+<script>
+  // Vento ICT 2016 — feiten uit het AFAS-rapport (zie ../AFAS-2016-rapport.md)
+  const VENTO = {
+    sales:        7335530,
+    net_income:   1428688,
+    total_assets: 3879131,
+    total_equity: -322018,  // NEGATIEF — cumulatieve verliezen voor 2016
+  };
+
+  const REF = {
+    pm:  VENTO.net_income / VENTO.sales,
+    tat: VENTO.sales / VENTO.total_assets,
+    em:  VENTO.total_assets / VENTO.total_equity,
+    roe_direct: VENTO.net_income / VENTO.total_equity,
+    roe_dupont: 0,
+  };
+  REF.roe_dupont = REF.pm * REF.tat * REF.em;
+
+  function fmt(n, decimals) {
+    return Number(n).toLocaleString('nl-NL', {
+      minimumFractionDigits: decimals === undefined ? 2 : decimals,
+      maximumFractionDigits: decimals === undefined ? 2 : decimals,
+    });
+  }
+
+  function makeSpan(text, cls) {
+    const s = document.createElement('span');
+    if (cls) s.className = cls;
+    s.textContent = text;
+    return s;
+  }
+
+  function makeDiv(cls) {
+    const d = document.createElement('div');
+    if (cls) d.className = cls;
+    return d;
+  }
+
+  function bereken() {
+    const pm  = parseFloat(document.getElementById('pm').value);
+    const tat = parseFloat(document.getElementById('tat').value);
+    const em  = parseFloat(document.getElementById('em').value);
+
+    const paneel = document.getElementById('result-paneel');
+    paneel.replaceChildren();
+    paneel.classList.remove('hidden', 'border-emerald-600', 'border-amber-600',
+                             'border-rose-600', 'bg-emerald-900/20',
+                             'bg-amber-900/20');
+
+    if (isNaN(pm) || isNaN(tat) || isNaN(em)) {
+      paneel.classList.remove('hidden');
+      paneel.classList.add('border-rose-600');
+      const p = document.createElement('p');
+      p.className = 'text-rose-300';
+      p.textContent = 'Vul alle drie de ratio\'s in voordat je berekent.';
+      paneel.appendChild(p);
+      return;
+    }
+
+    const pmDecimal = pm / 100;
+    const roe_dupont = pmDecimal * tat * em;
+    const roe_dupont_pct = roe_dupont * 100;
+    const roe_direct_pct = REF.roe_direct * 100;
+    const delta_pct = Math.abs(roe_dupont_pct - roe_direct_pct);
+    const match = delta_pct < 1.0;
+    const exact_match = delta_pct < 0.01;
+
+    paneel.classList.toggle('border-emerald-600', match);
+    paneel.classList.toggle('border-amber-600', !match);
+    paneel.classList.toggle('bg-emerald-900/20', match);
+    paneel.classList.toggle('bg-amber-900/20', !match);
+
+    // Header
+    const h = makeDiv('flex items-center gap-3 mb-4');
+    h.appendChild(makeSpan(match ? '✓' : '⚠',
+      (match ? 'text-emerald-400' : 'text-amber-400') + ' text-3xl'));
+    const titel = document.createElement('h2');
+    titel.className = 'text-xl md:text-2xl font-bold ' + (match ? 'text-emerald-300' : 'text-amber-300');
+    titel.textContent = match
+      ? 'Triangulatie geslaagd — DuPont-identiteit klopt'
+      : 'Triangulatie wijst op een verschil';
+    h.appendChild(titel);
+    paneel.appendChild(h);
+
+    // Berekening-blok
+    const ber = makeDiv('bg-slate-900 rounded p-4 mb-4 font-mono text-sm md:text-base text-slate-200');
+    const r1 = makeDiv('mb-2');
+    r1.appendChild(makeSpan(fmt(pmDecimal*100, 2) + '%', 'text-emerald-300'));
+    r1.appendChild(makeSpan(' × ', 'text-slate-500'));
+    r1.appendChild(makeSpan(fmt(tat, 2), 'text-purple-300'));
+    r1.appendChild(makeSpan(' × ', 'text-slate-500'));
+    r1.appendChild(makeSpan(fmt(em, 2), 'text-blue-300'));
+    r1.appendChild(makeSpan(' = ', 'text-slate-500'));
+    r1.appendChild(makeSpan(fmt(roe_dupont_pct, 2) + '%', 'text-amber-300 font-bold'));
+    ber.appendChild(r1);
+    ber.appendChild(makeDiv('text-slate-400 text-xs')).textContent = '↑ ROE via DuPont';
+    const r2 = makeDiv('border-t border-slate-700 mt-3 pt-3');
+    r2.appendChild(makeSpan('Werkelijke ROE-direct (NI / TE) = ', 'text-slate-400'));
+    r2.appendChild(makeSpan(fmt(roe_direct_pct, 2) + '%', 'text-amber-300 font-bold'));
+    ber.appendChild(r2);
+    const r3 = makeDiv('mt-2 text-slate-500');
+    r3.textContent = 'Δ = ' + fmt(delta_pct, 3) + ' procentpunt';
+    ber.appendChild(r3);
+    paneel.appendChild(ber);
+
+    // Interpretatie
+    const interp = makeDiv('text-sm text-slate-200 leading-relaxed');
+
+    if (exact_match) {
+      const p1 = document.createElement('p');
+      p1.className = 'mb-3';
+      p1.appendChild(makeSpan('Exact gevalideerd', 'text-emerald-300 font-bold'));
+      p1.appendChild(document.createTextNode(' — de drie ratio\'s, elk onafhankelijk gemeten uit verkoopfacturen, balans en V&W, reproduceren samen het werkelijke ROE op de cent na. Dat is een sluitcontrole op tientallen tussenstappen tegelijkertijd.'));
+      interp.appendChild(p1);
+
+      const p2 = document.createElement('p');
+      p2.className = 'text-slate-400';
+      p2.appendChild(makeSpan('Maar: ', 'text-slate-300 font-bold'));
+      p2.appendChild(document.createTextNode('wiskundig correct ≠ pedagogisch zinvol. Bij Vento is ROE = −443% door negatief eigen vermogen. Een ratio die "rendement op aandeelhouders" meet, is leeg als er geen aandeelhouders-kapitaal meer is om op te renderen.'));
+      interp.appendChild(p2);
+    } else if (match) {
+      const p1 = document.createElement('p');
+      p1.className = 'mb-3';
+      p1.appendChild(makeSpan('Gevalideerd binnen tolerantie', 'text-emerald-300 font-bold'));
+      p1.appendChild(document.createTextNode(' (Δ < 1pp). Kleine afwijking is afronding van je ingevoerde getallen — wiskundig moet de identiteit op 1e-6 sluiten.'));
+      interp.appendChild(p1);
+
+      const p2 = document.createElement('p');
+      p2.className = 'text-slate-400';
+      p2.textContent = 'Probeer met meer decimalen voor exacte match (klik "Toon werkelijke Vento-waarden").';
+      interp.appendChild(p2);
+    } else {
+      const p1 = document.createElement('p');
+      p1.className = 'mb-3';
+      p1.appendChild(makeSpan('Mismatch.', 'text-amber-300 font-bold'));
+      p1.appendChild(document.createTextNode(' Eén van de drie ratio\'s is verkeerd berekend. DuPont sluit altijd — als de identiteit niet klopt, zit er een fout in PM, TAT of EM.'));
+      interp.appendChild(p1);
+
+      const p2 = document.createElement('p');
+      p2.className = 'text-slate-400';
+      p2.appendChild(makeSpan('Debug-stappen:', 'font-bold'));
+      interp.appendChild(p2);
+
+      const ol = document.createElement('ol');
+      ol.className = 'list-decimal pl-5 mt-2 text-slate-400 space-y-1';
+      ['Werd PM in % ingevoerd of als decimaal? (Het invoerveld verwacht %, dus 19,48 niet 0,1948.)',
+       'Klopt het teken van EM? Bij negatief eigen vermogen is EM negatief.',
+       'Welke balans-datum gebruikte je? (Eind-saldo vs gemiddelde.)']
+        .forEach(t => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          ol.appendChild(li);
+        });
+      interp.appendChild(ol);
+    }
+
+    paneel.appendChild(interp);
+  }
+
+  function onthul() {
+    document.getElementById('pm').value  = (REF.pm  * 100).toFixed(2);
+    document.getElementById('tat').value = REF.tat.toFixed(2);
+    document.getElementById('em').value  = REF.em.toFixed(2);
+  }
+
+  function reset() {
+    document.getElementById('pm').value  = '';
+    document.getElementById('tat').value = '';
+    document.getElementById('em').value  = '';
+    document.getElementById('result-paneel').classList.add('hidden');
+  }
+
+  document.getElementById('btn-bereken').addEventListener('click', bereken);
+  document.getElementById('btn-onthul').addEventListener('click', onthul);
+  document.getElementById('btn-reset').addEventListener('click', reset);
+</script>
+
+</body>
+</html>

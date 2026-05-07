@@ -15,6 +15,13 @@ managementniveau. Gebaseerd op echte boekhoudgegevens van Vento ICT B.V.
 
 ---
 
+## Highlights v0.5 (triangulatie & validatie)
+
+- **Audit trail** per antwoord — uitklapbare berekenings-stappen tonen hoe elk getal tot stand komt
+- **Verify-block** voor twee-routes-vragen — toont match/mismatch met interpretatie
+- **DPO bewuste mismatch** in vraag 3 (betaaltermijnen) — snapshot 291d vs mediaan 27d, met methodologie-uitleg
+- **DuPont Challenge** als aparte plenaire pagina — drie groepen leveren PM, TAT, EM; tool toetst algebraïsche identiteit ROE = PM × TAT × EM. Bij Vento toont het de edge-case van −443% ROE door negatief eigen vermogen
+
 ## Highlights v0.4 (game-mode)
 
 - **Random rol-toewijzing** als Strategy Consultant (€ 250/u), Management Consultant (€ 150/u) of Junior Business Analyst (€ 100/u)
@@ -37,12 +44,14 @@ managementniveau. Gebaseerd op echte boekhoudgegevens van Vento ICT B.V.
 | `index.html` | **Tijdsblok 1** · intro + hub | Casus-intro, QR-code, navigatie naar alle fases, link naar handleiding |
 | `heatmap.html` | **Tijdsblok 3** · 10–25 min | 4-staps-flow: random niveau → rolkaart → Data Understanding → vragen-matrix met live antwoord-engine |
 | `plottwist.html` | **Tijdsblok 5** · 36–45 min | 11-slide presentatie: marge-tabel, contributiemarge-nuance, reflectie, slot |
+| `dupont.html` | **Tijdsblok 5 bonus** · plenair | DuPont Challenge — drie groepen leveren PM/TAT/EM, samen toetsen ze de algebraïsche identiteit van ROE |
 
 ```
 platform/
 ├── index.html                  ← Hub: intro + QR + docent-navigatie
 ├── heatmap.html                ← Fase 3 game-tool (~1300 regels)
 ├── plottwist.html              ← Fase 5 slide deck
+├── dupont.html                 ← Tijdsblok 5 bonus: DuPont Challenge (triangulatie)
 ├── js/
 │   └── engine.js               ← Auto-compute engine met 11 answer-functies
 ├── data/
