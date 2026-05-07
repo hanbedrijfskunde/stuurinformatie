@@ -1,0 +1,203 @@
+rekening_id,omschrijving,type,rapport_categorie
+0100,Bedrijfsinventaris,Balans,Vaste activa
+0110,Gebouwen en terreinen,Balans,Vaste activa
+0120,Computerapparatuur,Balans,Vaste activa
+0130,Vervoermiddelen,Balans,Vaste activa
+0200,Afschrijving bedrijfsinventaris,Balans,Cumulatieve afschrijving
+0210,Afschrijving gebouwen en terreinen,Balans,Cumulatieve afschrijving
+0220,Afschrijving computerapparatuur,Balans,Cumulatieve afschrijving
+0230,Afschrijving vervoermiddelen,Balans,Cumulatieve afschrijving
+0300,Egalisatie reserve subsidies,Balans,Reserves / Voorzieningen
+0310,Vervangingsreserve,Balans,Reserves / Voorzieningen
+0320,Herinvesteringsreservering,Balans,Reserves / Voorzieningen
+0500,Aandelenkapitaal,Balans,Eigen vermogen
+0600,Algemene reserve,Balans,Eigen vermogen
+0650,Onverdeeld resultaat,Balans,Eigen vermogen
+0700,Hypotheek o/g,Balans,Financiële vaste activa
+0750,Lening o/g,Balans,Financiële vaste activa
+0875,Leningen aan personeel,Balans,Financiële vaste activa
+1000,Kas,Balans,Liquide middelen
+1100,Bank rekening courant,Balans,Liquide middelen
+1150,Bank spaarrekening,Balans,Liquide middelen
+1160,Bank salarisrekening,Balans,Liquide middelen
+1200,ING Bank,Balans,Liquide middelen
+1400,Debiteuren,Balans,Debiteuren
+1405,Dubieuze debiteuren,Balans,Debiteuren
+1415,Incasso onderweg,Balans,Debiteuren
+1500,Btw te vorderen,Balans,Te vorderen belastingen
+1510,Btw te betalen,Balans,Te vorderen belastingen
+1550,Saldo btw vorig boekjaar,Balans,Te vorderen belastingen
+1565,Btw privégebruik auto,Balans,Te vorderen belastingen
+1570,Afdracht btw,Balans,Te vorderen belastingen
+1600,Crediteuren,Balans,Crediteuren
+1601,Crediteuren buitenland,Balans,Crediteuren
+1610,Emballage,Balans,Crediteuren
+1615,Betalingen onderweg,Balans,Crediteuren
+1650,Rekening courant Service,Balans,Crediteuren
+1651,Rekening courant Holding,Balans,Crediteuren
+1700,Te betalen Vennootschapsbelasting,Balans,Te betalen belastingen
+1800,Voorschotten lonen,Balans,Overige kortlopende schulden
+1805,Verstrekte leningen personeel,Balans,Overige kortlopende schulden
+1810,Loonbeslag,Balans,Overige kortlopende schulden
+1815,Boetes personeel,Balans,Overige kortlopende schulden
+1820,Fietsplan,Balans,Overige kortlopende schulden
+1825,Te betalen loonheffing,Balans,Overige kortlopende schulden
+1830,Te betalen sociale lasten,Balans,Overige kortlopende schulden
+1835,Te betalen pensioenlasten,Balans,Overige kortlopende schulden
+1840,Te betalen overige verzekeringen,Balans,Overige kortlopende schulden
+1845,Ingehouden spaarloon,Balans,Overige kortlopende schulden
+1850,Ingehouden levensloop,Balans,Overige kortlopende schulden
+1853,Levensloop werkgever,Balans,Overige kortlopende schulden
+1855,Ingehouden personeelsvereniging,Balans,Overige kortlopende schulden
+1860,Collectieve ziektekosten,Balans,Overige kortlopende schulden
+1900,Nog te nemen transitorische kosten,Balans,Tussenrekeningen passiva
+1901,Nog te nemen transitorische omzet,Balans,Tussenrekeningen passiva
+1992,Afronding activa,Balans,Tussenrekeningen passiva
+1995,Tussenrekening lonen,Balans,Tussenrekeningen passiva
+2000,Te betalen netto lonen,Balans,Voorzieningen
+2010,Reservering vakantiegeld,Balans,Voorzieningen
+2011,Verlof in geld,Balans,Voorzieningen
+2015,Reservering bijzondere beloningen,Balans,Voorzieningen
+2035,Reservering sociale verzekeringen vakantiegeld,Balans,Voorzieningen
+2045,Reservering sociale lasten eindejaarsuitkering,Balans,Voorzieningen
+2055,Reservering arbodienst,Balans,Voorzieningen
+2060,Reservering ongevallenverzekering,Balans,Voorzieningen
+2070,Tussenrekening pin,Balans,Voorzieningen
+2080,Tussenrekening creditcard,Balans,Voorzieningen
+2100,Kruisposten,Balans,Voorzieningen
+2600,Tussenrekening activa,Balans,Anders balans
+2900,Tegenrekening balans,Balans,Anders balans
+2992,Afronding passiva,Balans,Anders balans
+3000,Voorraad Algemeen,Balans,Voorraden
+3020,Voorraad Componenten,Balans,Voorraden
+3030,Voorraad Systemen,Balans,Voorraden
+3040,Voorraad Monitoren,Balans,Voorraden
+3050,Voorraad Randapparatuur,Balans,Voorraden
+3060,Voorraad Netwerkapparatuur,Balans,Voorraden
+3070,Voorraad Software,Balans,Voorraden
+3080,Voorraad Toebehoren,Balans,Voorraden
+3090,Voorraad Overige,Balans,Voorraden
+3100,Voorraad Video,Balans,Voorraden
+3110,Voorraad Foto,Balans,Voorraden
+3120,Voorraad Autoaudio,Balans,Voorraden
+3200,Onderhanden werk,Balans,Voorraden
+3400,Herwaardering voorraad,Resultaat,Voorraadmutaties
+3600,Nog te ontvangen inkoopfacturen,Balans,Voorraden
+3610,Nog te ontvangen kostenfacturen,Balans,Voorraden
+3990,Voorraadoverboeking,Balans,Voorraden
+4000,Bruto lonen,Resultaat,Personeelskosten
+4005,Overwerk,Resultaat,Personeelskosten
+4010,Voorziening vakantiegeld,Resultaat,Personeelskosten
+4011,Voorziening verlof in geld,Resultaat,Personeelskosten
+4015,Bijzondere beloningen,Resultaat,Personeelskosten
+4020,Reiskostenvergoeding belast,Resultaat,Personeelskosten
+4025,Onkostenvergoeding belast,Resultaat,Personeelskosten
+4030,Werkgeversdeel sociale verzekeringen,Resultaat,Personeelskosten
+4035,Werkgeversdeel sociale verzekeringen vakantiegeld,Resultaat,Personeelskosten
+4040,Pensioenpremie werkgever,Resultaat,Personeelskosten
+4046,Eindheffing,Resultaat,Personeelskosten
+4048,Eigen bijdrage auto,Resultaat,Personeelskosten
+4050,Ziektekostenvergoeding werkgeversdeel,Resultaat,Personeelskosten
+4055,Kosten arbodienst,Resultaat,Personeelskosten
+4060,Ongevallenverzekering werkgever,Resultaat,Personeelskosten
+4070,Reiskostenvergoeding onbelast,Resultaat,Personeelskosten
+4075,Onkostenvergoeding onbelast,Resultaat,Personeelskosten
+4080,Doorberekende salarissen,Resultaat,Personeelskosten
+4085,Ingeleend personeel,Resultaat,Personeelskosten
+4090,Commissies,Resultaat,Personeelskosten
+4095,Overige personeelskosten,Resultaat,Personeelskosten
+4100,Werkkostenregeling,Resultaat,Personeelskosten
+4200,Huur (belast),Resultaat,Overige bedrijfskosten
+4205,Huur (onbelast),Resultaat,Overige bedrijfskosten
+4210,Reparatie en onderhoud gebouw,Resultaat,Overige bedrijfskosten
+4220,Onroerend Zaak Belasting,Resultaat,Overige bedrijfskosten
+4250,"Gas, water en electra",Resultaat,Overige bedrijfskosten
+4260,Schoonmaakkosten,Resultaat,Overige bedrijfskosten
+4280,Opstalverzekering,Resultaat,Overige bedrijfskosten
+4282,Inboedelverzekering,Resultaat,Overige bedrijfskosten
+4300,Kantinekosten,Resultaat,Overige bedrijfskosten
+4310,Reparatie en onderhoud machines / gereedschappen,Resultaat,Overige bedrijfskosten
+4320,Kleine aanschaffingen,Resultaat,Overige bedrijfskosten
+4330,Huur machines / materieel,Resultaat,Overige bedrijfskosten
+4360,Verzekering machines / inventaris,Resultaat,Overige bedrijfskosten
+4400,Autokosten,Resultaat,Overige bedrijfskosten
+4410,Leasekosten auto's,Resultaat,Overige bedrijfskosten
+4420,Brandstofkosten,Resultaat,Overige bedrijfskosten
+4430,Motorrijtuigenbelasting,Resultaat,Overige bedrijfskosten
+4440,Verzekeringspremies,Resultaat,Overige bedrijfskosten
+4480,Transportkosten extern,Resultaat,Overige bedrijfskosten
+4500,Kantoorartikelen,Resultaat,Overige bedrijfskosten
+4510,Contributies en abonnementen,Resultaat,Overige bedrijfskosten
+4520,Internet en telefoonkosten,Resultaat,Overige bedrijfskosten
+4530,Automatiseringskosten,Resultaat,Overige bedrijfskosten
+4540,Portikosten,Resultaat,Overige bedrijfskosten
+4550,Administratiekosten,Resultaat,Overige bedrijfskosten
+4560,Adviseurshonorarium,Resultaat,Overige bedrijfskosten
+4570,Medische artikelen,Resultaat,Overige bedrijfskosten
+4600,Reis- en verblijfkosten,Resultaat,Overige bedrijfskosten
+4610,Representatiekosten,Resultaat,Overige bedrijfskosten
+4620,Advertentie- en reclamekosten,Resultaat,Overige bedrijfskosten
+4630,Licentiekosten,Resultaat,Overige bedrijfskosten
+4640,Drukwerk,Resultaat,Overige bedrijfskosten
+4680,Verpakkingsmateriaal,Resultaat,Overige bedrijfskosten
+4700,Afschrijvingskosten bedrijfsinventaris,Resultaat,Afschrijvingen
+4710,Afschrijvingskosten terreinen en gebouwen,Resultaat,Afschrijvingen
+4720,Afschrijvingskosten computerapparatuur,Resultaat,Afschrijvingen
+4730,Afschrijvingskosten vervoermiddelen,Resultaat,Afschrijvingen
+4800,Diverse kosten,Resultaat,Overige bedrijfskosten
+4802,Giften,Resultaat,Overige bedrijfskosten
+4810,Werkkleding,Resultaat,Overige bedrijfskosten
+4820,Boetes niet aftrekbaar,Resultaat,Overige bedrijfskosten
+4850,Betalingsverschillen,Resultaat,Overige bedrijfskosten
+4860,Koersverschillen,Resultaat,Overige bedrijfskosten
+4900,Bankkosten,Resultaat,Overige bedrijfskosten
+4910,Rentekosten,Resultaat,Overige bedrijfskosten
+4920,Incasso- en infokosten,Resultaat,Overige bedrijfskosten
+4940,Management fee,Resultaat,Management fee
+5000,Inkopen,Resultaat,Voorraadmutaties
+5010,Opboeken voorraad,Resultaat,Voorraadmutaties
+5100,Confrontatieverschillen,Resultaat,Voorraadmutaties
+5200,Transportkosten,Resultaat,Voorraadmutaties
+5250,Percentage verlies,Resultaat,Voorraadmutaties
+5300,Prijsverschillen,Resultaat,Voorraadmutaties
+5400,Korting crediteuren,Resultaat,Voorraadmutaties
+5500,Overige inkopen,Resultaat,Voorraadmutaties
+5600,Voorraadverschillen,Resultaat,Voorraadmutaties
+6000,Fabricage,Resultaat,Inkoopwaarde verkopen
+7000,Kostprijs verkopen (gefactureerd),Resultaat,Inkoopwaarde verkopen
+7001,Kostprijs verkopen (geleverd),Resultaat,Inkoopwaarde verkopen
+7010,Te leveren artikelen,Resultaat,Inkoopwaarde verkopen
+7050,Werk door derden,Resultaat,Inkoopwaarde verkopen
+7100,Productie,Resultaat,Inkoopwaarde verkopen
+7200,Productie verbruik,Resultaat,Inkoopwaarde verkopen
+8000,Omzet Algemeen,Resultaat,Omzet
+8010,Omzet Cursussen,Resultaat,Omzet
+8020,Omzet Componenten,Resultaat,Omzet
+8030,Omzet Systemen,Resultaat,Omzet
+8040,Omzet Monitoren,Resultaat,Omzet
+8050,Omzet Randapparatuur,Resultaat,Omzet
+8060,Omzet Netwerkapparatuur,Resultaat,Omzet
+8070,Omzet Software,Resultaat,Omzet
+8080,Omzet Toebehoren,Resultaat,Omzet
+8082,Omzet Video,Resultaat,Omzet
+8083,Omzet Foto,Resultaat,Omzet
+8084,Omzet Autoaudio,Resultaat,Omzet
+8090,Omzet Overige,Resultaat,Omzet
+8091,Omzet Abonnementen,Resultaat,Omzet
+8100,Omzet Consultancy,Resultaat,Omzet
+8150,Afrondingsverschillen,Resultaat,Omzet
+8170,Provisie,Resultaat,Omzet
+8180,Management fee,Resultaat,Omzet
+8800,Korting debiteuren,Resultaat,Korting omzet
+8900,Opbrengst verkoop activa,Resultaat,Omzet
+9000,Overige bijzondere baten en lasten,Resultaat,Buitengewone baten/lasten
+9101,Verlies verkoop activa,Resultaat,Verkoop activa
+9150,Betalingsverschillen,Resultaat,Verkoop activa
+9170,Kasverschillen,Resultaat,Verkoop activa
+9202,Winst verkoop activa,Resultaat,Verkoop activa
+9205,Vrijval subsidies,Balans,Anders balans
+9300,Bankrente,Resultaat,Financieel resultaat
+9350,Rentebaten verstrekte leningen,Resultaat,Financieel resultaat
+9400,Verschillen voorgaande jaren,Resultaat,Financieel resultaat
+9898,Vennootschapsbelasting,Resultaat,Vennootschapsbelasting
+9998,Resultaat voor belastingen,Resultaat,Vennootschapsbelasting

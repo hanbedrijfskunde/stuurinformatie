@@ -1,0 +1,204 @@
+klantnummer,klantnaam,contactpersoon,telefoon,email,kvk_nummer,straat,huisnummer,postcode,plaats,land,iban
+C10000,EnYoi ICT Services B.V.,C. de Cas de Graaf,033-4341800,k.zandbergen@enyoi.afas,354652,Philipsstraat,9,3833 LC,Leusden,NL,NL68ABNA0412595141
+C10001,Café 'Het fust',,0314-359746,bier@hetfust.afas,,Frans Halsweg,23,7004 AA,Doetinchem,NL,
+C10002,Perfecta Bouw,H. Henk Aert,0172-538522,info@perfectabouw.afas,,Oostkanaalweg,7,2441 EZ,Nieuwveen,NL,NL56INGB0001225383
+C10003,Metaalwarenfabriek Berlicum B.V.,B. Bram Kroonen,073-4998531,info@berlicummetalen.afas,,Kerkwijk,54,5258 KC,Berlicum NB,NL,NL39SNSB0800536576
+C10004,Eltingh Haarhuis Tennis & Events,,0578-621453,administratie@ehte.afas,,Sint Jorisweg,40,8161 HB,Epe,NL,NL60ABNA0542188546
+C10005,Taxi- en vervoerscentrale Hilversum B.V.,K.M. Killian Brabovic,035-2813302,info@taxi-en-vervoer-hilversum.afas,,Erfgooiersstraat,160,1222 BD,Hilversum,NL,NL34RABO0162533322
+C10006,De Priester & Scharsterburg Advies B.V.,H. Heidi Bezemer,0314-324580,info@priester-scharsterburg.afas,,Hamburgerstraat,2,7001 AK,Doetinchem,NL,NL49INGB0001615546
+C10007,Erbi Lara B.V.,F. Fenna Voerman,058-2845652,info@erbilara.afas,,Agora,10,8934 CJ,Leeuwarden,NL,NL53INGB0686336534
+C10008,Oostendorp-Nederland Service B.V.,,010-7671154,info@oostendorp-service-nl.afas,,Delflandseweg,92,3119 XB,Schiedam,NL,NL14SNSB0812146859
+C10009,Air-Trading Ruurlo,,0318-938469,info@airtradingruurlo.afas,,Hoenderweg,66,6712 CB,Ede Gld,NL,NL41INGB0007330542
+C10010,T.H. Barneveld B.V.,,023-5464167,info@thbarnieschicken.afas,,Kruisweg,1121,2131 CV,Hoofddorp,NL,NL67ABNA0410553115
+C10011,Zandstra B.V.,,0343-558975,info@zandstrabv.afas,,Valkenkamp,7,3972 ZA,Driebergen-Rijsenburg,NL,NL71INGB0684575175
+C10012,Balance Diligentia B.V.,,050-7939630,info@balancediligentia.afas,,Veldspaatstraat,370,9743 XV,Groningen,NL,NL90RABO0323367917
+C10013,Couro Lederwaren B.V.,,0174-788822,info@courolederwaren.afas,,Utrechtseweg,91,2678 AC,De Lier,NL,NL49INGB0007748856
+C10014,Tebodin Orgelbouw B.V.,,0186-516875,info@tebodin-orgelbouw.afas,,Hoofdland,2,3271 VC,Mijnsheerenland,NL,NL64RABO0182122417
+C10015,Speelgoed Caem B.V.,,020-6547812,contact@speelgoed-caem.afas,,Kalverstraat,140,1012 XD,Amsterdam,NL,NL38FVLB0630004536
+C10016,Congrex Plastics B.V.,,0418-230914,info@congrex-plastics.afas,,Kerkstraat,24,4181 AB,Waardenburg,NL,NL90RABO0302254218
+C10017,Euro Vacaturebank N.V.,,050-1254482,info@eurovacature.afas,,Spieghelstraat,35,9721 JR,Groningen,NL,NL17ABNA0485402319
+C10018,Top Marktonderzoek B.V.,,0598-454433,info@top-marktonderzoek.afas,,Trekweg,26,9636 AL,Zuidbroek,NL,NL19RABO0362212554
+C10019,Epsilon Coatings B.V.,,070-3191085,info@epsiloncoatings.afas,,Laakkade,79,2521 XC,'s-Gravenhage,NL,NL21ABNA0512100527
+C10020,Beentjes & Zn. Dakbedekking B.V.,,076-9096497,info@beentjesdak.afas,,Postbus,1151,4801 BD,Breda,NL,NL27RABO0168545217
+C10021,Bouwbedrijf Sofacom B.V.,,077-4753308,info@sofacom-bouw.afas,,Heuvelweg,9,5951 AT,Belfeld,NL,NL19INGB0004462551
+C10022,Inbo Bakker B.V.,,010-432888,contact@inbobakker.afas,,Meeuwenstraat,20,3071 PE,Rotterdam,NL,NL28ABNA0592201449
+C10023,J.F. Wiefferinck B.V.,,020-5260769,info@wiefferink-bv.afas,,Postbus,1204,1000 BE,Amsterdam,NL,NL26ABNA0463070526
+C10024,Van Ubbens Advies B.V.,,043-5809975,info@ubbensadvies.afas,,Vrijthof,6,6211 LC,Maastricht,NL,NL89RABO0300413564
+C10025,Hogendoorn Chemie N.V.,,035-3951876,info@hogendoorn-chemie.afas,,Spui,44,1273 MS,Huizen,NL,NL23SNSB0820003212
+C10026,Sigma Sport B.V.,,0514-368703,info@sigma-sport-bv.afas,,Gemini,63,8531 NS,Lemmer,NL,NL77RABO0364452889
+C10027,Sijpkes Biljards B.V.,,075-3909729,info@sijpkesbiljards.afas,,Olmenlaan,17,5616 LC,Eindhoven,NL,NL41ABNA0581466225
+C10028,Tijhuis Market B.V.,,078-8481474,info@tijhuismarket.afas,,Wega,41,3328 PE,Dordrecht,NL,NL98RABO0121622517
+C10029,Van den Berg N.V.,,053-4751090,info@vandenbergnv.afas,,Postbus,3816,7500 DV,Enschede,NL,NL20RBOS0665822219
+C10030,Loonbedrijf De Salarisstrook B.V.,,020-3738966,info@desalarisstrook.afas,,Lederambachtsstraat,69,1069 HM,Amsterdam,NL,NL15RABO0320155269
+C10031,Hafkamp Kappers B.V.,,013-975207,info@hafkamp.afas,,Bloemfonteinstraat,39,5025 HH,Tilburg,NL,NL11SNSB0810255219
+C10032,Koninklijke Exhibitions Benelux B.V.,,030-4411997,info@exhibitionsbenelux.afas,,IJsselstraat,33,3522 JW,Utrecht,NL,NL86ABNA0447530046
+C10033,Express Innovatienetwerk B.V.,,026-8781517,info@expressinnovatie.afas,,Steenbakkersweg,22,6991 EN,Rheden,NL,NL83FTSB0872144291
+C10034,KBC Beton B.V.,,023-5852278,info@kbcbeton.afas,,Hendrik Figeeweg,27,2031 BJ,Haarlem,NL,NL13INGB0007725642
+C10035,N.I.M. Specialisten B.V.,,0475-289485,info@nimspecialisten.afas,,Eykerstokweg,30,6093 ED,Heythuysen,NL,NL96INGB0007552167
+C10036,HBR Touringcarbedrijf B.V.,,0512-665903,info@hbrtouringcar.afas,,Tussendiepen,18,9206 AD,Drachten,NL,NL62RABO0330685228
+C10037,"Autoschadebedrijf ""De Uitdeuker"" B.V.",,020-372696,info@deuitdeuker.afas,,Sniep,26,1112 AH,Diemen,NL,NL05INGB0000062398
+C10038,Ingenieursbureau Zwijndrecht,,078-4692471,info@ingenieurszwijndrecht.afas,,Roerdompstraat,48,3334 AG,Zwijndrecht,NL,NL36RABO0335244017
+C10039,Gouda Treatments B.V.,,040-798864,info@gouda-treatments.afas,,Lijsterbesstraat,13,5616 LE,Eindhoven,NL,NL50ABNA0567553256
+C10040,Natuursteenbedrijf Valco B.V.,,020-3617505,info@natuursteenbedrijf-valco.afas,,Jan Hanzenstraat,18,1053 SM,Amsterdam,NL,NL73INGB0005524699
+C10041,"Zonwering ""De schaduwkant"" B.V.",,030-4231205,info@deschaduwkantzonwerking.afas,,Maliebaan,85,3581 CG,Utrecht,NL,NL18RABO0332524752
+C10042,Efficiency Konst B.V.,,010-2332560,info@efficiency-konst.afas,,Nieuwe Binnenweg,56,3015 BB,Rotterdam,NL,NL64RABO0323304656
+C10043,MBT Industrial B.V.,,030-4383115,info@mbt-industrial.afas,,Kruisweg,44,3513 CT,Utrecht,NL,NL92RABO0128545224
+C10044,Dakbedekkingsbedrijf Artimedes B.V.,,0591-834684,info@dakbedekkingartimedes.afas,,Oosterbracht,16,7821 CJ,Emmen,NL,NL25ABNA0560426534
+C10045,Kalkzandsteenfabriek Hoogeveen B.V.,,0528-838749,info@kalkzandsteen-hoogeveen.afas,,Kanaalweg,54,7902 LN,Hoogeveen,NL,NL92RABO0152214291
+C10046,Moens & Jansen Advies VOF,,0346-472451,info@moensenjansenadvies.afas,,Bisonspoor,2023,3605 LC,Maarssen,NL,NL23ABNA0412004445
+C10047,Hesta Touringcars B.V.,,073-1265979,info@hesta-touringcars.afas,,Europalaan,22,5232 BC,'s-Hertogenbosch,NL,NL30INGB0002275391
+C10048,Horti Ham B.V.,,030-6315808,info@horti-ham.afas,,Amalia van Solmslaan,18,3708 CN,Zeist,NL,NL25ABNA0402533038
+C10049,Reclamebureau Geldrop B.V.,,040-6074524,info@reclamebureau-geldrop.afas,,Bogardeind,100,5664 EB,Geldrop,NL,NL61RABO0161616186
+C10050,Janssen Promotional Advertising,,030-6947271,info@jpa.afas,,Röntgenstraat,30,3261 LK,Oud Beijerland,NL,NL96INGB0007002565
+C10051,Custom Car Parts Constar B.V.,,010-2133838,info@customcarpartsconstar.afas,,Gerard Burgerlaan,9,3131 KZ,Vlaardingen,NL,NL92ABNA0567543188
+C10052,Gebroeders Van Kooten B.V.,,0180-987786,info@gebroedersvankooten.afas,,Gieterijstraat,2,2984 AB,Ridderkerk,NL,NL89FVLB0234425008
+C10053,Interprojekt Engels B.V.,,020-2533147,info@interprojekt.afas,,Donauweg,14,1043 AJ,Amsterdam,NL,NL51RABO0152146644
+C10054,Schreurs Administratiekantoor B.V.,,036-9541978,info@administratie-scheurs-bv.afas,,Heliumweg,11,1362 JA,Almere,NL,NL14ABNA0882436953
+C10055,T.H. Arends B.V.,,070-2962477,info@arends.afas,,Saturnusstraat,60,2516 AH,'s-Gravenhage,NL,NL02INGB0687525411
+C10056,Sickens Heftrucks B.V.,,0598-329861,info@sickens-heftrucks.afas,,Meindert Veringastraat,14,9601 KG,Hoogezand,NL,NL67RABO0382204069
+C10057,Kluthe Producties B.V.,,0115-348384,info@klutheproductiesbv.afas,,Markt,17,4551 BK,Sas van Gent,NL,NL58ABNA0584572247
+C10058,Multihouse Techniek B.V.,,030-6140637,info@multihousetechniek.afas,,Tuibrug,3,3991 LC,Houten,NL,NL37ABNA0475334329
+C10059,Storm Finance B.V.,,030-1635958,info@storm-financebv.afas,,Ravellaan,7,3533 JE,Utrecht,NL,NL50KASA0635525674
+C10060,Blue Diamonds B.V.,,033-2343193,info@bluediamondsbv.afas,,Charlotte de Bourbonlaan,3,3818 DJ,Amersfoort,NL,NL30RABO0101533004
+C10061,Schouten Kunststofprofielen C.V.,,078-2867140,contact@schouten-kunstofprofiel.afas,,Industrieweg,34,3351 LD,Papendrecht,NL,NL51BNGH0624522199
+C10062,Hotel Utrechtse Heuvelrug B.V.,,033-4917451,info@hotel-utrechtseheuvelrug.afas,,Arnhemseweg,32,3832 GM,Leusden,NL,NL15FTSB0815267916
+C10063,Notariskantoor Verhoeven B.V.,,0341-603544,contact@notariskantoorverhoeven.afas,,Stationslaan,26,3842 LA,Harderwijk,NL,NL15RABO0100252001
+C10064,Steenfabriek Van Tegelen B.V.,,020-4892649,info@steenfabriek-tegelen.afas,,Amsteleiland,3,1184 VZ,Amstelveen,NL,NL73INGB0692571140
+C10065,Hotel de Koningshoeve B.V.,,026-1264022,info@dekoningshoeve-hotel.afas,,Walburgstraat,2,6811 CD,Arnhem,NL,NL60ABNA0445402334
+C10066,Enitor Handelsonderneming B.V.,,0182-310158,info@enitorhandel.afas,,Albert Plesmanplein,19,2805 AB,Gouda,NL,NL13ABNA0560221886
+C10067,Holmatro Dakbedekking B.V.,,071-4690887,info@holmatro-dakbedekking.afas,,Rietzanger,14,2396 JE,Koudekerk aan den Rijn,NL,NL54ABNA0421625414
+C10068,Niessink's Handelsmaatschappij B.V.,,036-5340676,info@niessink.afas,,Olof Palmehof,30,1314 WC,Almere,NL,NL71INGB0007302260
+C10069,Forbo Beton B.V.,,040-2337754,info@forbobeton.afas,,Langendijk,3,5652 AX,Eindhoven,NL,NL83RABO0360021433
+C10070,Executive Support Agency,,0573-441243,info@supportagency.afas,,Albert Hahnweg,44,7242 EC,Lochem,NL,NL59INGB0000624511
+C10071,Kuiper Marketing N.V.,,0118-365456,info@kuiper-marketing.afas,,Postbus,74,4380 AB,Vlissingen,NL,NL70ABNA0592332128
+C10072,Atlas Interieur B.V.,,0547-581668,atlasinfo@atlas.afas,,Postbus,69,7468 ZH,Enter,NL,NL87RABO0153482559
+C10073,Handelsonderneming Jonker B.V.,,015-4578771,info@jonkerhandel.afas,,Anna van Raesfeltstraat,36,2636 HX,Schipluiden,NL,NL65ABNA0570025419
+C10074,Indigo Design B.V.,,0497-346976,info@indigo-designbv.afas,,Broekstraat,37,5571 KJ,Bergeyk,NL,NL11RABO0182205142
+C10075,Crossroad Media B.V.,,030-3268417,info@crossroadmedia.afas,,Laan van Cattenbroeck,15,3703 BH,Zeist,NL,NL03RABO0112744168
+C10076,Salomon's Media B.V.,,0182-569472,info@salomonsmedia.afas,,Van Swietenstraat,19,2801 AH,Gouda,NL,NL94RABO0110888472
+C10077,Kaal Oldenzaal B.V.,,0541-789712,info@kaal-oldenzaal.afas,,Eektestraat,36,7575 AP,Oldenzaal,NL,NL13ABNA0448214725
+C10078,Dokkum Services B.V.,,020-6968747,info@dokkumservices.afas,,Postbus,1384,1000 BJ,Amsterdam,NL,NL80SNSB0812542886
+C10079,Accountantskantoor Van Otteren B.V.,,020-3335272,info@vanotterenaccountants.afas,,Rusland,18,1012 CL,Amsterdam,NL,NL51ABNA0591124238
+C10080,Wagenborg Systems B.V.,,024-2900008,info@wagenborgsystems.afas,,Einsteinstraat,98,6604 BW,Wijchen,NL,NL90RABO0387458824
+C10081,Bierling Orgelmakers,,0183-226360,info@bierling-orgelmakers.afas,,Handelsweg,4,4231 EZ,Meerkerk,NL,NL81RABO0102542147
+C10082,Nederlandse Koekenfabriek N.V.,,0570-434479,info@nederlandse-koekenfabriek.afas,,Londenstraat,11,7418 EE,Deventer,NL,NL31INGB0004006823
+C10083,Konenco Kwasten B.V.,,040-3460280,info@konencokwasten.afas,,Grote Bosweg,9,5666 BX,Geldrop,NL,NL42INGB0003125477
+C10084,Bastion Huisman B.V.,,010-6665946,info@bastionhuisman.afas,,Mathenesserlaan,184,3015 CM,Rotterdam,NL,NL54RABO0333642805
+C10085,Alta Projects B.V.,,040-3263468,info@altaprojects.afas,,Willemstraat,85,5616 GE,Eindhoven,NL,NL82ABNA0533614708
+C10086,B.R.B. Reklame B.V.,,030-8958268,info@brbreklame.afas,,Postbus,87,3430 AB,Nieuwegein,NL,NL63INGB0007725421
+C10087,Humble & Trumple Services B.V.,,030-3656235,info@humbletrumbleservices.afas,,Hessenweg,181,3731 JH,De Bilt,NL,NL12RABO0334248744
+C10088,Autocentrum Vermeulen B.V.,,050-2774387,info@autovermeulen.afas,,Osloweg,61,9723 BH,Groningen,NL,NL53RABO0121114368
+C10089,Timmer Notariaat B.V.,,0113-825296,info@notariaat-timmer.afas,,Grote Markt,17,4461 AH,Goes,NL,NL97RABO0300000103
+C10090,"Bierbrouwerij ""Biertje"" B.V.",,0493-332661,schuim@biertje.afas,,Voltstraat,13,5753 RL,Deurne,NL,NL96INGB0004006041
+C10091,BTC Afdichtingstechniek,,020-3405433,info@btcafdichting.afas,,Kruiswaal,11,1161 AL,Zwanenburg,NL,NL88INGB0004524456
+C10092,Nilfisk Reisorganisatie B.V.,,0164-761890,info@nilfiskreizen.afas,,Bolwerk Zuid,20,4611 EG,Bergen op Zoom,NL,NL47RABO0121416631
+C10093,Vereniging Bokkesprong,,0251-170992,info@verenigingbokkesprong.afas,,Haydnplein,8,1962 KE,Heemskerk,NL,NL50RABO0168722216
+C10094,Bureau Werklust B.V.,,072-2303984,werklust@minjust.afas,,Deimoslaan,1,1702 CK,Heerhugowaard,NL,NL53INGB0007758872
+C10095,Kalkzandsteenfabriek Waalwijk B.V.,,0416-427032,info@kalkzandsteen-waalwijk.afas,,Sluisweg,10,5145 PE,Waalwijk,NL,NL16ABNA0445471220
+C10096,Sijperda Instituut B.V.,,0251-584218,info@sijperda-instituut.afas,,Stratingplantsoen,52,1951 EV,Velsen-Noord,NL,NL88FTSB0844821144
+C10097,Perfect Draft International B.V.,,072-3877288,info@perfectdraft.afas,,Nieuwstraat,55,1811 BP,Alkmaar,NL,NL34RBOS0652534422
+C10098,Xella Industries B.V.,,0343-578703,info@xellaindustries.afas,,Doornseweg,83,3947 MB,Langbroek,NL,NL90RABO0312054807
+C10099,Meepo Instituut B.V.,,043-2723415,info@meepo-instituut.afas,,Grote Gracht,41,6211 SV,Maastricht,NL,NL02INGB0001248568
+C10100,Amersfoortse Verffabriek B.V.,,033-1734037,info@avf.afas,,Argonweg,20,3812 RB,Amersfoort,NL,NL60INGB0003112543
+C10101,Joosten Kunststoffen b.v.,,0180-833741,info@joostenkunstoffen.afas,,Stormpolderdijk,38,2921 LL,Krimpen aan den IJssel,NL,NL12INGB0005524730
+C10102,Huston Transport B.V.,,0320-632722,info@huston-transport.afas,,Platinastraat,68,8211 AR,Lelystad,NL,NL39RABO0382500423
+C10103,SVT Export N.V.,,040-9447997,info@svt-exportbedrijf.afas,,Luchthavenweg,20,5657 EB,Eindhoven,NL,NL71ABNA0560726406
+C10104,Hollman Import B.V.,,0475-463143,info@hollman-importbedrijf.afas,,Maasbrachterweg,79,6067 CP,Linne,NL,NL83INGB0007521458
+C10105,Bus Grondstoffen B.V.,,010-2564274,info@bus-grondstoffen.afas,,Eerste Tochtweg,2,2913 LP,Nieuwerkerk ad IJssel,NL,NL34INGB0007800245
+C10106,Acer Computer B.V. (Benelux),,073-6459645,benelux@acer.afas,,Kerkstraat,73,5211 KE,'s-Hertogenbosch,NL,NL28RBOS0569988888
+C10107,Pallet groothandel C.V.,,033-3399414,info@pallet.afas,,Wolframkade,3,3812 RC,Amersfoort,NL,NL31INGB0005521478
+C10108,Delta Industries B.V.,,076-3373800,info@deltaindustriesbv.afas,,Spinveld,22,4815 HS,Breda,NL,NL67RABO0328440655
+C10109,Lease Plan Nederland N.V.,,036-5272700,info@leaseplan.a.afas,39038941,Noordelijk Halfrond,10,2801 DE,Gouda,NL,NL07ABNA0486582116
+C10110,Holtslag Machinefabriek n.v.,,0418-261717,info@holtslag-machinefabriek.afas,27145186,Ringweistraat,1,4181 CL,Waardenburg,NL,NL21ABNA0567557464
+C10111,GDF Kunststoffen B.V.,,0184-540188,info@gdfkunststof.afas,,Molendijk,2,3361 EP,Sliedrecht,NL,NL50RABO0331352125
+C10112,Reklame/Adviesburo Vis B.V.,,055-2217329,contact@reklameadvies-vis.afas,,Lepelaarweg,28,7332 AE,Apeldoorn,NL,NL88INGB0007225421
+C10113,Vlasblom Communicatie B.V.,,024-6542098,info@vlasblomcommunicatie.afas,,Marconistraat,79,6604 BX,Wijchen,NL,NL54FTSB0817552146
+C10114,B.B.A. Support B.V.,,0113-549813,info@bbasupport.afas,,Scottweg,9,4462 GS,Goes,NL,NL04SNSB0821255436
+C10115,Fotostudio Den Haag,,070-4670846,info@fotostudiodenhaag.afas,,Plein,2,2511 CR,'s-Gravenhage,NL,NL63ABNA0546883389
+C10116,Moerdijkse Kunststoffen B.V.,,0168-988240,info@mk.afas,,Chemieweg,25,4782 SJ,Moerdijk,NL,NL41RBOS0652004385
+C10117,Van Bommel Restaurants B.V.,,0113-465753,lekkereten@vanbommel.afas,,Veerweg,37,4493 AM,Kamperland,NL,NL45ABNA0450206335
+C10118,Sanitairhandel Paleis B.V.,,046-5463408,info@sanitair-paleis.afas,,Limbrichterweg,6,6135 GG,Sittard,NL,NL29ABNA0412174669
+C10119,Wagenbouw Van de Ven,,030-2640075,info@wagenbouwven.afas,,Perronlaan,2,3534 BG,Utrecht,NL,NL42ABNA0567558444
+C10120,Natuursteenbedrijf Overbeek B.V.,,010-6598755,info@natuursteenoverbeek.afas,,Oosthavenkade,33,3134 NW,Vlaardingen,NL,NL43INGB0000752548
+C10121,Sport Amsterdam B.V.,,020-2894208,info@sportamsterdam.afas,,Emmalaan,73,1075 AT,Amsterdam,NL,NL87SNSB0848003632
+C10122,Talens Havenbedrijf B.V.,,013-2786587,admin@talens.afas,,Goirkekanaaldijk,40,5046 AT,Tilburg,NL,NL46ABNA0523663447
+C10123,Kielstra Grafisch Bureau,,0181-513575,vraag@kielstrabureau.afas,,Molenweg,22,3181 AT,Rozenburg ZH,NL,NL22ABNA0468857036
+C10124,Tilburg Kunststoffen B.V.,,0597-452368,info@tilburgkunstof.afas,,Stationsstraat,18,9679 ED,Scheemda,NL,NL44KASA0668566213
+C10125,Elevator Systems B.V.,,077-3579815,info@elevator-systems.afas,,Postbus,56,5900 AB,Venlo,NL,NL07ABNA0411152297
+C10126,Kaldick International VOF,,0495-667342,info@kaldick.afas,,Magnesiumstraat,1,6031 NW,Nederweert,NL,NL48RABO0334720001
+C10127,Qbic-Signs B.V.,,033-3621654,contact@qbic.afas,,Ambachtsweg,1,3831 KA,Leusden,NL,NL07ABNA0567555291
+C10128,Ergonom Benelux B.V.,,0416-549811,info@ergonombenelux.afas,,Duikerweg,7,5145 NV,Waalwijk,NL,NL47ABNA0412166003
+C10129,Stukadoorsbedrijf Burgers B.V.,,0511-420878,algemeen@stukadoorburgers.afas,,Marconistraat,3,9285 WG,Buitenpost,NL,NL73RABO0125012438
+C10130,Wagenborg Produkties B.V.,,070-36456492,info@wagenborgproducties.afas,,Schietlood,70,2495 AP,'s-Gravenhage,NL,NL79FVLB0220025053
+C10131,Hebo Reclamebureau B.V.,,0499-759656,hebo@hebogrou.afas,,Nijdjipstrjitte,6,9001 HH,Grou,NL,NL50RABO0352266198
+C10132,Total Job B.V.,,035-4534054,administratie@totaljob.afas,,Brinklaan,75,1404 ER,Bussum,NL,NL88FTSB0272106178
+C10133,Viking Architecten,,020-5374205,info@vikingarchitecten.afas,,Raadhuisstraat,14,1111 BL,Diemen,NL,NL25INGB0004528597
+C10134,Saniplein Inkoop B.V.,,079-5430987,info@saniplein.afas,,Philipsstraat,41,2722 NA,Zoetermeer,NL,NL11RABO0302312773
+C10135,Luce Albero Lichtmasten B.V.,,020-2015727,info@alberolicht.afas,,Oceanenweg,2,1047 BB,Amsterdam,NL,NL15RABO0315236108
+C10136,Hestex Nieuwenborg Beton B.V.,,020-5640456,info@hestex.afas,,Van Moerkerkenstraat,65,1064 KC,Amsterdam,NL,NL65RABO0115214224
+C10137,ETR Outdoor B.V.,,0228-610983,info@etr-outdoor.afas,,Schoolstraat,26,9781 JN,Bedum,NL,NL76INGB0000132512
+C10138,De Reclamezuil B.V.,,0318-546546,info@reclamezuil.afas,,Marktstraat,3,6711 GX,Ede Gld,NL,NL25INGB0002467153
+C10139,Software Research B.V.,,020-2468734,info@software-research.afas,,Maxwellstraat,25,1097 EW,Amsterdam,NL,NL88RABO0301019541
+C10140,Administratiekantoor Beers,,079-3465406,info@administratiebeers.afas,,Postbus,779,2700 AT,Zoetermeer,NL,NL68FVLB0611542471
+C10141,Slingerberg Metalen B.V.,,0492-564056,info@slingerbergmetaal.afas,,Beemdweg,23,5705 BJ,Helmond,NL,NL70FTSB0284635022
+C10142,Rand Lichtreklame B.V.,,035-1654610,admin@rand.afas,,Herenstraat,53,1406 PA,Bussum,NL,NL57ABNA0560224877
+C10143,Outdoor Sports B.V.,,020-3156087,info@outdoorsports.afas,,Tugelaweg,85,1091 VN,Amsterdam,NL,NL56FVLB0235244864
+C10144,Architektenbureau Veldhuis,,0346-646643,architekt@veldhuis.afas,,W. Stuutlaan,10,3769 AC,Soesterberg,NL,NL54ABNA0400556723
+C10145,Toel en Zonen N.V.,,0412-251650,info@toelenzonen.afas,,Leeuwerikstraat,13,5348 XA,Oss,NL,NL89RABO0135421802
+C10146,Janssen & Mikkers Accountants,,040-2680467,info@janssenmikkers.afas,,Frederiklaan,32,5616 NH,Eindhoven,NL,NL24ABNA0575230207
+C10147,Top Autobussen,,0297-346084,info@topautobus.afas,,Aalsmeerderweg,662,1437 EJ,Rozenburg NH,NL,NL59FVLB0632304804
+C10148,Heybroek Staalbouw N.V.,,0316-640664,info@heybroekstaal.afas,,Postbus,55,6900 AB,Zevenaar,NL,NL49INGB0693365129
+C10149,Heemskerk & Zonen B.V.,,0522-605449,info@heemskerkenzonen.afas,,Kleine Oever,11,7941 BK,Meppel,NL,NL59RBOS0650773616
+C10150,Accento Consultants B.V.,,075-6546562,consultant@accento.afas,,Peperstraat,147,1502 AE,Zaandam,NL,NL87RABO0164427554
+C10151,Tomallo Adviesbureau B.V.,,030-2651357,info@tomalloadviesbureau.afas,,Kennedylaan,16,3533 KJ,Utrecht,NL,NL61FVLB0633548308
+C10152,XSYS Reklame B.V.,,043-3832468,contact@xsys-reklame.afas,,Lochterstraat,21,6229 AW,Maastricht,NL,NL21FVLB0631880046
+C10153,Local Double N.V.,,0314-870654,info@local-double.afas,,Fabriekstraat,22,7005 AR,Doetinchem,NL,NL42RABO0166638218
+C10154,Tornado House,,030-6510989,storm@tornado.afas,,Limburghaven,1,3433 PK,Nieuwegein,NL,NL19ABNA0584125003
+C10155,Architectenbureau Brauw B.V.,,0341-640984,info@brauwarchitect.afas,,Prins Mauritslaan,35,3843 AJ,Harderwijk,NL,NL41INGB0003362175
+C10156,Hollandse Spellenfabriek B.V.,,030-3537590,jumbo@hsf.afas,,Galecopperlaan,41,3437 NA,Nieuwegein,NL,NL46ABNA0514002344
+C10157,Broeder Vastgoed B.V.,,0165-540849,administratie@broeder.afas,,Ekelstraat,19,4726 AN,Heerle,NL,NL55INGB0005488745
+C10158,Steencentrale Nederland B.V.,,046-5645054,info@steencentralened.afas,,Kapelweg,30,6121 JC,Born,NL,NL63RABO0121154734
+C10159,Deventer Adviseurs B.V.,,0570-640549,deventer@viseurs.afas,,Sint Olafstraat,7,7418 CG,Deventer,NL,NL26RABO0138103046
+C10160,Infour Ballonnenbedrijf B.V.,,070-3564046,info@infourballon.afas,,Rijksstraatweg,433,2245 AB,Wassenaar,NL,NL11ABNA0594521025
+C10161,Samsung Electronics Nederland B.V.,,015-2196100,mail@samsungg.afas,,Olof Palmestraat,10,2616 LR,Delft,NL,NL95INGB0005214873
+C10162,Logitech Benelux B.V.,,033-5231874,contact@logitech.afas,,Maanlander,14,3824 MP,Amersfoort,NL,NL08INGB0675835542
+C10163,ICT Groothandel Midden-Nederland,,023-2574195,info@middennederland.afas,,Veerpolder,36,2031 AR,Haarlem,NL,NL23INGB0004306503
+C10167,Studio Benelux B.V.,,010-2845521,contact@studio-benelux.afas,,Julianastraat,98,2902 HH,Capelle aan den IJssel,NL,NL37RABO0122334043
+C10168,Machinefabriek Holland B.V.,,020-2283060,info@machinefabriek-holland.afas,,Potgieterstraat,393,1053 XS,Amsterdam,NL,NL63SNSB0864570015
+C10169,Space Invaders Ruimtebouw B.V.,,0800-0991300,ctc@space-invaders-ruimtebouw.afas,,Parallelweg,10,3371 KJ,Hardinxveld-Giessendam,NL,NL75RGRB0600288641
+C10170,Jansen Adviesbureau VOF,,0475-674905,info@jansenadvies.afas,,Krimweg,1,6104 RM,Koningsbosch,NL,NL26ABNA0510024637
+C10171,Manutan B.V.,,030-2296111,info@manutan.afas,30053885,Elandlaan,2,3734 CP,Den Dolder,NL,NL86ABNA0585226202
+C10172,VGZ Verzekeringen,,015-6385100,info@vgz.afas,,Laan van van der Gaag,12,2627 BS,Delft,NL,NL84RABO0171254856
+C10173,Sony Nederland B.V.,,020-6581911,nederland@sony.afas,,Schipholweg,275,1171 PK,Badhoevedorp,NL,NL30ABNA0561325731
+C10174,HTC Nederland,,026-3328411,info@htc-products-nl.afas,,Utrechtseweg,56,6862 AM,Oosterbeek,NL,NL38INGB0000176167
+C10176,Man and Machine,,(+33) 0155824582,marketing@manandmachine.afas,,Avenue du General de Gaulle,88,93541,Bagnolet Cedex,FR,NL83ABNA0434158747
+C10177,Industrial Software Ltd,,(+44) 1709300136,enquiries@IndustrialSoftwareLtd.co.afas,,Manvers Way,45,S63 5DA,Rotherham,GB,NL15RABO0123474965
+C10178,Aannemersbedrijf Van Straaten B.V.,,0182-904211,info@aannemerstraaten.afas,,Edisonstraat,20,2809 BP,Gouda,NL,NL60RABO0326217541
+C10179,E. van Gent Beton B.V.,,0546-666594,info@vangentbeton.afas,,Violenhoeksweg,6,7641 BE,Wierden,NL,NL80RABO0115436278
+C10180,Haitsema Touringcars B.V.,,073-3263468,info@haitsema-touring.afas,,Industrieweg,13,5262 GJ,Vught,NL,NL64ABNA0480041253
+C10181,AFAS Software B.V.,,033-4341800,info@afas.afas,31046821,Philipsstraat,9,3833 LC,Leusden,NL,NL92RABO0142294101
+C10182,Accountantskantoor Jansen & Janssen B.V.,,0184-723415,info@jansenaccountant.afas,,Wilgenhof,24,3363 HR,Sliedrecht,NL,NL60RABO0333521447
+C10183,Direct Express,,020-6674905,admin@directexpress.afas,,Nieuwzeelandweg,5,1045 AL,Amsterdam,NL,NL10RABO0152264752
+C10184,Rijder Autogroep,,073-5512780,info@rijder.afas,,Heesakkerstraat,32,5271 CB,Sint Michielsgestel,NL,NL11ABNA0435487973
+C10185,Bema Betonmortel B.V.,,038-4542859,info@bemabeton.afas,,Gasthuisdijk,23,8041 AE,Zwolle,NL,NL59ABNA0519500458
+C10186,Van Kempen Afbouw b.v.,,020-6533022,info@vankempenafbouw.afas,,Theemsweg,80,1043 BC,Amsterdam,NL,NL07ABNA0554214784
+C20085,De Luyere Pvba,,(+32) 3 277 49 29,henkdebruyn@luyere.afasbe,,Hooge Lei,23,2030,Antwerpen 3,BE,BE09785542759057
+C20222,J.Cnossens,,,jack@cnossens.afasbe,,Rue de Liberté,45,1000,Bruxelles 1,BE,BE68539007547034
+C20675,Music PeVe,,(+32) 50 63 01 00,a.roos@peve.afasbe,,Markthof,22,8300,Westkapelle,BE,BE72091012240116
+C20922,Wesbaeke pvba,,(+32) 65 59 04 66,muzak@monsnet.afasbe,,Rue du 11 Novembre,54,7000,Mons,BE,BE44452144785345
+C21250,Musique Toujours,,,Claude@musiquetoujours.afasfr,,Rue Napoleon,144,75017,Paris,FR,FR1420041010050500013M02606
+C21741,Leon Drabuille sp,,,jacqueline@LDMusic.afasfr,,Route du Soleil,66,69003,Lyon,FR,FR7618206000103056966400117
+C21823,S.A. Classique,,,jeanfavier@saclassique.afasfr,,Place Defour,2,31000,Toulouse,FR,FR7654284584562254216698619
+C22020,Alsach Musik GmbH,,(+49) 211-43770,hansmaus@alsachmusic.afasde,,Buttingerstr.,29,40474,Düsseldorf,DE,DE22120700000065428547
+C22458,Firma Innersbach,,,innersbach@deutschland.afasde,,Dorfplatz,1,48282,Emsdetten,DE,DE20100602370085476650
+C22685,H.H.Heinrichs,,(+49) 711-900550,bohm@hotmail.afascom,,Saturnus,16,70629,Stuttgart,DE,DE89370400440532013000
+C22910,Musik Willingen,,(+49) 89-38450,karl@willingen.afasde,,Königsallee,33,80336,München,DE,DE41120965975625875547
+C23222,Welsley's Music Corner,,,fgy@welsley.com.afasgb,,Charlotte Street,56,W1T 2NS,London,GB,UK50891136008754288918
+C23450,Ipswich Ltd,,(+44) 161-870-1600,administration@ipswich.com.afasgb,,Oakroad,1,M1 5LE,Manchester,GB,UK47890884255019932849
+C23688,J.F.Peterson and Son,,(+44) 151-7084200,john.peterson@liverpool.com.afasgb,,Fleetstreet,44,L3 4FN,Liverpool,GB,UK10890336585472297749
+C23901,W.Wandsom Ltd,,,willie@wandsom.net.afasgb,,Pall Mall Avenue,4,B1 2HQ,Birmingham,GB,UK67891495900154754338
+C23955,Jessica Yorker,,,cdw@yorker.afascom,,Wistlestreet,66,AB21 9LN,Aberdeen,GB,UK76891555603247820552
+C24200,G.T.Gibsson,,(+1) 646-459-6500,gerold@gibsson.afasus,,Street 54,66,NY 10019,New York,US,554284-65628-11
+C24585,Music Entertainer,,(+1) 305-374-0000,information@me.afasus,,Long Beach,12,FL 33126,Miami,US,584521-54874-56
+C24777,Thompson & Sons,,(+1) 213-624-0000,bernhardpee@thompson.afascom,,Prado Street,45,CA 90035,Los Angeles,US,665845-66251-63
+C24851,U.N.C.L.E. Music,,(+1) 415-433-6600,Dean@unclemusic.afasus,,"Ave 66,",5,CA 94133,San Francisco,US,521441-56228-47

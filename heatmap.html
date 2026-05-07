@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vraagkaartjes-heatmap — Sturing in lagen</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="js/engine.js" defer></script>
 <style>
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
   .cell {
@@ -288,6 +290,18 @@
       <tbody id="rows"></tbody>
     </table>
 
+    <!-- Antwoord-paneel — toont berekend antwoord bij cel-klik (v0.4.1) -->
+    <section id="answer-panel" class="hidden mt-8 bg-slate-800/60 rounded-lg p-6 border border-slate-700">
+      <div class="flex items-start justify-between gap-4 mb-3">
+        <div class="flex-1">
+          <div class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-1" id="answer-vraagnummer"></div>
+          <div class="text-base text-slate-200" id="answer-vraagtekst"></div>
+        </div>
+        <button id="answer-close" class="text-slate-500 hover:text-white text-xl leading-none px-2" aria-label="Sluit antwoord-paneel">×</button>
+      </div>
+      <div id="answer-content" class="text-slate-100 mt-4"></div>
+    </section>
+
     <div class="mt-8 flex flex-wrap gap-3 items-center">
       <button id="toggle-key"
               class="hidden px-4 py-2 rounded bg-slate-700 hover:bg-slate-600 transition text-white font-semibold">
@@ -452,6 +466,9 @@
     document.getElementById('full-reset').addEventListener('click', fullReset);
     document.getElementById('landing-reset').addEventListener('click', fullReset);
     document.getElementById('toggle-key').addEventListener('click', toggleKey);
+    document.getElementById('answer-close').addEventListener('click', () => {
+      document.getElementById('answer-panel').classList.add('hidden');
+    });
 
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -516,6 +533,10 @@
     document.getElementById('docent-howto').classList.add('hidden');
     buildRows();
     render();
+    // Auto-compute engine: laad datasets in achtergrond (v0.4.1)
+    if (window.engine) {
+      window.engine.loadDatasets(lvl).catch(err => console.error('Dataset load:', err));
+    }
   }
 
   function enterDocentMode() {
@@ -531,6 +552,10 @@
     document.getElementById('docent-howto').classList.remove('hidden');
     buildRows();
     render();
+    // Auto-compute engine: laad ALLE datasets voor docent
+    if (window.engine) {
+      window.engine.loadDatasets('docent').catch(err => console.error('Dataset load:', err));
+    }
   }
 
   function buildRows() {
@@ -584,6 +609,113 @@
     else state[key] = nxt;
     save();
     render();
+    // Toon berekend antwoord voor deze vraag (v0.4.1)
+    showAnswerPanel(q);
+  }
+
+  function showAnswerPanel(qIdx) {
+    const panel = document.getElementById('answer-panel');
+    panel.classList.remove('hidden');
+
+    document.getElementById('answer-vraagnummer').textContent = `Vraag ${qIdx + 1}`;
+    document.getElementById('answer-vraagtekst').textContent = VRAGEN[qIdx];
+
+    const content = document.getElementById('answer-content');
+    content.replaceChildren();
+
+    if (!window.engine || Object.keys(window.engine.datasets).length === 0) {
+      const loading = document.createElement('div');
+      loading.className = 'text-slate-400 text-sm italic';
+      loading.textContent = 'Data wordt geladen — probeer opnieuw te klikken over enkele seconden.';
+      content.appendChild(loading);
+      return;
+    }
+
+    const result = window.engine.computeAnswer(qIdx);
+
+    if (result.value === null || result.value === undefined) {
+      const div = document.createElement('div');
+      div.className = 'text-amber-400 text-sm';
+      div.textContent = `Geen antwoord berekenbaar — ${result.reden || 'data ontbreekt'}`;
+      content.appendChild(div);
+      return;
+    }
+
+    // Render afhankelijk van formaat
+    if (result.formaat === 'twee-routes' && typeof result.value === 'object') {
+      const intro = document.createElement('p');
+      intro.className = 'text-amber-300 text-sm mb-3 italic';
+      intro.textContent = '⚠ Deze vraag heeft twee geldige routes — beiden kloppen, maar geven andere getallen:';
+      content.appendChild(intro);
+
+      for (const [route, data] of Object.entries(result.value)) {
+        const box = document.createElement('div');
+        box.className = 'bg-slate-900/60 rounded p-3 mb-3';
+        const title = document.createElement('div');
+        title.className = 'text-xs uppercase tracking-wider text-slate-400 mb-2';
+        title.textContent = data.methode;
+        box.appendChild(title);
+        if (Array.isArray(data.value)) {
+          const ul = document.createElement('ul');
+          ul.className = 'list-disc pl-5 text-sm text-slate-100';
+          for (const item of data.value) {
+            const li = document.createElement('li');
+            li.textContent = item;
+            ul.appendChild(li);
+          }
+          box.appendChild(ul);
+        } else {
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'text-emerald-300 font-bold text-lg';
+          valueDiv.textContent = data.value;
+          box.appendChild(valueDiv);
+        }
+        content.appendChild(box);
+      }
+    } else if (Array.isArray(result.value)) {
+      const ul = document.createElement('ul');
+      ul.className = 'list-disc pl-5 text-slate-100';
+      for (const item of result.value) {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      }
+      content.appendChild(ul);
+    } else if (typeof result.value === 'object' && result.value !== null) {
+      // Bv. { totaal, top10 }
+      if (result.value.totaal) {
+        const text = document.createElement('div');
+        text.className = 'text-emerald-300 font-bold text-lg mb-3';
+        text.textContent = 'Totaal openstaand: ' + result.value.totaal;
+        content.appendChild(text);
+      }
+      if (result.value.top10 && Array.isArray(result.value.top10)) {
+        const subtitle = document.createElement('div');
+        subtitle.className = 'text-xs uppercase tracking-wider text-slate-400 mb-2';
+        subtitle.textContent = 'Top-10 met openstaand bedrag';
+        content.appendChild(subtitle);
+        const ul = document.createElement('ul');
+        ul.className = 'list-disc pl-5 text-slate-100 text-sm';
+        for (const item of result.value.top10) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          ul.appendChild(li);
+        }
+        content.appendChild(ul);
+      }
+    } else {
+      const div = document.createElement('div');
+      div.className = 'text-emerald-300 font-bold text-2xl';
+      div.textContent = result.value;
+      content.appendChild(div);
+    }
+
+    if (result.methode && result.formaat !== 'twee-routes') {
+      const meth = document.createElement('div');
+      meth.className = 'text-xs text-slate-500 mt-3';
+      meth.textContent = 'Berekend via: ' + result.methode;
+      content.appendChild(meth);
+    }
   }
 
   function save() {
